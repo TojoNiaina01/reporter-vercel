@@ -1,0 +1,83 @@
+{
+  "ArticleRecentMain": [
+    {
+      "img": "/assets/img/ArticleOne.jpg",
+      "category": "politique",
+      "titre": "Selection of very comfortable furniture for relaxing on the terrace ",
+      "description": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+      "date": "JUL 06.2021",
+      "auteur": "vinago"
+    },
+    {
+      "img": "/assets/img/Articletwo.jpg",
+      "category": "culture",
+      "titre": "Modern style for young fashionistas spring autumn",
+      "description": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+      "date": "JUL 06.2021",
+      "auteur": "vinago"
+    },
+    {
+      "img": "/assets/img/ArticleThree.jpg",
+      "category": "life art",
+      "titre": "Are you ready to try new things in electronics this year",
+      "description": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+      "date": "JUL 06.2021",
+      "auteur": "vinago"
+    }
+  ],
+
+  "ArticleRecentSecondary" : [
+    {
+      "img" : "/assets/img/ArticleSecondaryOne.jpg",
+      "date": "JUL 06.2021",
+      "auteur": "vinago",
+      "titre": "Fresh home photo session. see how we love our pets"
+    },{
+      "img" : "/assets/img/ArticleSecondaryTwo.jpg",
+      "date": "JUL 06.2021",
+      "auteur": "vinago",
+      "titre": "The best ideas for decorating living areas in your garden"
+    },{
+      "img" : "/assets/img/ArticleSecondaryThree.jpg",
+      "date": "JUL 06.2021",
+      "auteur": "vinago",
+      "titre": "How not to get lost without knowing the language"
+    }
+  ],
+
+  "ArticlePopular" : [
+    {
+      "img": "/assets/img/ArticlePopularOne.jpg",
+      "titre": "A set of the most necessary things on vaca.",
+      "date": "JUL 06.2021",
+      "auteur": "vinago"
+    },
+    {
+      "img": "/assets/img/ArticlePopularTwo.jpg",
+      "titre": "The best indoor plants to create comfort at home",
+      "date": "JUL 06.2021",
+      "auteur": "vinago"
+    },
+    {
+      "img": "/assets/img/ArticlePopularThree.jpg",
+      "titre": "How does your morning at the office begin?",
+      "date": "JUL 06.2021",
+      "auteur": "vinago"
+    },{
+      "img": "/assets/img/ArticlePopularFour.jpg",
+      "titre": "only here are the most beautiful sunsets",
+      "date": "JUL 06.2021",
+      "auteur": "vinago"
+    }
+  ],
+
+  "ArticlePopularSeconde" : [
+    {
+      "img": "/assets/img/ArticlePopularSeconde.jpg",
+      "date": "JUL 06.2021",
+      "auteur" : "vinago",
+      "titre": "Universal cream for any type of skin",
+      "description": "A breakdown or a flat tire can happen to anyone at any time, and..."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+export { default as Logo } from "./Logo.png";
+export { default as Border } from "./Border.png";
+export { default as Publicite } from "./Publicite.png";
+export { default as PubliciteDeux } from "./PubliciteDeux.png";
+export { default as ArticleDemo } from "./ArticleDemo.png";
+export { default as ArticleOne } from "./ArticleOne.jpg";
+export { default as ArticleTwo } from "./ArticleTwo.jpg";
+export { default as ArticleThree } from "./ArticleThree.jpg";
+export { default as ArticleSecondaryOne } from "./ArticleSecondaryOne.jpg";
+export { default as ArticleSecondaryTwo } from "./ArticleSecondaryTwo.jpg";
+export { default as ArticleSecondaryThree } from "./ArticleSecondaryThree.jpg";
+export { default as ArticlePopularOne } from "./ArticlePopularOne.jpg";
+export { default as ArticlePopularTwo } from "./ArticlePopularTwo.jpg";
+export { default as ArticlePopularThree } from "./ArticlePopularThree.jpg";
+export { default as ArticlePopularFour } from "./ArticlePopularFour.jpg";
+export { default as ArticlePopularSeconde } from "./ArticlePopularSeconde.jpg";

@@ -1,0 +1,28 @@
+export const MenuFR = [
+  "accueil",
+  "politique",
+  "economie",
+  "social",
+  "sport",
+  "diaspora",
+  "industie",
+  "culture",
+  "life art",
+  "environement",
+  "infrastructure",
+  "tourisme",
+];
+export const MenuEN = [
+  "home",
+  "policy",
+  "economy",
+  "social",
+  "sport",
+  "diasporat",
+  "industry",
+  "culure",
+  "life art",
+  "environement",
+  "infrastructure",
+  "tourism",
+];
