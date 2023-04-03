@@ -8,7 +8,7 @@ import Category from "@/components/headers/Category";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 const indicators = (index) => (
-  <span className="cursor-pointer p-[6px] bg-gray-300 rounded-full mx-1 indicator" />
+  <span className="cursor-pointer p-[4px] bg-gray-300 rounded-full mx-1 indicator xl:p-[5px]" />
 );
 
 const settings = {
