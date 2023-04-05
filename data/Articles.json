@@ -1,6 +1,7 @@
 {
   "ArticleRecentMain": [
     {
+      "id": 1,
       "img": "/assets/img/ArticleOne.jpg",
       "category": "politique",
       "titre": "Selection of very comfortable furniture for relaxing on the terrace ",
@@ -9,6 +10,7 @@
       "auteur": "vinago"
     },
     {
+      "id": 2,
       "img": "/assets/img/Articletwo.jpg",
       "category": "culture",
       "titre": "Modern style for young fashionistas spring autumn",
@@ -17,6 +19,7 @@
       "auteur": "vinago"
     },
     {
+      "id": 3,
       "img": "/assets/img/ArticleThree.jpg",
       "category": "life art",
       "titre": "Are you ready to try new things in electronics this year",
@@ -28,16 +31,19 @@
 
   "ArticleRecentSecondary" : [
     {
+      "id": 1,
       "img" : "/assets/img/ArticleSecondaryOne.jpg",
       "date": "JUL 06.2021",
       "auteur": "vinago",
       "titre": "Fresh home photo session. see how we love our pets"
     },{
+      "id": 2,
       "img" : "/assets/img/ArticleSecondaryTwo.jpg",
       "date": "JUL 06.2021",
       "auteur": "vinago",
       "titre": "The best ideas for decorating living areas in your garden"
     },{
+      "id": 3,
       "img" : "/assets/img/ArticleSecondaryThree.jpg",
       "date": "JUL 06.2021",
       "auteur": "vinago",
@@ -78,6 +84,34 @@
       "auteur" : "vinago",
       "titre": "Universal cream for any type of skin",
       "description": "A breakdown or a flat tire can happen to anyone at any time, and..."
+    }
+  ],
+  "ArticleMostMain" : [
+    {
+      "img": "/assets/img/ArticleMostOne.jpg",
+      "date": "JUL 06.2021",
+      "auteur" : "vinago",
+      "titre": "How to create a cozy scent in any room using only",
+      "category": "Social"
+    },{
+      "img": "/assets/img/ArticleMostTwo.jpg",
+      "date": "JUL 06.2021",
+      "auteur" : "vinago",
+      "titre": "Pets of our gardeners. all about care and fertilizers",
+      "category": "Culture"
+    },{
+      "img": "/assets/img/ArticleMostThree.jpg",
+      "date": "JUL 06.2021",
+      "auteur" : "vinago",
+      "titre": "How to properly illuminate the workplace so as not to stra",
+      "category": "office"
+    },
+    {
+      "img": "/assets/img/ArticleMostFour.jpg",
+      "date": "JUL 06.2021",
+      "auteur": "vinago",
+      "titre": "Where to rest for those who do not like noisy places",
+      "category": "Travel"
     }
   ]
 }

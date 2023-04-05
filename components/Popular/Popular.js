@@ -1,23 +1,28 @@
 import React, { useContext } from "react";
-import Title from "@/components/Title";
+import HeaderCategory from "@/components/HeaderCategory";
 import MainPopular from "@/components/Popular/MainPopular";
 import { ArticlesContext } from "@/pages";
+import { v4 as uuidv4 } from "uuid";
 import SecondaryPopular from "@/components/Popular/SecondaryPopular";
 
 const Popular = () => {
   const { ArticlePopular } = useContext(ArticlesContext);
   return (
     <section className="mt-10">
-      <Title title="Popular Articles" />
-      <div>
-        <div className="md:flex  gap-2 lg:pt-2">
+      <HeaderCategory title="Popular Articles" all />
+      <div className="lg:flex lg:justify-between">
+        <div className="md:flex  gap-2 lg:pt-2 lg:flex-col">
           {ArticlePopular?.map(({ img, titre, date, auteur }) => (
-            <MainPopular img={img} titre={titre} date={date} auteur={auteur} />
+            <MainPopular
+              key={uuidv4()}
+              img={img}
+              titre={titre}
+              date={date}
+              auteur={auteur}
+            />
           ))}
         </div>
-        <div>
-          <SecondaryPopular />
-        </div>
+        <SecondaryPopular />
       </div>
     </section>
   );

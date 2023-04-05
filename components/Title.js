@@ -1,21 +1,17 @@
 import React from "react";
-import Image from "next/image";
-import { Border } from "@/public/assets/img";
-import { Jost } from "next/font/google";
 
+import { Jost } from "next/font/google";
 const jost = Jost({ subsets: ["latin"], weight: "600" });
-const Title = ({ title }) => {
+
+const Title = ({ children, style }) => {
   return (
-    <div className="flex items-center gap-4 ">
-      <h4
-        className={`whitespace-nowrap text-xl md:text-2xl 2xl:text-3xl font-bold ${jost.className}`}
-      >
-        {title}
-      </h4>
-      <div>
-        <Image src={Border} alt="Graphic decoration" />
-      </div>
-    </div>
+    <h5
+      className={`${style ? style : "text-base"} md:pt-2 leading-5 ${
+        jost.className
+      } lg:group-hover:underline`}
+    >
+      {children}
+    </h5>
   );
 };
 

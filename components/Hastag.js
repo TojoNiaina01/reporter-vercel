@@ -1,13 +1,13 @@
 import React from "react";
 
-const Category = ({ title, style }) => {
+const Hastag = ({ children, style }) => {
   return (
     <span
       className={`text-white bg-main-500 px-2 text-xs font-semibold tracking-wide uppercase ${style}`}
     >
-      {title}
+      {children}
     </span>
   );
 };
 
-export default Category;
+export default Hastag;

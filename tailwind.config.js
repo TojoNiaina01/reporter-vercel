@@ -33,6 +33,9 @@ module.exports = {
           900: "#0b0504",
         },
       },
+      backgroundImage: (theme) => ({
+        "home-bg": "url('/assets/img/Newsletter.png')",
+      }),
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

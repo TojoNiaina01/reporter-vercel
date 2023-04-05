@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
     .indicator.active {
         @apply bg-main-500
     }
     .indicators{
         @apply absolute top-0 right-1/2 translate-x-1/2
+    }
+    .popular:not(:first-child) {
+        @apply hidden md:flex
     }
     .popular:not(:first-child) {
         @apply hidden md:flex

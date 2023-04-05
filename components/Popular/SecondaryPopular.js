@@ -3,17 +3,16 @@ import Image from "next/image";
 import { ArticlesContext } from "@/pages";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import DateAuteur from "@/components/DateAuteur";
-import { Jost } from "next/font/google";
+import Title from "@/components/Title";
 
-const jost = Jost({ subsets: ["latin"], weight: "600" });
 const SecondaryPopular = () => {
   const { ArticlePopularSeconde } = useContext(ArticlesContext);
 
   const { img, titre, date, auteur, description } = ArticlePopularSeconde[0];
 
   return (
-    <div className="pt-3 relative cursor-pointer">
-      <div className="relative w-[100%] h-[228px]">
+    <div className="pt-3 relative cursor-pointer lg:w-[70%]">
+      <div className="relative w-full h-[228px] md:h-[270px] lg:w-full lg:h-full">
         <Image
           src={img}
           fill
@@ -21,14 +20,10 @@ const SecondaryPopular = () => {
           alt="Image article blog"
         />
       </div>
-      <div className="absolute bg-white py-2 px-6 left-4 bottom-0">
+      <div className="absolute bg-white w-[65%] py-2 px-4 md:px-6 left-4 bottom-0 md:w-[45%] md:left-9 lg:w-[50%]">
         <DateAuteur date={date} auteur={auteur} />
-        <h5
-          className={` text-base lg:text-xl ${jost.className} lg:group-hover:underline`}
-        >
-          {titre}
-        </h5>
-        <p className="text-xs pt-1 text-gray-500 md:text-sm lg:text-base lg:pb-0">
+        <Title>{titre}</Title>
+        <p className="text-xs pt-1 text-gray-500 md:text-sm 2xl:text-base lg:pb-0">
           {description}
         </p>
 

@@ -1,31 +1,27 @@
 import React from "react";
 import Image from "next/image";
-import { ArticlePopularOne } from "@/public/assets/img";
-import { Jost } from "next/font/google";
 import DateAuteur from "@/components/DateAuteur";
-
-const jost = Jost({ subsets: ["latin"], weight: "600" });
+import Title from "@/components/Title";
 
 const MainPopular = ({ img, date, auteur, titre }) => {
   return (
-    <div className="popular flex gap-4 md:flex-col md:gap-0 cursor-pointer group">
-      <div className="relative w-[120px] md:w-full h-[95px] md:h-[120px]">
-        <Image
-          src={img}
-          fill
-          className="object-cover"
-          alt="Image blog article"
-        />
+    <>
+      <div className="popular flex gap-4 cursor-pointer group md:flex-col  md:gap-0 lg:flex-row lg:gap-3">
+        <div className="relative w-[120px] h-[95px] md:w-full md:h-[120px] lg:w-[110px] lg:h-[90px]">
+          <Image
+            src={img}
+            fill
+            className="object-cover"
+            alt="Image blog article"
+          />
+        </div>
+        <div className="w-[60%] relative md:w-full mb-auto lg:w-[50%]">
+          <Title>{titre}</Title>
+          <DateAuteur date={date} auteur={auteur} />
+        </div>
       </div>
-      <div className="w-[60%] relative md:w-full mb-auto">
-        <h5
-          className={`text-base pb-3 md:pb-0 md:pt-2 leading-5 ${jost.className} lg:group-hover:underline`}
-        >
-          {titre}
-        </h5>
-        <DateAuteur date={date} auteur={auteur} />
-      </div>
-    </div>
+      <hr className="popularHr w-[90%] hidden lg:block" />
+    </>
   );
 };
 

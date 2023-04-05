@@ -1,34 +1,35 @@
 import React from "react";
 import Image from "next/image";
-import { ArticleOne } from "@/public/assets/img";
-
-import { Jost } from "next/font/google";
-import Category from "@/components/headers/Category";
+import Hastag from "@/components/Hastag";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import DateAuteur from "@/components/DateAuteur";
+import Title from "@/components/Title";
 
-const jost = Jost({ subsets: ["latin"], weight: "600" });
-
-const MainArticle = ({ img, category, titre, description, date, auteur }) => {
+const MainArticle = ({
+  img,
+  category,
+  titre,
+  description,
+  date,
+  auteur,
+  id,
+}) => {
   return (
-    <div className="group flex items-center gap-2 border-[1px] border-gray-200 rounded cursor-pointer md:gap-5 mg:gap-7">
-      <div className=" flex-1 h-[200px] md:w-[40%] lg:w-[30%] lg:h-[200px]">
-        <div className="relative w-full h-full">
-          <Category title={category} style="absolute top-2 z-10  left-4" />
-          <Image
-            src={img}
-            fill
-            className="object-cover "
-            alt="Image article blog"
-          />
-        </div>
+    <div
+      key={id}
+      className="group flex items-center gap-2 border-[1px] border-gray-200 rounded cursor-pointer md:gap-5"
+    >
+      <div className="relative w-[60%] h-[200px] md:w-[40%] lg:w-[35%]">
+        <Hastag style="absolute top-2 z-10  left-4"> {category} </Hastag>
+        <Image
+          src={img}
+          fill
+          className="object-cover"
+          alt="Image article blog"
+        />
       </div>
-      <div className="w-[55%] pt-4 md:w-[50%] lg:w-[60%] lg:mr-2 lg:pt-0">
-        <h5
-          className={` text-sm md:text-lg md:leading-6 lg:leading-normal lg:text-xl ${jost.className} lg:group-hover:underline`}
-        >
-          {titre}
-        </h5>
+      <div className="w-[55%] lg:pt-0">
+        <Title>{titre}</Title>
         <p className="text-xs pt-1 pb-2  text-gray-500 md:p md:text-sm lg:text-base lg:pb-0">
           {description}
         </p>
