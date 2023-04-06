@@ -21,3 +21,6 @@ export { default as ArticleMostThree } from "./ArticleMostThree.jpg";
 export { default as ArticleMostFour } from "./ArticleMostFour.jpg";
 export { default as NewsletterImg } from "./Newsletter.png";
 export { default as HotStafImg } from "./HotStafImg.jpg";
+export { default as ArticleTopOfWeekOne } from "./ArticleTopOfWeekOne.jpg";
+export { default as ArticleTopOfWeekTwo } from "./ArticleTopOfWeekTwo.jpg";
+export { default as ArticleTopOfWeekThree } from "./ArticleTopOfWeekThree.jpg";

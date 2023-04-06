@@ -16,5 +16,8 @@
     .popular:not(:first-child) {
         @apply hidden md:flex
     }
+    .footerCateg{
+        @apply text-[#555555] uppercase text-sm py-1 font-semibold lg:text-xs
+    }
 }
 

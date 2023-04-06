@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   MagnifyingGlassIcon,
@@ -8,13 +8,15 @@ import {
 import { Logo } from "@/public/assets/img";
 import { MenuBurger, Cross } from "@/public/assets/svg";
 import useMediaQuery from "@/hook/useMediaQuery";
+import { ModalContext } from "@/pages";
 
-const Navbar = () => {
+const Navbar = ({ clickHandler }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
+  const { newsLetterModal, setNewsLetterModal } = useContext(ModalContext);
 
   return (
-    <nav className="flex items-center justify-between md:pt-5 lg:pt-2">
+    <nav className="flex items-center justify-between relative md:pt-5 lg:pt-2">
       <div className="relative w-28 h-14 md:w-40 md:h-20 lg:order-2 lg:w-[150px] 2xl:w-[260px] 2xl:h-[110px]">
         <Image src={Logo} fill className="object-cover" alt="Logo" />
       </div>
@@ -40,6 +42,7 @@ const Navbar = () => {
           <button
             className="flex items-center shadow-md active:scale-95 transition duration-150 bg-main-500
         text-white py-3 px-4 rounded-full gap-2"
+            onClick={() => setNewsLetterModal(!newsLetterModal)}
           >
             <EnvelopeIcon className="h-5 text-white" />
             <p className="uppercase text-xs tracking-wider font-semibold 2xl:text-sm">
@@ -51,11 +54,8 @@ const Navbar = () => {
 
       {/* Mobile Boutton */}
       {!isAboveMediumScreens && (
-        <div className="relative">
-          <div
-            className="bg-main-500 rounded p-2 "
-            onClick={() => setToggleMenu(!toggleMenu)}
-          >
+        <div className="relative" onClick={() => setToggleMenu(!toggleMenu)}>
+          <div className="bg-main-500 rounded p-2 ">
             {toggleMenu ? (
               <Image src={Cross} height={20} width={20} alt="Menu" />
             ) : (
@@ -71,7 +71,10 @@ const Navbar = () => {
                   <option value="fr">FR</option>
                   <option value="en">EN</option>
                 </select>
-                <button className="flex items-center outline-none shadow-md bg-main-500 focus:outline-none text-white py-2 px-4 rounded-full gap-2">
+                <button
+                  className="flex items-center outline-none shadow-md bg-main-500 focus:outline-none text-white py-2 px-4 rounded-full gap-2"
+                  onClick={() => setNewsLetterModal(!newsLetterModal)}
+                >
                   <EnvelopeIcon className="h-5" color="#FFFFFF" />
                   <span className="uppercase tracking-wide font-semibold text-sm ">
                     s'abonner

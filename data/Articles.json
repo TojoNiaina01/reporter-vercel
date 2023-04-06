@@ -113,5 +113,26 @@
       "titre": "Where to rest for those who do not like noisy places",
       "category": "Travel"
     }
+  ],
+  "ArticleTopOfWeek": [
+    {
+      "img": "/assets/img/ArticleTopOfWeekOne.jpg",
+      "date": "JUL 06.2021",
+      "auteur" : "vinago",
+      "titre": "A new trend of a photo shoot with pets is gaining high popularity amo...",
+      "category": "Madagascar et le monde"
+    },{
+      "img": "/assets/img/ArticleTopOfWeekTwo.jpg",
+      "date": "JUL 06.2021",
+      "auteur" : "vinago",
+      "titre": "How to properly care for pedigree cats at home",
+      "category": "sport"
+    },{
+      "img": "/assets/img/ArticleTopOfWeekThree.jpg",
+      "date": "JUL 06.2021",
+      "auteur" : "vinago",
+      "titre": "A selection of the best travel books for lovers of a quiet holiday",
+      "category": "culture"
+    }
   ]
 }

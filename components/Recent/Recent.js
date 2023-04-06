@@ -27,8 +27,6 @@ const Recent = () => {
     }
   };
 
-  const keyLog = uuidv4();
-
   return (
     <section className="mt-10">
       <HeaderCategory title="Recent News" />

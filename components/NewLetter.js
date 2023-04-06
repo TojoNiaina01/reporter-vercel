@@ -12,7 +12,6 @@ const NewLetter = () => {
   return (
     <section className="mt-10 mx-4 lg:w-full lg:mx-0 lg:relative">
       {isAboveScreen && <Image src={NewsletterImg} alt="Newletter graphics" />}
-
       <div className="lg:absolute top-4 left-10 w-full xl:top-12">
         <h6 className={` text-2xl leading-7 ${jost.className} lg:text-4xl`}>
           Stay Up To Date! <br /> Subscribe!
@@ -23,7 +22,7 @@ const NewLetter = () => {
             placeholder="Your Email"
             className=" w-full border-b-2 border-black text-sm outline-none focus:border-main-500 text-main-700 bg-transparent md:w-[50%] lg:w-full lg:text-base 2xl:text-base"
           />
-          <button className="bg-black text-sm text-white uppercase px-5 py-4 rounded-full shadow-md">
+          <button className="bg-black text-sm text-white uppercase px-5 py-4 rounded-full shadow-md active:scale-95 transition duration-150 ease-in-out">
             Subscribe
           </button>
         </div>
