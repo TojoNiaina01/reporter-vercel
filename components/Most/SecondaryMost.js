@@ -3,27 +3,20 @@ import HeaderCategory from "@/components/HeaderCategory";
 import Image from "next/image";
 import { PubliciteTrois } from "@/public/assets/img";
 import Hastag from "@/components/Hastag";
+import { MenuFR } from "@/constant/constant";
+import Link from "next/link";
 
 const SecondaryMost = () => {
-  const categories = [
-    { name: "Politique", number: 15 },
-    { name: "video", number: 23 },
-    { name: "Economie", number: 34 },
-    { name: "Social", number: 5 },
-    { name: "Sport", number: 51 },
-    { name: "Le monde et Madagascar", number: 8 },
-    { name: "Culture", number: 29 },
-    { name: "Life Art", number: 29 },
-  ];
-
   return (
     <div className="lg:w-[25%]">
-      <HeaderCategory title="Categories" />
+      <HeaderCategory title="Categories" banner />
       <ul>
-        {categories?.map(({ name, number }) => (
+        {MenuFR?.map((menu) => (
           <>
-            <li className="uppercase text-xs font-semibold py-[15px] cursor-pointer transition duration-200 ease-out hover:font-bold hover:text-main-600">
-              {name} <span className="font-normal">({number})</span>
+            <li className="uppercase text-xs font-semibold py-[12px] cursor-pointer transition duration-200 ease-out hover:font-bold hover:text-secondary-500">
+              <Link href={menu.href}>
+                {menu.k} <span className="font-normal">(10)</span>{" "}
+              </Link>
             </li>
             <hr />
           </>

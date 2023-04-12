@@ -24,3 +24,8 @@ export { default as HotStafImg } from "./HotStafImg.jpg";
 export { default as ArticleTopOfWeekOne } from "./ArticleTopOfWeekOne.jpg";
 export { default as ArticleTopOfWeekTwo } from "./ArticleTopOfWeekTwo.jpg";
 export { default as ArticleTopOfWeekThree } from "./ArticleTopOfWeekThree.jpg";
+export { default as Profil } from "./Profil.jpg";
+export { default as NotFoundBg } from "./NotFoundBg.png";
+export { default as PolitiqueArticleOne } from "./PolitiqueArticleOne.jpg";
+export { default as PolitiqueArticleTwo } from "./PolitiqueArticleTwo.jpg";
+export { default as PolitiqueArticleThree } from "./PolitiqueArticleThree.jpg";

@@ -4,20 +4,30 @@
 
 
 @layer components {
+    html {
+        @apply mx-2 max-w-screen-xl md:mx-14 lg:mx-36  2xl:mx-auto;
+    }
+
     .indicator.active {
         @apply bg-main-500
     }
-    .indicators{
+
+    .indicators {
         @apply absolute top-0 right-1/2 translate-x-1/2
     }
+
     .popular:not(:first-child) {
         @apply hidden md:flex
     }
-    .popular:not(:first-child) {
-        @apply hidden md:flex
+
+    .footerCateg {
+        @apply text-[#555555] uppercase text-sm py-1 font-semibold cursor-pointer lg:text-xs
     }
-    .footerCateg{
-        @apply text-[#555555] uppercase text-sm py-1 font-semibold lg:text-xs
+
+    .tagBg {
+        opacity: 0.8;
+        background: #fbf9f9 repeating-linear-gradient(-45deg, #f1e1e1, #f1e1e1 2px, #ffffff 2px, #ffffff 12px);
     }
+
 }
 

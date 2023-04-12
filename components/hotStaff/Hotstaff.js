@@ -13,7 +13,7 @@ const jost = Jost({ subsets: ["latin"], weight: "500" });
 const Hotstaff = () => {
   return (
     <section className="mt-10">
-      <HeaderCategory title="Hot Staff" />
+      <HeaderCategory title="Hot Staff" banner />
       <div className="lg:flex">
         <Image
           src={HotStafImg}

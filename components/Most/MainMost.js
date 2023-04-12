@@ -4,10 +4,14 @@ import Title from "@/components/Title";
 import DateAuteur from "@/components/DateAuteur";
 import HeaderCategory from "@/components/HeaderCategory";
 import Hastag from "@/components/Hastag";
+import { v4 as uuidv4 } from "uuid";
 
 const MainMost = ({ img, date, titre, auteur, category }) => {
   return (
-    <div className=" group relative border-[1px] border-gray-300 rounded cursor-pointer">
+    <div
+      key={uuidv4()}
+      className="group relative border-[1px] border-gray-300 rounded cursor-pointer"
+    >
       <Hastag style="absolute top-1 z-10  left-1">{category}</Hastag>
       <div className="relative w-full h-[100px] md:h-[150px] lg:w-full lg:h-[200px]">
         <Image

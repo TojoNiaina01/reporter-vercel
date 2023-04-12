@@ -10,46 +10,39 @@ import Hotstaff from "@/components/hotStaff/Hotstaff";
 import TopOfWeek from "@/components/Mostread/TopOfWeek";
 import Layout from "@/Layout/Layout";
 import Modal from "@/components/Modal";
+import Banner from "@/components/headers/Banner";
 
 export const ArticlesContext = React.createContext(undefined, undefined);
-export const ModalContext = React.createContext(undefined, undefined);
 
 const Home = ({ articleMain }) => {
-  const [newsLetterModal, setNewsLetterModal] = useState(false);
   return (
-    <>
-      <div className="app mx-2 md:mx-14 lg:mx-36 max-w-screen-xl 2xl:mx-auto">
-        <ModalContext.Provider value={{ newsLetterModal, setNewsLetterModal }}>
-          <Layout>
-            <div className=" hidden lg:block relative w-full h-[290px] mt-6 2xl:mt-16 cursor-pointer">
-              <Hastag style="absolute top-10 z-10  right-14">ads </Hastag>
-              <Image
-                src={PubliciteDeux}
-                fill
-                className="w-full h-[290px] object-cover"
-                alt="Publicite"
-              />
-            </div>
-            <ArticlesContext.Provider value={articleMain}>
-              <Recent />
-              <Popular />
-              <Most />
-              <NewLetter />
-              <Hotstaff />
-              <TopOfWeek />
-            </ArticlesContext.Provider>
-            {newsLetterModal && <Modal />}
-          </Layout>
-        </ModalContext.Provider>
+    <div className="">
+      <Banner />
+      <div className=" hidden lg:block relative w-full h-[290px] mt-6 2xl:mt-16 cursor-pointer">
+        <Hastag style="absolute top-10 z-10  right-14">ads </Hastag>
+        <Image
+          src={PubliciteDeux}
+          fill
+          className="w-full h-[290px] object-cover"
+          alt="Publicite"
+        />
       </div>
-    </>
+      <ArticlesContext.Provider value={articleMain}>
+        <Recent />
+        <Popular />
+        <Most />
+        <NewLetter />
+        <Hotstaff />
+        <TopOfWeek />
+      </ArticlesContext.Provider>
+    </div>
   );
 };
 
 export default Home;
 
 export async function getStaticProps() {
-  const data = await import(`/data/Articles.json`);
+  const data = await import(`/data/thumbnail.json`);
   const articleMain = JSON.parse(JSON.stringify(data));
 
   return {

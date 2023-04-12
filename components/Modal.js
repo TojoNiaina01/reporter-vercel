@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Jost } from "next/font/google";
 import { Cross } from "@/public/assets/svg";
 import Image from "next/image";
-import { ModalContext } from "@/pages";
+import { ModalContext } from "@/Layout/Layout";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 const Modal = () => {

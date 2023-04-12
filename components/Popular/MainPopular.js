@@ -3,10 +3,14 @@ import Image from "next/image";
 import DateAuteur from "@/components/DateAuteur";
 import Title from "@/components/Title";
 
-const MainPopular = ({ img, date, auteur, titre }) => {
+const MainPopular = ({ img, date, auteur, titre, styleHidden }) => {
   return (
     <>
-      <div className="popular flex gap-4 cursor-pointer group md:flex-col  md:gap-0 lg:flex-row lg:gap-3">
+      <div
+        className={`${
+          !styleHidden ? "" : "popular"
+        } flex gap-4 cursor-pointer group md:flex-col  md:gap-0 lg:flex-row lg:gap-3`}
+      >
         <div className="relative w-[120px] h-[95px] md:w-full md:h-[120px] lg:w-[110px] lg:h-[90px]">
           <Image
             src={img}

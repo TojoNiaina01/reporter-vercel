@@ -19,14 +19,8 @@ const TopOfWeek = () => {
     }
   };
   return (
-    <section className="mt-10 relative">
-      <HeaderCategory title="Top of the week" all />
-      <button
-        onClick={() => handleClick("left")}
-        className={`absolute top-1/2 -translate-y-1/2 left-2 z-10 active:scale-95 p-2 bg-main-500 rounded-full md:-left-4 lg:hidden`}
-      >
-        <ChevronLeftIcon className="h-5 w-5  text-white  " />
-      </button>
+    <section className="mt-10">
+      <HeaderCategory title="Top of the week" all banner />
       <div
         className="flex overflow-x-scroll scrollbar-hide gap-6 lg:justify-between"
         ref={ArticleRef}
@@ -41,12 +35,6 @@ const TopOfWeek = () => {
           />
         ))}
       </div>
-      <button
-        onClick={() => handleClick("right")}
-        className="absolute top-1/2 -translate-y-1/2 right-2 z-10 active:scale-95 p-2 bg-main-500 rounded-full md:-right-4 lg:hidden"
-      >
-        <ChevronRightIcon className=" h-5 w-5  text-white" />
-      </button>
     </section>
   );
 };

@@ -6,18 +6,22 @@ import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import useMediaQuery from "@/hook/useMediaQuery";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
-const HeaderCategory = ({ title, all }) => {
+const HeaderCategory = ({ title, all, banner, style }) => {
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
   return (
     <div className="flex items-center gap-4 ">
       <h4
-        className={`whitespace-nowrap text-xl md:text-2xl 2xl:text-3xl font-bold ${jost.className}`}
+        className={`whitespace-nowrap text-xl md:text-2xl 2xl:text-3xl font-bold first-letter:uppercase ${
+          style && "uppercase"
+        } ${jost.className}`}
       >
         {title}
       </h4>
-      <div>
-        <Image src={Border} alt="Graphic decoration" />
-      </div>
+      {banner && (
+        <div>
+          <Image src={Border} alt="Graphic decoration" />
+        </div>
+      )}
 
       {all && isAboveScreen && (
         <div className="flex items-center gap-2 whitespace-nowrap cursor-pointer">

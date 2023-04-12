@@ -8,7 +8,7 @@ import {
 import { Logo } from "@/public/assets/img";
 import { MenuBurger, Cross } from "@/public/assets/svg";
 import useMediaQuery from "@/hook/useMediaQuery";
-import { ModalContext } from "@/pages";
+import { ModalContext } from "@/Layout/Layout";
 
 const Navbar = ({ clickHandler }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -40,7 +40,7 @@ const Navbar = ({ clickHandler }) => {
             <option value="en">EN</option>
           </select>
           <button
-            className="flex items-center shadow-md active:scale-95 transition duration-150 bg-main-500
+            className="flex items-center shadow-md active:scale-95 transition duration-150 bg-main-400
         text-white py-3 px-4 rounded-full gap-2"
             onClick={() => setNewsLetterModal(!newsLetterModal)}
           >

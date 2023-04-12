@@ -13,12 +13,12 @@ const indicators = (index) => (
 
 const settings = {
   prevArrow: (
-    <button className="bg-white active:scale-95 w-10 h-10 shadow-md rounded-full ml-5 ">
+    <button className="opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 ease-out bg-white active:scale-95 w-10 h-10 shadow-md rounded-full ml-5 ">
       <ChevronLeftIcon color="#3e817d" className="h-4 2xl:h-6 mx-auto" />
     </button>
   ),
   nextArrow: (
-    <button className="bg-white active:scale-95 p-3 shadow-md rounded-full mr-5 ">
+    <button className="opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 ease-in-out bg-white active:scale-95 p-3 shadow-md rounded-full mr-5 ">
       <ChevronRightIcon color="#3e817d" className=" h-4 2xl:h-6" />
     </button>
   ),
@@ -34,7 +34,7 @@ const settings = {
 const Banner = () => {
   return (
     <section className="flex gap-4 pt-5 w-full 2xl:justify-between">
-      <div className=" w-full lg:w-[70%]  relative">
+      <div className=" w-full lg:w-[70%]  relative group">
         <Slide {...settings}>
           <Slider />
           <Slider />
@@ -42,8 +42,6 @@ const Banner = () => {
           <Slider />
         </Slide>
       </div>
-
-      {/* MILA REGLENA TY ADS TY REHEFA FARANY FA MISY MANONDRANA KELY  ///  */}
 
       <div className="hidden lg:block relative flex-grow h-[450px] 2xl:h-[600px] cursor-pointer max-w-sm bg-black">
         <Hastag style="absolute top-2 z-10  right-4"> ads</Hastag>

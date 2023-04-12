@@ -11,7 +11,7 @@ const Most = () => {
   return (
     <section className="mt-10 flex lg:gap-6 lg:justify-between">
       <div className="lg:w-[65%]">
-        <HeaderCategory title="Most Read" all />
+        <HeaderCategory title="Most Read" all banner />
         <div className="grid grid-cols-2 gap-2 md:gap-6">
           {ArticleMostMain?.map(({ img, titre, date, auteur, category }) => (
             <MainMost
