@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { Border } from "@/public/assets/img";
-import { Jost } from "next/font/google";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import useMediaQuery from "@/hook/useMediaQuery";
+import { Jost } from "next/font/google";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 const HeaderCategory = ({ title, all, banner, style }) => {

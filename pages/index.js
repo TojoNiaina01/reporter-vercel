@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import Image from "next/image";
 import { PubliciteDeux } from "@/public/assets/img";
 import Hastag from "@/components/Hastag";
@@ -8,15 +8,28 @@ import Most from "@/components/Most/Most";
 import NewLetter from "@/components/NewLetter";
 import Hotstaff from "@/components/hotStaff/Hotstaff";
 import TopOfWeek from "@/components/Mostread/TopOfWeek";
-import Layout from "@/Layout/Layout";
-import Modal from "@/components/Modal";
 import Banner from "@/components/headers/Banner";
 
-export const ArticlesContext = React.createContext(undefined, undefined);
-
-const Home = ({ articleMain }) => {
+export const ArticlesContext = createContext();
+const Home = ({
+  ArticleRecentMain,
+  ArticleRecentSecondary,
+  ArticlePopular,
+  ArticlePopularSeconde,
+  ArticleMostMain,
+  ArticleTopOfWeek,
+}) => {
   return (
-    <div className="">
+    <ArticlesContext.Provider
+      value={{
+        ArticleRecentMain,
+        ArticleRecentSecondary,
+        ArticlePopular,
+        ArticlePopularSeconde,
+        ArticleMostMain,
+        ArticleTopOfWeek,
+      }}
+    >
       <Banner />
       <div className=" hidden lg:block relative w-full h-[290px] mt-6 2xl:mt-16 cursor-pointer">
         <Hastag style="absolute top-10 z-10  right-14">ads </Hastag>
@@ -27,27 +40,35 @@ const Home = ({ articleMain }) => {
           alt="Publicite"
         />
       </div>
-      <ArticlesContext.Provider value={articleMain}>
-        <Recent />
-        <Popular />
-        <Most />
-        <NewLetter />
-        <Hotstaff />
-        <TopOfWeek />
-      </ArticlesContext.Provider>
-    </div>
+      <Recent />
+      <Popular />
+      <Most />
+      <NewLetter />
+      <Hotstaff />
+      <TopOfWeek />
+    </ArticlesContext.Provider>
   );
 };
 
 export default Home;
 
 export async function getStaticProps() {
-  const data = await import(`/data/thumbnail.json`);
-  const articleMain = JSON.parse(JSON.stringify(data));
+  const allArticlesData = await import(`/data/thumbnail.json`);
 
+  const ArticleRecentMain = allArticlesData.ArticleRecentMain;
+  const ArticleRecentSecondary = allArticlesData.ArticleRecentSecondary;
+  const ArticlePopular = allArticlesData.ArticlePopular;
+  const ArticlePopularSeconde = allArticlesData.ArticlePopularSeconde;
+  const ArticleMostMain = allArticlesData.ArticleMostMain;
+  const ArticleTopOfWeek = allArticlesData.ArticleTopOfWeek;
   return {
     props: {
-      articleMain,
+      ArticleRecentMain,
+      ArticleRecentSecondary,
+      ArticlePopular,
+      ArticlePopularSeconde,
+      ArticleMostMain,
+      ArticleTopOfWeek,
     },
   };
 }

@@ -1,379 +1,475 @@
 {
   "pages": [
     {
-      "name": "accueil"
-    },
-    {
       "name": "culture",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "politique",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "social",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "sport",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "diaspora",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "industrie",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "life-art",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "environement",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "infrastructure",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "tourisme",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     },
     {
       "name": "video",
-      "data" : [
+      "tag": [
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money",
+        "president",
+        "business",
+        "money"
+      ],
+      "data": [
         {
-          "tag" : ["president" , "business" , "money","president" , "business" , "money","president" , "business" , "money","president" , "business" , "money"],
-          "articles" : [
-            {
-              "img": "/assets/img/PolitiqueArticleOne.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "A set of the most necessary things on vacation",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleTwo.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "How not to get lost without knowing the language",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            },
-            {
-              "img": "/assets/img/PolitiqueArticleThree.jpg",
-              "date": "jul 06.2021",
-              "auteur": "vinago",
-              "titre": "Where to rest for those who do not like noisy places",
-              "minidescription" : "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
-              "description": ""
-            }
-          ]
+          "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "A set of the most necessary things on vacation",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "How not to get lost without knowing the language",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
+        },
+        {
+          "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "date": "jul 06.2021",
+          "auteur": "vinago",
+          "titre": "Where to rest for those who do not like noisy places",
+          "minidescription": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
+          "description": "Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur do cupi roident id est ex sunt nostrud nisi mine consectetur do cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat velit dolore consectetur deserunt laboris magna eiusmod aliquip consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris et eu mollit qui esse dolore exercitation in dolore sint nisi eu aliqua. Sit ipsum cillum commodo enim eiusmod. Eiusmod et anim laborum consectetur. Proident nostrud anim nisi sunt veniam. Labore amet eiusmod dolor adipisicing Lorem tempor cillum incididunt proident consequat laborum. Velit anim minim est consequat commodo eu reprehenderit eiusmod nisi amet quis tempor incididunt. Irure proident aute non sit adipisicing nulla sit proident dolore sunt. Aute aute Lorem sint sunt et fugiat laborum. Qui incididunt aute pariatur aute laborum elit nulla amet magna enim."
         }
       ]
     }

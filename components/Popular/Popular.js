@@ -9,7 +9,7 @@ const Popular = () => {
   const { ArticlePopular } = useContext(ArticlesContext);
   return (
     <section className="mt-10">
-      <HeaderCategory title="Popular Articles" all banner />
+      <HeaderCategory title="Popular Articless" all banner />
       <div className="lg:flex lg:justify-between">
         <div className="md:flex  gap-2 lg:pt-2 lg:flex-col">
           {ArticlePopular?.map(({ img, titre, date, auteur }) => (

@@ -1,11 +1,9 @@
 import React, { useContext, useRef, useState } from "react";
 import HeaderCategory from "@/components/HeaderCategory";
 import MainArticle from "@/components/Recent/MainArticle";
-import { ArticlesContext } from "@/pages";
 import SecondaryArticle from "@/components/Recent/SecondaryArticle";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { v4 as uuidv4 } from "uuid";
 import { Jost } from "next/font/google";
+import { ArticlesContext } from "@/pages";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 const Recent = () => {
