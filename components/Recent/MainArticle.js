@@ -30,7 +30,7 @@ const MainArticle = ({
         />
       </div>
       <div className="w-[55%] lg:pt-0">
-        <Title>{titre}</Title>
+        <Title style="lg:text-lg">{titre}</Title>
         <p className="text-xs pt-1 pb-2  text-gray-500 md:p md:text-sm lg:text-base lg:pb-0">
           {description}
         </p>

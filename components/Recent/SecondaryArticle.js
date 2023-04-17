@@ -4,8 +4,8 @@ import DateAuteur from "@/components/DateAuteur";
 import Title from "@/components/Title";
 const Secondary = ({ img, date, auteur, titre, id }) => {
   return (
-    <div key={id} className="w-[210px] group cursor-pointer">
-      <div className="relative w-[210px] h-[103px]">
+    <div key={id} className="w-full lg:w-[210px] group cursor-pointer">
+      <div className="relative w-[210px] h-[103px] lg:w-full">
         <Image
           src={img}
           fill

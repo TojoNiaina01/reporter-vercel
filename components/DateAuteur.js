@@ -6,8 +6,8 @@ const DateAuteur = ({ date, auteur, style }) => {
   return (
     <div
       className={`${
-        style ? style : "text-secondary-500 font-semibold text-xs"
-      }   pt-2 uppercase pb-2 tracking-wide whitespace-nowrap  flex items-center gap-1`}
+        style ? style : "text-secondary-500  py-2"
+      } uppercase tracking-wide whitespace-nowrap font-semibold text-xs  flex items-center gap-1`}
     >
       {date} <span className={`${style ? style : "text-black"}`}> - </span>
       <Image

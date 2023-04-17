@@ -22,9 +22,9 @@ const MainMost = ({ img, date, titre, auteur, category }) => {
         />
       </div>
       <div className="p-2">
-        <Title style="text-sm lg:text-base">{titre}</Title>
-        <hr />
         <DateAuteur date={date} auteur={auteur} />
+        <hr />
+        <Title>{titre}</Title>
       </div>
     </div>
   );

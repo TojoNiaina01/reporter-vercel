@@ -144,6 +144,7 @@ const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
               auteur={auteur}
               date={date}
               titre={titre}
+              dateStyle
             />
           ))}
         </div>

@@ -8,8 +8,8 @@ import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 
 const MainTopOfWeek = ({ img, category, titre, date, auteur }) => {
   return (
-    <div className="group w-[245px] lg:w-[300px] cursor-pointer">
-      <div className="relative w-[245px] h-[129px] lg:w-[300px] lg:h-[150px] ">
+    <div className="group w-[245px] lg:w-full cursor-pointer">
+      <div className="relative w-[245px] h-[129px] lg:w-full lg:h-[175px] ">
         <Hastag style="absolute top-2 z-10  left-2">{category}</Hastag>
         <Image
           src={img}

@@ -86,7 +86,7 @@ const ArticlePrincipale = ({ articles, articleRecent, articlePopular }) => {
           />
         </div>
       </section>
-      <div className="hidden lg:block relative w-full h-[250px]">
+      <div className="hidden lg:block relative w-full h-[250px] mt-10">
         <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
         <Image
           src={PubliciteDeux}

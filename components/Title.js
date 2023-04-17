@@ -6,9 +6,11 @@ const jost = Jost({ subsets: ["latin"], weight: "600" });
 const Title = ({ children, style }) => {
   return (
     <h5
-      className={`${style ? style : "text-base"} md:pt-2 leading-5 ${
+      className={`${
+        style ? style : "text-base md:pt-2 leading-6"
+      } text-gray-800  lg:group-hover:underline lg:leading-6 ${
         jost.className
-      } lg:group-hover:underline`}
+      } `}
     >
       {children}
     </h5>

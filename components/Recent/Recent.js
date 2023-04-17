@@ -13,9 +13,9 @@ const Recent = () => {
   return (
     <section className="mt-10">
       <HeaderCategory title="Recent News" banner />
-      <div className="flex flex-col gap-4 lg:flex-row lg:gap-10 lg:pt-2">
+      <div className="flex flex-col gap-4 lg:flex-row lg:pt-2">
         {/* Left Panel */}
-        <div className="space-y-7 lg:space-y-8">
+        <div className="space-y-7 lg:w-[80%] lg:space-y-8">
           {ArticleRecentMain?.map(
             ({ img, category, titre, description, auteur, date, id }) => (
               <MainArticle
