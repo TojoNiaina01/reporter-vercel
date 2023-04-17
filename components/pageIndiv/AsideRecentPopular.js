@@ -33,7 +33,7 @@ const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
           ({ img, date, auteur, titre, description, category }) => (
             <div
               key={uuidv4()}
-              className="group flex items-center gap-2 cursor-pointer md:gap-5 lg:flex-col lg:gap-0 lg:order-1"
+              className="group flex md:items-center gap-2 cursor-pointer md:gap-5 lg:flex-col lg:gap-0 lg:order-1"
             >
               <div className="relative w-[50%] h-[200px] md:w-[40%] lg:w-full lg:h-[150px]">
                 <Hastag style="absolute top-2 z-10  left-4">{category}</Hastag>
@@ -46,7 +46,7 @@ const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
               </div>
               <div className="w-[55%] lg:w-full">
                 <Title>{titre}</Title>
-                <p className="text-xs pt-1 pb-2  text-gray-500 md:p md:text-sm lg:hidden">
+                <p className="text-xs  text-gray-500 md:p md:text-sm lg:hidden">
                   {description}
                 </p>
                 <DateAuteur date={date} auteur={auteur} />

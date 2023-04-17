@@ -13,19 +13,20 @@ import Hastag from "@/components/Hastag";
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 
 const Articless = ({ enCourData, articleRecent, articlePopular }) => {
-  console.log(enCourData);
   return (
     <>
       <section className="mt-10 mx-2">
         <div className="flex justify-between items-center gap-1 lg:items-start">
           <div>
             <HeaderCategory title="article" style />
-            <p className="text-xs">{enCourData.titre}</p>
+            <p className="text-xs lg:text-sm font-semibold tracking-wide">
+              {enCourData.titre}
+            </p>
           </div>
           <div className="z-10 absolute right-5 md:static">
             <form className="relative mx-auto w-max bg-secondary-100 rounded-full">
               <input
-                type="search"
+                type="index"
                 className="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12
               outline-none focus:w-full focus:cursor-text focus:border-secondary-400 focus:pl-16 focus:pr-4"
               />
@@ -132,7 +133,7 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
 
               <div className="w-full mr-4 rounded ">
                 <Title style="text-white text-lg">Judi Cael</Title>
-                <p className="text-xs text-white my-2 tracking-wide leading-5">
+                <p className="text-xs text-white my-2 tracking-wide leading-5 lg:text-sm lg:max-w-md">
                   Web developer since 2016. Create hundreds of websites, HTML
                   and CSS3 expert, who started to learn web design on a
                   world-class level.

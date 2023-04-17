@@ -18,7 +18,7 @@ const MainArticle = ({
   return (
     <div
       key={uuidv4()}
-      className="group flex items-center gap-2 border-[1px] border-gray-200 rounded cursor-pointer md:gap-5"
+      className="group flex md:items-center gap-2 border-[1px] border-gray-200 rounded cursor-pointer md:gap-5"
     >
       <div className="relative w-[50%] h-[200px] md:w-[40%] lg:w-[35%]">
         <Hastag style="absolute top-2 z-10  left-4"> {category} </Hastag>

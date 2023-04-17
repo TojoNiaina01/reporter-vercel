@@ -27,7 +27,7 @@ const ArticlePrincipale = ({ articles, articleRecent, articlePopular }) => {
               className="relative mx-auto w-max bg-secondary-100 rounded-full"
             >
               <input
-                type="search"
+                type="index"
                 className="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12
               outline-none focus:w-full focus:cursor-text focus:border-secondary-400 focus:pl-16 focus:pr-4"
               />

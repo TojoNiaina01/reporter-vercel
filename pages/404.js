@@ -31,7 +31,7 @@ const Errors = () => {
               </h5>
               <p className="whitespace-nowrap text-gray-500 text-xs">
                 It looks like nothing was found at this location. Maybe try a
-                search?
+                index?
               </p>
             </div>
             <form
