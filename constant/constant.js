@@ -1,7 +1,8 @@
 export const MenuFR = [
   { k: "accueil", href: "/" },
-  { k: "culture", href: "/culture" },
   { k: "politique", href: "/politique" },
+  { k: "culture", href: "/culture" },
+  { k: "economie", href: "/economie" },
   { k: "social", href: "/social" },
   { k: "sport", href: "/sport" },
   { k: "diaspora", href: "/diaspora" },
