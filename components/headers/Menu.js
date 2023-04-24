@@ -9,7 +9,7 @@ const Menu = () => {
   return (
     <div className="pt-4 mx-4 md:mx-0 select-none">
       <ul
-        className="flex gap-4 md:gap-5 lg:gap-4 xl:justify-between
+        className="flex gap-4 md:gap-5 lg:justify-between
           font-semibold overflow-x-scroll scrollbar-hide"
       >
         {MenuFR.map((item) => (
