@@ -26,7 +26,7 @@ const Flash = () => {
             back on the ...
           </p>
         </div>
-        <button className="bg-main-300 rounded-full p-2">
+        <button className="bg-main-400 rounded-full p-2">
           <ArrowSmallRightIcon className="h-5 text-gray-300" />
         </button>
       </div>

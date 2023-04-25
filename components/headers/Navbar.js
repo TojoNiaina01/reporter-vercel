@@ -55,7 +55,7 @@ const Navbar = ({ clickHandler }) => {
       {/* Mobile Boutton */}
       {!isAboveMediumScreens && (
         <div className="relative" onClick={() => setToggleMenu(!toggleMenu)}>
-          <div className="bg-main-500 rounded p-2 ">
+          <div className="bg-main-400 rounded p-2 ">
             {toggleMenu ? (
               <Image src={Cross} height={20} width={20} alt="Menu" />
             ) : (
@@ -72,7 +72,7 @@ const Navbar = ({ clickHandler }) => {
                   <option value="en">EN</option>
                 </select>
                 <button
-                  className="flex items-center outline-none shadow-md bg-main-500 focus:outline-none text-white py-2 px-4 rounded-full gap-2"
+                  className="flex items-center outline-none shadow-md bg-main-400 focus:outline-none text-white py-2 px-4 rounded-full gap-2"
                   onClick={() => setNewsLetterModal(!newsLetterModal)}
                 >
                   <EnvelopeIcon className="h-5" color="#FFFFFF" />

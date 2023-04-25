@@ -121,7 +121,7 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
                 </li>
               </ul>
             </div>
-            <div className="bg-main-500 flex gap-6 items-center my-6">
+            <div className="bg-main-400 flex gap-6 items-center my-6 rounded">
               <div className="relative w-[200px] h-[180px] rounded-r-full overflow-hidden">
                 <Image
                   src={Profil}

@@ -44,7 +44,7 @@ const Banner = () => {
       </div>
 
       <div className="hidden lg:block relative flex-grow h-[450px] 2xl:h-[600px] cursor-pointer max-w-sm bg-black">
-        <Hastag style="absolute top-2 z-10  right-4"> ads</Hastag>
+        <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
         <Image
           src={Publicite}
           fill
