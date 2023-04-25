@@ -17,7 +17,7 @@ const Navbar = ({ clickHandler }) => {
 
   return (
     <nav className="flex items-center justify-between relative md:pt-5 lg:pt-2">
-      <div className="relative w-40 h-14 md:w-64 md:h-20 lg:order-2 lg:w-[250px] 2xl:w-[260px] 2xl:h-[110px]">
+      <div className="relative w-40 h-14 md:w-64 md:h-20 lg:order-2 lg:w-[250px] 2xl:w-[350px] 2xl:h-[110px]">
         <Image src={Logo} fill className="object-contain" alt="Logo" />
       </div>
       <div
@@ -40,7 +40,7 @@ const Navbar = ({ clickHandler }) => {
             <option value="en">EN</option>
           </select>
           <button
-            className="flex items-center shadow-md active:scale-95 transition duration-150 bg-main-400
+            className="flex items-center active:scale-95 transition duration-150 bg-main-400
         text-white py-3 px-4 rounded-full gap-2"
             onClick={() => setNewsLetterModal(!newsLetterModal)}
           >
@@ -72,7 +72,7 @@ const Navbar = ({ clickHandler }) => {
                   <option value="en">EN</option>
                 </select>
                 <button
-                  className="flex items-center outline-none shadow-md bg-main-400 focus:outline-none text-white py-2 px-4 rounded-full gap-2"
+                  className="flex items-center outline-none bg-main-400 focus:outline-none text-white py-2 px-4 rounded-full gap-2"
                   onClick={() => setNewsLetterModal(!newsLetterModal)}
                 >
                   <EnvelopeIcon className="h-5" color="#FFFFFF" />

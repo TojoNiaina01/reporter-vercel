@@ -1,6 +1,6 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -14,8 +14,8 @@ module.exports = {
           100: "#d8e6e5",
           200: "#b2cdcb",
           300: "#8bb3b1",
-          400: "#659a97",
-          500: "#3e817d",
+          400: "#3e817d",
+          500: "#659a97",
           600: "#326764",
           700: "#254d4b",
           800: "#193432",
