@@ -17,8 +17,8 @@ const Navbar = ({ clickHandler }) => {
 
   return (
     <nav className="flex items-center justify-between relative md:pt-5 lg:pt-2">
-      <div className="relative w-28 h-14 md:w-40 md:h-20 lg:order-2 lg:w-[150px] 2xl:w-[260px] 2xl:h-[110px]">
-        <Image src={Logo} fill className="object-cover" alt="Logo" />
+      <div className="relative w-40 h-14 md:w-64 md:h-20 lg:order-2 lg:w-[250px] 2xl:w-[260px] 2xl:h-[110px]">
+        <Image src={Logo} fill className="object-contain" alt="Logo" />
       </div>
       <div
         className="border border-gray-300 rounded-full flex items-center
