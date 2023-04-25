@@ -10,7 +10,7 @@ const jost = Jost({ subsets: ["latin"], weight: "400" });
 const Slider = () => {
   return (
     <div className="relative mx-3 border-[1px] border-gray-300 rounded-md shadow-md md:border-0 md:shadow-none md:h-[550px]  lg:mx-0 2xl:h-[700px]">
-      <Hastag style="absolute top-2 z-10  left-4 ">politique </Hastag>
+      <Hastag style="absolute top-2 z-10  left-4 bg-main-400">politique</Hastag>
       <div className="relative max-w-6xl">
         <div className="relative w-full h-[240px] md:h-[450px] 2xl:h-[600px] ">
           <Image

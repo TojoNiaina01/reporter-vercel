@@ -7,7 +7,7 @@
       "titre": "Selection of very comfortable furniture for relaxing on the terrace ",
       "description": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
       "date": "JUL 06.2021",
-      "auteur": "vinago"
+      "auteur": "independent Reporter"
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "titre": "Modern style for young fashionistas spring autumn",
       "description": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
       "date": "JUL 06.2021",
-      "auteur": "vinago"
+      "auteur": "independent Reporter"
     },
     {
       "id": 3,
@@ -25,7 +25,7 @@
       "titre": "Are you ready to try new things in electronics this year",
       "description": "A breakdown or a flat tire can happen to anyone at any time, and what you have in your car can make the difference between getting back on the ...",
       "date": "JUL 06.2021",
-      "auteur": "vinago"
+      "auteur": "independent Reporter"
     }
   ],
   "ArticleRecentSecondary" : [
@@ -33,19 +33,19 @@
       "id": 1,
       "img" : "/assets/img/ArticleSecondaryOne.jpg",
       "date": "JUL 06.2021",
-      "auteur": "vinago",
+      "auteur": "independent Reporter",
       "titre": "Fresh home photo session. see how we love our pets"
     },{
       "id": 2,
       "img" : "/assets/img/ArticleSecondaryTwo.jpg",
       "date": "JUL 06.2021",
-      "auteur": "vinago",
+      "auteur": "independent Reporter",
       "titre": "The best ideas for decorating living areas in your garden"
     },{
       "id": 3,
       "img" : "/assets/img/ArticleSecondaryThree.jpg",
       "date": "JUL 06.2021",
-      "auteur": "vinago",
+      "auteur": "independent Reporter",
       "titre": "How not to get lost without knowing the language"
     }
   ],
@@ -54,31 +54,31 @@
       "img": "/assets/img/ArticlePopularOne.jpg",
       "titre": "A set of the most necessary things on vaca.",
       "date": "JUL 06.2021",
-      "auteur": "vinago"
+      "auteur": "independent Reporter"
     },
     {
       "img": "/assets/img/ArticlePopularTwo.jpg",
       "titre": "The best indoor plants to create comfort at home",
       "date": "JUL 06.2021",
-      "auteur": "vinago"
+      "auteur": "independent Reporter"
     },
     {
       "img": "/assets/img/ArticlePopularThree.jpg",
       "titre": "How does your morning at the office begin?",
       "date": "JUL 06.2021",
-      "auteur": "vinago"
+      "auteur": "independent Reporter"
     },{
       "img": "/assets/img/ArticlePopularFour.jpg",
       "titre": "only here are the most beautiful sunsets",
       "date": "JUL 06.2021",
-      "auteur": "vinago"
+      "auteur": "independent Reporter"
     }
   ],
   "ArticlePopularSeconde" : [
     {
       "img": "/assets/img/ArticlePopularSeconde.jpg",
       "date": "JUL 06.2021",
-      "auteur" : "vinago",
+      "auteur" : "independent Reporter",
       "titre": "Universal cream for any type of skin",
       "description": "A breakdown or a flat tire can happen to anyone at any time, and..."
     }
@@ -87,26 +87,26 @@
     {
       "img": "/assets/img/ArticleMostOne.jpg",
       "date": "JUL 06.2021",
-      "auteur" : "vinago",
+      "auteur" : "independent Reporter",
       "titre": "How to create a cozy scent in any room using only",
       "category": "Social"
     },{
       "img": "/assets/img/ArticleMostTwo.jpg",
       "date": "JUL 06.2021",
-      "auteur" : "vinago",
+      "auteur" : "independent Reporter",
       "titre": "Pets of our gardeners. all about care and fertilizers",
       "category": "Culture"
     },{
       "img": "/assets/img/ArticleMostThree.jpg",
       "date": "JUL 06.2021",
-      "auteur" : "vinago",
+      "auteur" : "independent Reporter",
       "titre": "How to properly illuminate the workplace so as not to stra",
       "category": "office"
     },
     {
       "img": "/assets/img/ArticleMostFour.jpg",
       "date": "JUL 06.2021",
-      "auteur": "vinago",
+      "auteur": "independent Reporter",
       "titre": "Where to rest for those who do not like noisy places",
       "category": "Travel"
     }
@@ -115,19 +115,19 @@
     {
       "img": "/assets/img/ArticleTopOfWeekOne.jpg",
       "date": "JUL 06.2021",
-      "auteur" : "vinago",
+      "auteur" : "independent Reporter",
       "titre": "A new trend of a photo shoot with pets is gaining high popularity amo...",
       "category": "Madagascar et le monde"
     },{
       "img": "/assets/img/ArticleTopOfWeekTwo.jpg",
       "date": "JUL 06.2021",
-      "auteur" : "vinago",
+      "auteur" : "independent Reporter",
       "titre": "How to properly care for pedigree cats at home",
       "category": "sport"
     },{
       "img": "/assets/img/ArticleTopOfWeekThree.jpg",
       "date": "JUL 06.2021",
-      "auteur" : "vinago",
+      "auteur" : "independent Reporter",
       "titre": "A selection of the best travel books for lovers of a quiet holiday",
       "category": "culture"
     }

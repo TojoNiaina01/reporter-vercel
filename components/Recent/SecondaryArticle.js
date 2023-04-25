@@ -13,7 +13,7 @@ const Secondary = ({ img, date, auteur, titre, id }) => {
           alt="Image article blog"
         />
       </div>
-      <DateAuteur date={date} auteur={auteur} />
+      <DateAuteur date={date} auteur={auteur} wrap />
       <hr />
       <Title>{titre}</Title>
     </div>
