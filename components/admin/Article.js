@@ -10,12 +10,15 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { ArticleOne } from "@/public/assets/img";
+import AddArticle from "@/components/admin/AddArticle";
+import ModalArticle from "@/components/ModalArticle";
 
 const Article = () => {
   const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
+  const [modalShow, setModalShow] = useState(false);
 
   return (
-    <div className="">
+    <>
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold tracking-wide">
           Listes Articles.
@@ -110,13 +113,18 @@ const Article = () => {
         </table>
       </div>
       <div className="flex justify-between items-center mt-5">
-        <button className="bg-main-500 text-white px-4 py-2 rounded-2xl flex items-center gap-4 active:scale-95 transition">
+        <button
+          className="bg-main-500 text-white px-4 py-2 rounded-2xl flex items-center gap-4 active:scale-95 transition"
+          onClick={() => setModalShow(!modalShow)}
+        >
           <PlusCircleIcon className="h-5 text-white" />
           <span className="tracking-wide font-semibold ">Nouveau</span>
         </button>
         <div>PAGINATION</div>
       </div>
-    </div>
+
+      {modalShow && <ModalArticle setModalShow={setModalShow} />}
+    </>
   );
 };
 

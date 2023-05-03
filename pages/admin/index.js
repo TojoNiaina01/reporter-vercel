@@ -122,7 +122,7 @@ const Admin = () => {
               <Article />
             </Tab.Panel>
             <Tab.Panel>
-              <AddArticle />
+              <AddArticle header submitBtn="Ajouter" />
             </Tab.Panel>
             <Tab.Panel>Content 3</Tab.Panel>
           </Tab.Panels>

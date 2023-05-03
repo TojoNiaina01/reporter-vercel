@@ -3,14 +3,12 @@ import Input from "@/components/Input";
 import UploadFile from "@/components/admin/UploadFile";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const AddArticle = ({ header, submitBtn, setModalShow }) => {
+const EditArticle = () => {
   return (
     <section className="">
-      {header && (
-        <h3 className="text-xl font-semibold tracking-wide mb-4">
-          Création d'article.
-        </h3>
-      )}
+      <h3 className="text-xl font-semibold tracking-wide mb-4">
+        Edition d'article.
+      </h3>
       <form>
         <div className="flex gap-6">
           <div className="flex flex-col gap-4 w-1/2 h-fit">
@@ -31,16 +29,13 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
         </div>
 
         <div className="flex gap-12 mt-8">
-          <button
-            className="flex items-center bg-[#555555] text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md"
-            onClick={() => setModalShow(false)}
-          >
+          <button className="flex items-center bg-[#555555] text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md">
             <XMarkIcon className="h-5" />
             <span>Annuler</span>
           </button>
           <button className="flex items-center bg-main-500 text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md">
             <CheckIcon className="h-5" />
-            <span>{submitBtn}</span>
+            <span>Modifier</span>
           </button>
         </div>
       </form>
@@ -48,4 +43,4 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
   );
 };
 
-export default AddArticle;
+export default EditArticle;
