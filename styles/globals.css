@@ -4,8 +4,11 @@
 
 
 @layer components {
-    html {
+    .app {
         @apply mx-2 max-w-screen-xl md:mx-14 lg:mx-36  2xl:mx-auto;
+    }
+    .admin {
+        @apply mx-2   md:mx-8 xl:max-w-screen-xl xl:mx-auto;
     }
 
     .indicator.active {
@@ -27,6 +30,9 @@
     .tagBg {
         opacity: 0.8;
         background: #fbf9f9 repeating-linear-gradient(-45deg, #f1e1e1, #f1e1e1 2px, #ffffff 2px, #ffffff 12px);
+    }
+    .tabs{
+        @apply ui-selected:bg-main-500 rounded-xl px-4 py-2  ui-selected:text-white ui-not-selected:text-[#84849D] flex items-center gap-4
     }
 
 }

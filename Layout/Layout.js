@@ -10,7 +10,7 @@ export const ModalContext = React.createContext(undefined, undefined);
 const Layout = ({ children }) => {
   const [newsLetterModal, setNewsLetterModal] = useState(false);
   return (
-    <div className="">
+    <div className="app">
       <ModalContext.Provider value={{ newsLetterModal, setNewsLetterModal }}>
         {newsLetterModal && <Modal />}
         <header>
