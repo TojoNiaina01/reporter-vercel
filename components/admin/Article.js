@@ -103,7 +103,10 @@ const Article = () => {
                 <td className="px-6 py-4">05/12/2021</td>
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
-                    <PencilSquareIcon className="h-5 text-main-500 cursor-pointer" />
+                    <PencilSquareIcon
+                      className="h-5 text-main-500 cursor-pointer"
+                      onClick={() => setModalShow(!modalShow)}
+                    />
                     <TrashIcon className="h-5 text-red-500 cursor-pointer" />
                   </div>
                 </td>
@@ -113,10 +116,7 @@ const Article = () => {
         </table>
       </div>
       <div className="flex justify-between items-center mt-5">
-        <button
-          className="bg-main-500 text-white px-4 py-2 rounded-2xl flex items-center gap-4 active:scale-95 transition"
-          onClick={() => setModalShow(!modalShow)}
-        >
+        <button className="bg-main-500 text-white px-4 py-2 rounded-2xl flex items-center gap-4 active:scale-95 transition">
           <PlusCircleIcon className="h-5 text-white" />
           <span className="tracking-wide font-semibold ">Nouveau</span>
         </button>
