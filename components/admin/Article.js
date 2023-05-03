@@ -82,7 +82,7 @@ const Article = () => {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5, 6].map((table) => (
+            {[1, 2, 3, 4, 5].map((table) => (
               <tr key={table} className="bg-white border-b ">
                 <td className="px-6 py-4">{table}</td>
                 <td className="relative w-[100px] h-[100px]">
