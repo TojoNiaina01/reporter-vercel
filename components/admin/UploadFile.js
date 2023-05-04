@@ -22,7 +22,7 @@ const UploadFile = () => {
 
   return (
     <div
-      className="flex flex-col w-1/2"
+      className="flex flex-col"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >

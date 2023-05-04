@@ -19,6 +19,8 @@ import Article from "@/components/admin/Article";
 import AddArticle from "@/components/admin/AddArticle";
 import useMediaQuery from "@/hook/useMediaQuery";
 import Errors from "@/pages/404";
+import Ads from "@/components/admin/Ads";
+import AddAds from "@/components/admin/AddAds";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
@@ -104,6 +106,10 @@ const Admin = () => {
                 <span>Ads Manager</span>
               </Tab>
               <Tab className="tabs">
+                <CalendarDaysIcon className="h-5" />
+                <span>Ajout Ads</span>
+              </Tab>
+              <Tab className="tabs">
                 <InboxIcon className="h-5" />
                 <span>Newsletter</span>
               </Tab>
@@ -124,7 +130,12 @@ const Admin = () => {
             <Tab.Panel>
               <AddArticle header submitBtn="Ajouter" />
             </Tab.Panel>
-            <Tab.Panel>Content 3</Tab.Panel>
+            <Tab.Panel>
+              <Ads />
+            </Tab.Panel>
+            <Tab.Panel>
+              <AddAds submitBtn="Ajouter" />
+            </Tab.Panel>
           </Tab.Panels>
         </div>
       </Tab.Group>

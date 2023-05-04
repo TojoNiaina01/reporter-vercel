@@ -5,7 +5,7 @@ import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const AddArticle = ({ header, submitBtn, setModalShow }) => {
   return (
-    <section className="">
+    <section className="w-[90%] mx-auto">
       {header && (
         <h3 className="text-xl font-semibold tracking-wide mb-4">
           Création d'article.
@@ -26,8 +26,9 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
             />
           </div>
 
-          {/* Upload file */}
-          <UploadFile />
+          <div className="flex-1">
+            <UploadFile />
+          </div>
         </div>
 
         <div className="flex gap-12 mt-8">
