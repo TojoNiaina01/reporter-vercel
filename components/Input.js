@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
-const Input = ({ id, label, type, required, textarea }) => {
+const Input = ({ id, label, type, required, textarea, password }) => {
+  const [hide, setHide] = useState(true);
+
   return (
     <div className="w-full relative">
       {textarea ? (
@@ -40,7 +43,7 @@ const Input = ({ id, label, type, required, textarea }) => {
         />
       )}
       <label
-        htmlFor=""
+        htmlFor={id}
         className="absolute
         text-gray-500
           text-md
@@ -58,6 +61,21 @@ const Input = ({ id, label, type, required, textarea }) => {
       >
         {label}
       </label>
+      {password && (
+        <div className="absolute right-5 top-1/2 transform  -translate-y-1/2">
+          {hide ? (
+            <EyeSlashIcon
+              className="h-5 cursor-pointer"
+              onClick={() => setHide(!hide)}
+            />
+          ) : (
+            <EyeIcon
+              className="h-5 cursor-pointer"
+              onClick={() => setHide(!hide)}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -8,7 +8,7 @@ const jost = Jost({ subsets: ["latin"], weight: "600" });
 const Modal = () => {
   const { newsLetterModal, setNewsLetterModal } = useContext(ModalContext);
   return (
-    <section className="fixed inset-0  bg-black/30 z-20 backdrop-blur-sm flex  justify-center items-center">
+    <section className="fixed inset-0  bg-black/40 z-20 backdrop-blur-sm flex  justify-center items-center">
       <button
         className="fixed top-5 right-5 border-white lg:top-10 lg:right-20 border-2 lg:border-main-500 p-2 rounded-md"
         onClick={() => setNewsLetterModal(!newsLetterModal)}

@@ -10,12 +10,13 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { ArticleOne } from "@/public/assets/img";
-import AddArticle from "@/components/admin/AddArticle";
 import ModalArticle from "@/components/ModalArticle";
+import ConfirmDelete from "@/components/ConfirmDelete";
 
 const Article = () => {
   const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
   const [modalShow, setModalShow] = useState(false);
+  const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
 
   return (
     <>
@@ -107,7 +108,10 @@ const Article = () => {
                       className="h-5 text-main-500 cursor-pointer"
                       onClick={() => setModalShow(!modalShow)}
                     />
-                    <TrashIcon className="h-5 text-red-500 cursor-pointer" />
+                    <TrashIcon
+                      className="h-5 text-red-500 cursor-pointer"
+                      onClick={() => setModalDeleteConfirm(!modalDeleteConfirm)}
+                    />
                   </div>
                 </td>
               </tr>
@@ -124,6 +128,9 @@ const Article = () => {
       </div>
 
       {modalShow && <ModalArticle setModalShow={setModalShow} />}
+      {modalDeleteConfirm && (
+        <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
+      )}
     </>
   );
 };
