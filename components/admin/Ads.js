@@ -23,7 +23,7 @@ const Ads = () => {
 
   const [adsState, setAdsState] = useState(state[0]);
   console.log(adsState);
-  const [modalShow, setModalShow] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
   return (
     <>
@@ -139,7 +139,7 @@ const Ads = () => {
         </button>
         <div>PAGINATION</div>
       </div>
-      {modalShow && <EditAds />}
+      {modalShow && <EditAds setModalShow={setModalShow} />}
       {modalDeleteConfirm && (
         <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
       )}

@@ -6,11 +6,7 @@ import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 const AddArticle = ({ header, submitBtn, setModalShow }) => {
   return (
     <section className="w-[90%] mx-auto">
-      {header && (
-        <h3 className="text-xl font-semibold tracking-wide mb-4">
-          Création d'article.
-        </h3>
-      )}
+      <h3 className="text-xl font-semibold tracking-wide mb-4">{header}</h3>
       <form>
         <div className="flex gap-6">
           <div className="flex flex-col gap-4 w-1/2 h-fit">

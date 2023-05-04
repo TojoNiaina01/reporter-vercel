@@ -21,6 +21,7 @@ import useMediaQuery from "@/hook/useMediaQuery";
 import Errors from "@/pages/404";
 import Ads from "@/components/admin/Ads";
 import AddAds from "@/components/admin/AddAds";
+import Setting from "@/components/admin/Setting";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
@@ -128,13 +129,17 @@ const Admin = () => {
               <Article />
             </Tab.Panel>
             <Tab.Panel>
-              <AddArticle header submitBtn="Ajouter" />
+              <AddArticle header="Creation d'article" submitBtn="Ajouter" />
             </Tab.Panel>
             <Tab.Panel>
               <Ads />
             </Tab.Panel>
             <Tab.Panel>
               <AddAds submitBtn="Ajouter" />
+            </Tab.Panel>
+            <Tab.Panel>News Letter</Tab.Panel>
+            <Tab.Panel>
+              <Setting />
             </Tab.Panel>
           </Tab.Panels>
         </div>

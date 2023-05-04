@@ -8,7 +8,7 @@ import "react-date-range/dist/theme/default.css";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-const AddAds = ({ submitBtn }) => {
+const AddAds = ({ submitBtn, setModalShow }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const menu = [
