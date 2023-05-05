@@ -1,5 +1,5 @@
 import React from "react";
-import { Tab } from "@headlessui/react";
+import { Disclosure, Tab } from "@headlessui/react";
 import { Popover } from "@headlessui/react";
 import { Jost } from "next/font/google";
 import Link from "next/link";
@@ -12,7 +12,6 @@ import {
   HomeIcon,
   InboxIcon,
   NewspaperIcon,
-  PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Article from "@/components/admin/Article";
@@ -21,12 +20,56 @@ import useMediaQuery from "@/hook/useMediaQuery";
 import Errors from "@/pages/404";
 import Ads from "@/components/admin/Ads";
 import AddAds from "@/components/admin/AddAds";
-import Setting from "@/components/admin/Setting";
+import ListUser from "@/components/admin/ListUser";
+import { ArticleOne } from "@/public/assets/img";
+import AddUser from "@/components/admin/AddUser";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
 const Admin = () => {
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
+  // Ty juste ilay header an ilay tableau ana articless
+  const tabsHead = ["id", "medias", "titre", "categories", "date", "actions"];
+
+  const data = [
+    {
+      img: ArticleOne,
+      titre: "A set of the most necessary things on vacation",
+      category: "Politique",
+      date: "05/12/2021",
+    },
+    {
+      img: ArticleOne,
+      titre: "A set of the most necessary things on vacation",
+      category: "Politique",
+      date: "05/12/2021",
+    },
+    {
+      img: ArticleOne,
+      titre: "A set of the most necessary things on vacation",
+      category: "Politique",
+      date: "05/12/2021",
+    },
+    {
+      img: ArticleOne,
+      titre: "A set of the most necessary things on vacation",
+      category: "Politique",
+      date: "05/12/2021",
+    },
+    {
+      img: ArticleOne,
+      titre: "A set of the most necessary things on vacation",
+      category: "Politique",
+      date: "05/12/2021",
+    },
+    {
+      img: ArticleOne,
+      titre: "A set of the most necessary things on vacation",
+      category: "Politique",
+      date: "05/12/2021",
+    },
+  ];
+  console.log(data);
 
   if (!isAboveScreen)
     return (
@@ -114,10 +157,27 @@ const Admin = () => {
                 <InboxIcon className="h-5" />
                 <span>Newsletter</span>
               </Tab>
-              <Tab className="tabs">
-                <Cog6ToothIcon className="h-5" />
-                <span>Settings</span>
-              </Tab>
+              {/*<Tab className="tabs">*/}
+              {/*  <Cog6ToothIcon className="h-5" />*/}
+              {/*  <span>Settings</span>*/}
+              {/*</Tab>*/}
+              <Disclosure>
+                <Disclosure.Button className="tabs">
+                  <Cog6ToothIcon className="h-5" />
+                  <span>Utilisateur</span>
+                  <ChevronDownIcon className="h-5 ui-open:rotate-180 ui-open:transform" />
+                </Disclosure.Button>
+                <Disclosure.Panel className="text-gray-500 space-y-4">
+                  <Tab className="tabs w-full justify-center">
+                    <Cog6ToothIcon className="h-5" />
+                    <span>Listes</span>
+                  </Tab>
+                  <Tab className="tabs w-full justify-center">
+                    <Cog6ToothIcon className="h-5" />
+                    <span>Ajout</span>
+                  </Tab>
+                </Disclosure.Panel>
+              </Disclosure>
             </div>
 
             <div className="text-center">
@@ -126,7 +186,11 @@ const Admin = () => {
           </Tab.List>
           <Tab.Panels className="flex-1">
             <Tab.Panel>
-              <Article />
+              <Article
+                header="Listes Articles."
+                tabhead={tabsHead}
+                data={data}
+              />
             </Tab.Panel>
             <Tab.Panel>
               <AddArticle header="Creation d'article" submitBtn="Ajouter" />
@@ -139,7 +203,10 @@ const Admin = () => {
             </Tab.Panel>
             <Tab.Panel>News Letter</Tab.Panel>
             <Tab.Panel>
-              <Setting />
+              <ListUser />
+            </Tab.Panel>
+            <Tab.Panel>
+              <AddUser />
             </Tab.Panel>
           </Tab.Panels>
         </div>

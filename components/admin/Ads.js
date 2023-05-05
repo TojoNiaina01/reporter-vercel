@@ -133,10 +133,7 @@ const Ads = () => {
         </table>
       </div>
       <div className="flex justify-between items-center mt-5">
-        <button className="bg-main-500 text-white px-4 py-2 rounded-2xl flex items-center gap-4 active:scale-95 transition">
-          <PlusCircleIcon className="h-5 text-white" />
-          <span className="tracking-wide font-semibold ">Nouveau</span>
-        </button>
+        <div />
         <div>PAGINATION</div>
       </div>
       {modalShow && <EditAds setModalShow={setModalShow} />}
