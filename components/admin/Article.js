@@ -9,7 +9,6 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { ArticleOne } from "@/public/assets/img";
 import ModalArticle from "@/components/ModalArticle";
 import ConfirmDelete from "@/components/ConfirmDelete";
 

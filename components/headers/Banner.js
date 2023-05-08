@@ -23,12 +23,12 @@ const settings = {
     </button>
   ),
   pauseOnHover: true,
-  // canSwipe: true,
+  canSwipe: true,
   easing: "ease-out",
-  duration: 7000,
+  duration: 5000,
   transitionDuration: 500,
   indicators: indicators,
-  autoplay: false,
+  autoplay: true,
 };
 
 const Banner = () => {

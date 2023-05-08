@@ -7,8 +7,8 @@ const jost = Jost({ subsets: ["latin"], weight: "700" });
 
 const Flash = () => {
   return (
-    <div className="hidden bg-main-500/20 rounded-xl lg:flex lg:items-center">
-      <div className=" bg-gradient-to-br from-[#D93D59]  to-[#D93D59]/70 p-4 rounded-xl tracking-wider">
+      <div className="hidden bg-main-500/20 rounded-xl lg:flex lg:items-center animate-marquee">
+      <div className="bg-gradient-to-br from-[#D93D59]  to-[#D93D59]/70 p-4 rounded-xl tracking-wider ">
         <h1
           className={`uppercase text-white text-2xl ${jost.className} leading-6`}
         >
@@ -31,6 +31,8 @@ const Flash = () => {
         </button>
       </div>
     </div>
+
+
   );
 };
 
