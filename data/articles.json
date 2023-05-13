@@ -19,6 +19,7 @@
       "data": [
         {
           "img": "/assets/img/PolitiqueArticleOne.jpg",
+          "video": "/assets/video/video1.mp4",
           "date": "jul 06.2021",
           "auteur" : "independent Reporter",
           "titre": "A set of the most necessary things on vacation",
@@ -27,6 +28,7 @@
         },
         {
           "img": "/assets/img/PolitiqueArticleTwo.jpg",
+          "video": "/assets/video/video1.mp4",
           "date": "jul 06.2021",
           "auteur" : "independent Reporter",
           "titre": "How not to get lost without knowing the language",
@@ -35,6 +37,7 @@
         },
         {
           "img": "/assets/img/PolitiqueArticleThree.jpg",
+          "video": "/assets/video/video1.mp4",
           "date": "jul 06.2021",
           "auteur" : "independent Reporter",
           "titre": "Where to rest for those who do not like noisy places",
