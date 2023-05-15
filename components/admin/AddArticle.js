@@ -7,7 +7,9 @@ import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const AddArticle = ({ header, submitBtn, setModalShow }) => {
+  const lang = ["Francais" , "Anglais"];
     const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
+    const [selectedLang , setSelectedLang] = useState(lang[0]);
   return (
     <section className="w-[90%] mx-auto">
       <h3 className="text-xl font-semibold tracking-wide mb-4">{header}</h3>
@@ -16,8 +18,9 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
           <div className="flex flex-col gap-4 w-1/2 h-fit">
             <Input id="titre" label="Titre" required type="text" />
             <Input id="sous-titre" label="Sous-Titre" required type="text" />
-            <Listbox value={selectedMenu} onChange={setSelectedMenu}>
-              <div className="flex flex-col relative">
+            <div className="flex gap-4 w-full">
+              <Listbox value={selectedMenu} onChange={setSelectedMenu}>
+              <div className="flex flex-col relative w-full">
                 <Listbox.Button className="text-main-500 flex justify-between items-center border rounded-full p-4 border-main-500">
                   <p className="">{selectedMenu.k}</p>
                   <ChevronDownIcon className="block h-4" />
@@ -35,6 +38,26 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
                 </Listbox.Options>
               </div>
             </Listbox>
+              <Listbox value={selectedLang} onChange={setSelectedLang}>
+              <div className="flex flex-col relative w-full">
+                <Listbox.Button className="text-main-500 flex justify-between items-center border rounded-full p-4 border-main-500">
+                  <p className="">{selectedLang}</p>
+                  <ChevronDownIcon className="block h-4" />
+                </Listbox.Button>
+                <Listbox.Options className="absolute top-16 border border-main-500 p-2 z-40  rounded-md shadow-md bg-white">
+                  {lang.map((item) => (
+                    <Listbox.Option
+                      key={item}
+                      value={item}
+                      className="ui-active:bg-main-500 rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
+                    >
+                      {item}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </div>
+            </Listbox>
+            </div>
             <Input id="auteur" label="Auteur" required type="text" />
             <Input
               id="contenu"
