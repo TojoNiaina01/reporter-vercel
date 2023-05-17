@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Input from "@/components/Input";
 import UploadFile from "@/components/admin/UploadFile";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MenuFR } from "@/constant/constant";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import ConfirmAdd from "@/components/ConfirmAdd";
 
 const AddArticle = ({ header, submitBtn, setModalShow }) => {
   const lang = ["Francais" , "Anglais"];
     const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
     const [selectedLang , setSelectedLang] = useState(lang[0]);
+    const [confirmModal, setConfirmModal] = useState(false);
+    const handleSubmit = (e) => {
+      e.preventDefault();
+    }
+
+    const toggleConfirmModal = useCallback(() => {
+      setConfirmModal(!confirmModal)
+    } , [confirmModal])
+
   return (
-    <section className="w-[90%] mx-auto">
+
+   <>
+      <section className="w-[90%] mx-auto">
       <h3 className="text-xl font-semibold tracking-wide mb-4">{header}</h3>
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="flex gap-6">
           <div className="flex flex-col gap-4 w-1/2 h-fit">
             <Input id="titre" label="Titre" required type="text" />
@@ -81,13 +93,20 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
             <XMarkIcon className="h-5" />
             <span>Annuler</span>
           </button>
-          <button className="flex items-center bg-main-500 text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md">
+          <button onClick={toggleConfirmModal}  className="flex items-center bg-main-500 text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md">
             <CheckIcon className="h-5" />
             <span>{submitBtn}</span>
           </button>
         </div>
       </form>
+
+
+        {confirmModal && <ConfirmAdd setConfirmModal={setConfirmModal} />}
     </section>
+
+
+    </>
+
   );
 };
 
