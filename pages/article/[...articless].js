@@ -2,12 +2,12 @@ import React, { useRef, useState } from "react";
 import AsideRecentPopular from "@/components/pageIndiv/AsideRecentPopular";
 import HeaderCategory from "@/components/HeaderCategory";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Head from 'next/head';
+import Head from "next/head";
 import {
   PauseCircleIcon,
   PlayCircleIcon,
   SpeakerWaveIcon,
-  SpeakerXMarkIcon
+  SpeakerXMarkIcon,
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import DateAuteur from "@/components/DateAuteur";
@@ -16,7 +16,7 @@ import { NotFoundBg, Profil, PubliciteDeux } from "@/public/assets/img";
 import { Vector } from "@/public/assets/svg";
 import Title from "@/components/Title";
 import Hastag from "@/components/Hastag";
-
+import ReviewWithStars from "@/components/ReviewWithStars";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 
@@ -25,13 +25,13 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
   const [isPlayed, setIsPlayed] = useState(true);
   const videoRef = useRef();
   const play = () => {
-    setIsPlayed((value) => !value)
+    setIsPlayed((value) => !value);
     videoRef.current.play();
-  }
+  };
   const pause = () => {
-    setIsPlayed((value) => !value)
+    setIsPlayed((value) => !value);
     videoRef.current.pause();
-  }
+  };
   return (
     <>
       <Head>
@@ -52,8 +52,7 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
                 className="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12
               outline-none focus:w-full focus:cursor-text focus:border-secondary-400 focus:pl-16 focus:pr-4"
               />
-              <MagnifyingGlassIcon
-                className="absolute inset-y-0 my-auto h-8 w-12 border-r  border-transparent stroke-secondary-500 px-3.5 peer-focus:border-secondary-400 peer-focus:stroke-secondary-500" />
+              <MagnifyingGlassIcon className="absolute inset-y-0 my-auto h-8 w-12 border-r  border-transparent stroke-secondary-500 px-3.5 peer-focus:border-secondary-400 peer-focus:stroke-secondary-500" />
             </form>
           </div>
         </div>
@@ -70,28 +69,39 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
                 />
               </div>
               <div className="relative group ">
-                <video src={enCourData.video} type="video/mp4" play muted={isMuted} loop ref={videoRef} />
+                <video
+                  src={enCourData.video}
+                  type="video/mp4"
+                  play
+                  muted={isMuted}
+                  loop
+                  ref={videoRef}
+                />
                 <div className="absolute right-5 bottom-5 text-main-500">
-                  {isMuted ?
+                  {isMuted ? (
                     <SpeakerXMarkIcon
                       className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={() => setIsMuted((value) => !value)} />
-                    :
+                      onClick={() => setIsMuted((value) => !value)}
+                    />
+                  ) : (
                     <SpeakerWaveIcon
                       className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={() => setIsMuted((value) => !value)} />
-                  }
+                      onClick={() => setIsMuted((value) => !value)}
+                    />
+                  )}
                 </div>
                 <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  {isPlayed ?
+                  {isPlayed ? (
                     <PlayCircleIcon
                       className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={play} />
-                    :
+                      onClick={play}
+                    />
+                  ) : (
                     <PauseCircleIcon
                       className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={pause} />
-                  }
+                      onClick={pause}
+                    />
+                  )}
                 </div>
               </div>
               <div className="relative w-full h-[250px] lg:h-[450px] lg:rounded">
@@ -168,16 +178,13 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
             <div className="mt-5 flex items-center gap-4">
               <HeaderCategory title="Tags :" />
               <ul className="flex gap-4 ">
-                <li
-                  className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
+                <li className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
                   election
                 </li>
-                <li
-                  className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
+                <li className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
                   maison blanche
                 </li>
-                <li
-                  className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
+                <li className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
                   office
                 </li>
               </ul>
@@ -200,6 +207,9 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
                   world-class level.
                 </p>
               </div>
+            </div>
+            <div className=" h-24">
+              <ReviewWithStars />
             </div>
           </div>
           {/*Aside*/}
@@ -242,8 +252,8 @@ export async function getStaticProps({ params }) {
     props: {
       enCourData,
       articleRecent,
-      articlePopular
-    }
+      articlePopular,
+    },
   };
 }
 
@@ -255,11 +265,11 @@ export async function getStaticPaths(context) {
   const paths = data.pages
     .find((obj) => obj.name === "culture")
     .data.map((item) => ({
-      params: { articless: [linkBeautify(item.titre)] }
+      params: { articless: [linkBeautify(item.titre)] },
     }));
 
   return {
     paths,
-    fallback: false
+    fallback: false,
   };
 }

@@ -1,8 +1,13 @@
 import React, { useCallback, useState } from "react";
 import Input from "@/components/Input";
 import UploadFile from "@/components/admin/UploadFile";
+import dynamic from "next/dynamic";
+
 import {
+  BoltIcon,
   CheckIcon,
+  FireIcon,
+  HomeIcon,
   PlusIcon,
   TrashIcon,
   XMarkIcon,
@@ -11,13 +16,14 @@ import { MenuFR } from "@/constant/constant";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ConfirmAdd from "@/components/ConfirmAdd";
+import RichText from "@/components/RichText";
 
-const AddArticle = ({ header, submitBtn, setModalShow }) => {
+const AddArticle = ({ header, submitBtn, setModalShow, edition, pushBtn }) => {
   const lang = ["Francais", "Anglais"];
   const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [confirmModal, setConfirmModal] = useState(false);
-  const [inputs, setInputs] = useState([""]);
+  const [value, setValue] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -26,25 +32,24 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
     setConfirmModal(!confirmModal);
   }, [confirmModal]);
 
-  const handleAddInput = () => {
-    setInputs([...inputs, ""]);
-  };
-
-  const handleRemoveInput = (index) => {
-    const newInputs = [...inputs];
-    newInputs.splice(index, 1);
-    setInputs(newInputs);
-  };
-
   return (
     <>
-      <section className="w-[90%] mx-auto">
+      <section className={`w-[90%] mx-auto`}>
         <h3 className="text-xl font-semibold tracking-wide mb-4">{header}</h3>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="flex gap-6">
-            <div className="flex flex-col gap-4 w-1/2 h-fit">
+          <div className="flex gap-6 ">
+            <div
+              className={`flex flex-col gap-4 ${
+                edition ? "w-1/2" : "w-full"
+              } h-fit`}
+            >
               <Input id="titre" label="Titre" required type="text" />
-              <Input id="auteur" label="Auteur" required type="text" />
+              <Input
+                id="description"
+                label="Description"
+                required
+                type="text"
+              />
               <div className="flex gap-4 w-full">
                 <Listbox value={selectedMenu} onChange={setSelectedMenu}>
                   <div className="flex flex-col relative w-full">
@@ -85,46 +90,41 @@ const AddArticle = ({ header, submitBtn, setModalShow }) => {
                   </div>
                 </Listbox>
               </div>
-              <>
-                {inputs?.map((input, index) => (
-                  <div className="space-y-6" key={index}>
-                    <Input
-                      id="sous-titre"
-                      label="Sous-Titre"
-                      required
-                      type="text"
-                    />
-                    <Input
-                      id="contenu"
-                      label="Contenu"
-                      required
-                      textarea
-                      className="peer w-full p-4 pt-6 border border-gray-400 rounded-md outline-none transition pl-4"
-                    />
-                  </div>
-                ))}
-                <div className="mx-auto space-x-2">
-                  <button
-                    className="text-center bg-main-500 rounded-full p-1 mx-auto "
-                    onClick={handleAddInput}
-                  >
-                    <PlusIcon className="h-6 text-white" />
+              <div>
+                <Input
+                  id="tags"
+                  label="Enter all of the choices divided by a comma (',')."
+                  required
+                  type="text"
+                />
+              </div>
+              {pushBtn && (
+                <div className="flex gap-3">
+                  <button className="flex items-center bg-main-500 gap-2 text-white p-2 rounded-lg active:scale-95 transition">
+                    <BoltIcon className="h-5" />
+                    <span>Flash info</span>
                   </button>
-
-                  <button
-                    className="text-center bg-main-500 rounded-full p-1 mx-auto "
-                    onClick={handleRemoveInput}
-                  >
-                    <TrashIcon className="h-6 text-white" />
+                  <button className="flex items-center bg-main-500 gap-2 text-white p-2 rounded-lg active:scale-95 transition">
+                    <HomeIcon className="h-5" />
+                    <span>Slider</span>
+                  </button>
+                  <button className="flex items-center bg-main-500 gap-2 text-white p-2 rounded-lg active:scale-95 transition">
+                    <FireIcon className="h-5" />
+                    <span>Hot staff</span>
                   </button>
                 </div>
-              </>
+              )}
             </div>
 
-            <div className="flex-1">
-              <UploadFile />
-            </div>
+            {edition && (
+              <div className="flex-1">
+                <UploadFile />
+              </div>
+            )}
           </div>
+
+          {/* rich text content */}
+          <RichText theme="snow" value={value} onChange={setValue} />
 
           <div className="flex gap-12 mt-8">
             <button

@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Listbox } from "@headlessui/react";
 import { MenuFR } from "@/constant/constant";
 import {
+  BoltIcon,
   ChevronDownIcon,
+  FireIcon,
+  HomeIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
   PlusCircleIcon,
@@ -87,6 +90,16 @@ const Article = ({ header, tabhead, data, user }) => {
                     {item.titre}
                   </th>
                   <td className="px-6 py-4">{item.category}</td>
+
+                  {/* eto hoe slide sa hot staff sa flash info */}
+                  <td className="px-6 py-4">
+                    <div className="flex gap-1">
+                      <BoltIcon className="h-5" />
+                      <HomeIcon className="h-5" />
+                      <FireIcon className="h-5" />
+                    </div>
+                  </td>
+
                   <td className="px-6 py-4">{item.date}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">

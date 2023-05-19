@@ -12,12 +12,13 @@ const ModalArticle = ({ setModalShow }) => {
       >
         <Image src={Cross} alt="close" />
       </button>
-      <div className="bg-white w-2/3 px-6 py-5">
+      <div className="bg-white w-2/5 px-6 py-5 h-[90vh] overflow-y-scroll 2xl:overflow-y-auto ">
         {/*  Add Articles */}
         <AddArticle
           header="Edition d'une Article"
           submitBtn="Editer"
           setModalShow={setModalShow}
+          pushBtn
         />
       </div>
     </section>

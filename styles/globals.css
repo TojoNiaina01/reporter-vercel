@@ -4,8 +4,11 @@
 
 
 @layer components {
+    html {
+        @apply scrollbar-thumb-main-500 scrollbar-track-secondary-200 scrollbar-thin
+    }
     .app {
-        @apply mx-2 max-w-screen-xl md:mx-14 lg:mx-36  2xl:mx-auto;
+        @apply mx-2 max-w-screen-xl md:mx-14 lg:mx-36  2xl:mx-auto ;
     }
 
     .admin {

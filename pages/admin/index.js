@@ -29,7 +29,15 @@ const jost = Jost({ subsets: ["latin"], weight: "500" });
 const Admin = () => {
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
   // Ty juste ilay header an ilay tableau ana articless
-  const tabsHead = ["id", "medias", "titre", "categories", "date", "actions"];
+  const tabsHead = [
+    "id",
+    "medias",
+    "titre",
+    "categories",
+    "placement",
+    "date",
+    "actions",
+  ];
 
   const data = [
     {
@@ -80,7 +88,7 @@ const Admin = () => {
       />
     );
   return (
-    <section className="admin w-full py-4">
+    <section className="admin w-full max-w-7xl py-4">
       <div className="flex justify-between  items-center">
         <div className="cursor-pointer">
           <h2 className={` ${jost.className} text-main-400 text-lg`}>
@@ -193,7 +201,11 @@ const Admin = () => {
               />
             </Tab.Panel>
             <Tab.Panel>
-              <AddArticle header="Creation d'article" submitBtn="Ajouter" />
+              <AddArticle
+                header="Creation d'article"
+                submitBtn="Ajouter"
+                edition
+              />
             </Tab.Panel>
             <Tab.Panel>
               <Ads />
