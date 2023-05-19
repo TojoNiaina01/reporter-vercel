@@ -15,14 +15,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Article from "@/components/admin/Article";
-import AddArticle from "@/components/admin/AddArticle";
 import useMediaQuery from "@/hook/useMediaQuery";
 import Errors from "@/pages/404";
-import Ads from "@/components/admin/Ads";
+import AdsManager from "@/components/admin/AdsManager";
 import AddAds from "@/components/admin/AddAds";
 import ListUser from "@/components/admin/ListUser";
 import { ArticleOne } from "@/public/assets/img";
 import AddUser from "@/components/admin/AddUser";
+import FormArticle from "@/components/admin/FormArticle";
+import AddArticle from "@/components/admin/AddArticle";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
@@ -165,10 +166,6 @@ const Admin = () => {
                 <InboxIcon className="h-5" />
                 <span>Newsletter</span>
               </Tab>
-              {/*<Tab className="tabs">*/}
-              {/*  <Cog6ToothIcon className="h-5" />*/}
-              {/*  <span>Settings</span>*/}
-              {/*</Tab>*/}
               <Disclosure>
                 <Disclosure.Button className="tabs">
                   <Cog6ToothIcon className="h-5" />
@@ -201,17 +198,13 @@ const Admin = () => {
               />
             </Tab.Panel>
             <Tab.Panel>
-              <AddArticle
-                header="Creation d'article"
-                submitBtn="Ajouter"
-                edition
-              />
+              <AddArticle />
             </Tab.Panel>
             <Tab.Panel>
-              <Ads />
+              <AdsManager />
             </Tab.Panel>
             <Tab.Panel>
-              <AddAds submitBtn="Ajouter" />
+              <AddAds />
             </Tab.Panel>
             <Tab.Panel>News Letter</Tab.Panel>
             <Tab.Panel>

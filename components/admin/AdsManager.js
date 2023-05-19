@@ -6,16 +6,14 @@ import {
   ExclamationTriangleIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
-  PlusCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { Publicite } from "@/public/assets/img";
 import Image from "next/image";
 import ConfirmDelete from "@/components/ConfirmDelete";
-import AddAds from "@/components/admin/AddAds";
 import EditAds from "@/components/admin/EditAds";
 
-const Ads = () => {
+const AdsManager = () => {
   const state = [
     { k: 1, name: "En cours" },
     { k: 2, name: "Fini" },
@@ -144,4 +142,4 @@ const Ads = () => {
   );
 };
 
-export default Ads;
+export default AdsManager;

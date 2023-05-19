@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Cross } from "@/public/assets/svg";
 import Image from "next/image";
-import AddArticle from "@/components/admin/AddArticle";
+import FormArticle from "@/components/admin/FormArticle";
 
 const ModalArticle = ({ setModalShow }) => {
   return (
@@ -14,7 +14,7 @@ const ModalArticle = ({ setModalShow }) => {
       </button>
       <div className="bg-white w-2/5 px-6 py-5 h-[90vh] overflow-y-scroll 2xl:overflow-y-auto ">
         {/*  Add Articles */}
-        <AddArticle
+        <FormArticle
           header="Edition d'une Article"
           submitBtn="Editer"
           setModalShow={setModalShow}

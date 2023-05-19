@@ -1,7 +1,7 @@
 import React from "react";
-import AddAds from "@/components/admin/AddAds";
 import { Cross } from "@/public/assets/svg";
 import Image from "next/image";
+import FormAds from "@/components/admin/FormAds";
 
 const EditAds = ({ setModalShow }) => {
   return (
@@ -13,8 +13,7 @@ const EditAds = ({ setModalShow }) => {
         <Image src={Cross} alt="close" />
       </button>
       <div className="bg-white w-2/3 px-6 py-5">
-        {/*  Add Articles */}
-        <AddAds
+        <FormAds
           header="Edition d'une Article"
           submitBtn="Editer"
           setModalShow={setModalShow}

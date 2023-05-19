@@ -1,16 +1,42 @@
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
-const Input = ({ id, label, type, required, password }) => {
+const Input = ({
+  id,
+  label,
+  type,
+  required,
+  password,
+  textarea,
+  placeholder,
+}) => {
   const [hide, setHide] = useState(true);
 
   return (
     <div className="w-full relative">
-      <input
-        type={type}
-        id={id}
-        placeholder=" "
-        className={`peer
+      {textarea ? (
+        <textarea
+          className={`
+          w-full
+          p-4
+          pt-6 
+          font-light 
+          bg-white 
+          border
+          rounded-md
+          outline-none
+          transition
+          border-gray-400
+          placeholder-black
+         pl-4`}
+          placeholder={placeholder}
+        />
+      ) : (
+        <input
+          type={type}
+          id={id}
+          placeholder=" "
+          className={`peer
           w-full
           p-4
           pt-6 
@@ -22,7 +48,8 @@ const Input = ({ id, label, type, required, password }) => {
           transition
           border-gray-400
          pl-4`}
-      />
+        />
+      )}
       <label
         htmlFor={id}
         className="absolute
