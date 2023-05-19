@@ -126,14 +126,16 @@ class MyDatabase {
         return ObjectFormater(resToJson, 'image')
     }
 
-    async addArticle(title, body, description, author){
+    async addArticle({title, body, description, author, category_id, lang}){
        let articleID = await knex
                         .insert({
                             title,
                             body,
                             description,
                             author,
-                            created_at: moment().format("YYYY-MM-DD hh:mm:ss")
+                            category_id,
+                            created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
+                            lang
                         }) 
                         .into('articles')
         articleID = JSON.parse(JSON.stringify(articleID))
