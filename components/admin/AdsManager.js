@@ -24,7 +24,7 @@ const AdsManager = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
   return (
-    <>
+    <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold tracking-wide">Listes ADS.</h3>
         <div className="flex gap-4">
@@ -138,7 +138,7 @@ const AdsManager = () => {
       {modalDeleteConfirm && (
         <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
       )}
-    </>
+    </div>
   );
 };
 

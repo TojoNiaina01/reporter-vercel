@@ -21,7 +21,7 @@ const Article = ({ header, tabhead, data, user }) => {
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
   console.log(typeof data);
   return (
-    <>
+    <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold tracking-wide">{header}</h3>
         <div className="flex gap-4">
@@ -161,7 +161,7 @@ const Article = ({ header, tabhead, data, user }) => {
       {modalDeleteConfirm && (
         <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
       )}
-    </>
+    </div>
   );
 };
 

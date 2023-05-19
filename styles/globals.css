@@ -40,6 +40,7 @@
         @apply ui-selected:bg-main-500 rounded-xl px-4 py-2  ui-selected:text-white ui-not-selected:text-[#84849D] flex items-center gap-4
     }
 
+
 }
 
 
