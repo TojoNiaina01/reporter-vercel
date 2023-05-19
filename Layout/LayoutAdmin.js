@@ -23,9 +23,7 @@ const ActiveLink = ({ children, href }) => {
     <Link href={href}>
       <p
         className={`${
-          router.pathname === href
-            ? "bg-main-500 rounded-xl text-white"
-            : "bg-white hover:bg-secondary-100 hover:text-white rounded-xl"
+          router.pathname === href ? "bg-main-500 rounded-xl text-white" : ""
         } flex items-center gap-2  font-semibold text-sm py-3 px-4`}
       >
         {children}
@@ -112,6 +110,10 @@ const LayoutAdmin = ({ children }) => {
             <Cog6ToothIcon className="h-5" />
             <span className="whitespace-nowrap">Ajout utilisateur</span>
           </ActiveLink>
+
+          <button className="bg-secondary-500 text-white py-2 rounded active:scale-95 transition mt-8">
+            Logout
+          </button>
         </div>
         <div className="w-full">{children}</div>
       </div>
