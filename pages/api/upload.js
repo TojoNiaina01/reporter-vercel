@@ -60,13 +60,11 @@ export default async function handler(req, res) {
 
           if(checkType(extension) === 'image'){
             fs.rename(file.filepath, path.join(pathFolderImage,`${newName}.${extension}`), () => {
-              console.log("type file",file)
               return res.status(200).json({type: "image",result: {name: newName, extension: extension, size: file.size, type: file.mimetype}})
           })
           }else{
 
             fs.rename(file.filepath, path.join(pathFolderVideo,`${newName}.${extension}`), () => {
-              console.log("type file",file)
               return res.status(200).json({type: "video", result: {name: newName, extension: extension}})
           })
           return res.status(200).json({type: "video"})

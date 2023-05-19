@@ -20,7 +20,6 @@ const AdsManager = () => {
   ];
 
   const [adsState, setAdsState] = useState(state[0]);
-  console.log(adsState);
   const [modalShow, setModalShow] = useState(false);
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
   return (

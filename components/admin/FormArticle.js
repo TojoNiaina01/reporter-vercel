@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Input from "@/components/Input";
 import UploadFile from "@/components/admin/UploadFile";
 
@@ -21,6 +21,7 @@ const FormArticle = ({
   setModalShow,
   uploadFile,
   pushBtn,
+  listCategories
 }) => {
   const lang = ["Francais", "Anglais"];
   const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
@@ -35,6 +36,10 @@ const FormArticle = ({
     setConfirmModal(!confirmModal);
   }, [confirmModal]);
 
+
+  useEffect(() => {
+    console.log("listCategories === ", listCategories)
+  }, [])
   return (
     <>
       <section className={`w-[90%] mx-auto`}>
@@ -46,11 +51,12 @@ const FormArticle = ({
                 uploadFile ? "w-1/2" : "w-full"
               } h-fit`}
             >
-              <Input id="titre" label="Titre" required type="text" />
+              <Input id="titre" label="Titre" required type="text" name="title" />
               <Input
                 id="description"
                 required
                 type="text"
+                name="description"
                 textarea
                 placeholder="Description"
                 a
@@ -156,3 +162,23 @@ const FormArticle = ({
 };
 
 export default FormArticle;
+
+export async function getStaticProps(){
+  const param = {query: 'getFullCategories', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
+  let listCategories
+    await fetch('/api/knexApi', {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listCategories = data)
+console.log("list == ", listCategories)
+      return {
+        props: {
+          listCategories
+        }
+      }
+  }
+
