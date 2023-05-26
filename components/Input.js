@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const Input = ({
@@ -9,8 +9,38 @@ const Input = ({
   password,
   textarea,
   placeholder,
+  onChange,
+  defaultValue
 }) => {
   const [hide, setHide] = useState(true);
+  const [textValue, setTextValue] = useState('')
+  const [value, setValue] = useState('')
+
+
+  const textareaHandler = (e) => {
+    setTextValue(e.target.value)
+    if(textarea){
+       onChange(e.target.value)
+    }
+  }
+
+
+  const inputHandler = (e) => {
+    setValue(e.target.value)
+    if(!textarea){
+      onChange(e.target.value)
+   }
+  }
+
+
+  useEffect(() => {
+    if(textarea){
+      setTextValue(defaultValue)
+    }else{
+      setValue(defaultValue)
+    }
+
+  },[])
 
   return (
     <div className="w-full relative">
@@ -29,7 +59,10 @@ const Input = ({
           border-gray-400
           placeholder-black
          pl-4`}
+          value={textValue}
           placeholder={placeholder}
+          onChange={e => textareaHandler(e)}
+         
         />
       ) : (
         <input
@@ -48,6 +81,9 @@ const Input = ({
           transition
           border-gray-400
          pl-4`}
+
+         value={value}
+         onChange={e => inputHandler(e)}
         />
       )}
       <label

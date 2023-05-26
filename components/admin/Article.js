@@ -14,12 +14,23 @@ import {
 import Image from "next/image";
 import ModalArticle from "@/components/ModalArticle";
 import ConfirmDelete from "@/components/ConfirmDelete";
+import moment from "moment";
+import {v4 as uuidV4} from 'uuid'
 
-const Article = ({ header, tabhead, data, user }) => {
+
+const Article = ({ header, tabhead, data, user, listArticles }) => {
   const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
   const [modalShow, setModalShow] = useState(false);
+  const [articleData, setArticleData] = useState()
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
-  console.log(typeof data);
+console.log("list articles == ", listArticles[0].image[0].image_name)
+
+
+const modifHandler = (val) => {
+  setModalShow(!modalShow)
+  setArticleData(val)
+}
+
   return (
     <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-between">
@@ -64,7 +75,7 @@ const Article = ({ header, tabhead, data, user }) => {
           <thead className="text-xs uppercase bg-main-500 text-white">
             <tr>
               {tabhead?.map((tab) => (
-                <th scope="col" className="px-6 py-3">
+                <th key={uuidV4()} scope="col" className="px-6 py-3">
                   {tab}
                 </th>
               ))}
@@ -72,13 +83,13 @@ const Article = ({ header, tabhead, data, user }) => {
           </thead>
           {!user && (
             <tbody>
-              {data?.map((item, i) => (
-                <tr key={item.name} className="bg-white border-b ">
+              {listArticles?.map((article, i) => (
+                <tr key={uuidV4()} className="bg-white border-b ">
                   <td className="px-6 py-4">{i}</td>
                   <td className="relative w-[100px] h-[100px]">
                     <Image
                       fill
-                      src={item.img}
+                      src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                       className=" object-contain"
                       alt="Article image blog"
                     />
@@ -87,9 +98,9 @@ const Article = ({ header, tabhead, data, user }) => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
-                    {item.titre}
+                    {(article.title.length > 40) ? `${article.title.substring(0,40)}...`: article.title}
                   </th>
-                  <td className="px-6 py-4">{item.category}</td>
+                  <td className="px-6 py-4">{article.category_fr}</td>
 
                   {/* eto hoe slide sa hot staff sa flash info */}
                   <td className="px-6 py-4">
@@ -100,12 +111,12 @@ const Article = ({ header, tabhead, data, user }) => {
                     </div>
                   </td>
 
-                  <td className="px-6 py-4">{item.date}</td>
+                  <td className="px-6 py-4">{moment(article.created_at).format('DD/MM/YYYY')}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
                       <PencilSquareIcon
                         className="h-5 text-main-500 cursor-pointer"
-                        onClick={() => setModalShow(!modalShow)}
+                        onClick={() => modifHandler(article)}
                       />
                       <TrashIcon
                         className="h-5 text-red-500 cursor-pointer"
@@ -157,7 +168,7 @@ const Article = ({ header, tabhead, data, user }) => {
         <div>PAGINATION</div>
       </div>
 
-      {modalShow && <ModalArticle setModalShow={setModalShow} />}
+      {modalShow && <ModalArticle setModalShow={setModalShow} articleData={articleData}/>}
       {modalDeleteConfirm && (
         <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
       )}

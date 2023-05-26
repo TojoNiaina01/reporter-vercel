@@ -79,6 +79,7 @@ class MyDatabase {
     async getArticlesByLang(lang){
         const res = await knex({a: 'articles'})
         .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
         .select(
                'a.id', 
                'a.title', 
@@ -86,6 +87,9 @@ class MyDatabase {
                'a.description', 
                'a.author', 
                'a.lang',
+               'a.created_at',
+               {category_fr: 'c.fr'},
+               {category_en: 'c.en'},
                {image_name: 'img.name'}, 
                {image_extension: 'img.extension'},
                {image_size: 'img.size'}, 
@@ -161,7 +165,7 @@ class MyDatabase {
      * @deleteImage        : effacer une image avec son ID
      *========================================================================**/
 
-     async addImage(article_id, name, extension, size, type){
+     async addImage({article_id, name, extension, size, type}){
         let imgID = await knex
                         .insert({
                             article_id,
@@ -176,6 +180,21 @@ class MyDatabase {
 
         return imgID[0]
      }
+    //  async addImage(article_id, name, extension, size, type){
+    //     let imgID = await knex
+    //                     .insert({
+    //                         article_id,
+    //                         name,
+    //                         extension,
+    //                         size,
+    //                         type
+    //                     })
+    //                     .into('images')
+
+    //     imgID = JSON.parse(JSON.stringify(imgID))
+
+    //     return imgID[0]
+    //  }
 
      async deleteImage(id){
         await knex('images')

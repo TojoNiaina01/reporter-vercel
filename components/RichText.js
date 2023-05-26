@@ -17,12 +17,13 @@ const modules = {
   ],
 };
 
-const RichText = ({ style, defaultValue }) => {
+const RichText = ({ style, value, setValue }) => {
   return (
     <ReactQuill
       modules={modules}
       className={` max-w-5xl ${style} mt-4 2xl:h-[300px] 2xl:mb-20`}
-      defaultValue={defaultValue}
+      value={value}
+      onChange={setValue}
     />
   );
 };

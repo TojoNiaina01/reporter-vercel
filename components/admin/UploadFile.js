@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { log } from "next/dist/server/typescript/utils";
 
-const UploadFile = () => {
+const UploadFile = ({onChangeFile}) => {
   const [files, setFiles] = useState();
   const inputRef = useRef(null);
   const handleDragOver = (event) => {
@@ -13,11 +13,13 @@ const UploadFile = () => {
   const handleDrop = (event) => {
     event.preventDefault();
     setFiles(event.dataTransfer.files);
+    onChangeFile(event.dataTransfer.files)
   };
 
   const removeFile = (e, fileName) => {
     e.preventDefault();
     setFiles(Array.from(files).filter((file) => file.name !== fileName));
+    onChangeFile(Array.from(files).filter((file) => file.name !== fileName))
   };
 
   return (
