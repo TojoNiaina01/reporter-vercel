@@ -11,7 +11,7 @@ export const MenuFR = [
   { k: "environnement", href: "/environnement" },
   { k: "infrastructure", href: "/infrastructure" },
   { k: "tourisme", href: "/tourisme" },
-  { k: "video", href: "/video" },
+  // { k: "video", href: "/video" },
 ];
 // export const MenuEN = [
 //   "home",
