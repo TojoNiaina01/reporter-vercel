@@ -27,7 +27,7 @@ const Slider = () => {
           className="bg-white px-6 py-4 w-full
         md:w-fit md:px-10 md:absolute md:-bottom-24 md:right-1/2 md:translate-x-1/2 md:border-2 md:border-gray-200 z-50  rounded "
         >
-          <DateAuteur date="JUL 06.2021" auteur="VINAGO" />
+          <DateAuteur date="JUL 06.2021" auteur="INDEPENDENT REPORTER" />
           <h3
             className={` text-[30px]  lg:text-3xl font-semibold  whitespace-nowrap 2xl:text-4xl ${jost.className}`}
           >
