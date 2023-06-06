@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Listbox } from "@headlessui/react";
 import { MenuFR } from "@/constant/constant";
 import {
@@ -15,15 +15,20 @@ import Image from "next/image";
 import ModalArticle from "@/components/ModalArticle";
 import ConfirmDelete from "@/components/ConfirmDelete";
 import moment from "moment";
-import {v4 as uuidV4} from 'uuid'
+import {v4 as uuidV4} from 'uuid';
+import { ROOT_URL } from "@/env";
 
 
-const Article = ({ header, tabhead, data, user, listArticles }) => {
-  const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
+const Article = ({ header, tabhead, data, user, listArticles, listCategories, dispatchArticle }) => {
+  const lang = [
+    {tag: "fr", langue: "français"},
+    {tag: "en", langue: "Anglais"},
+  ];
+  const [selectedMenu, setSelectedMenu] = useState(listCategories[0]);
+  const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [modalShow, setModalShow] = useState(false);
   const [articleData, setArticleData] = useState()
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
-console.log("list articles == ", listArticles[0].image[0].image_name)
 
 
 const modifHandler = (val) => {
@@ -31,31 +36,87 @@ const modifHandler = (val) => {
   setArticleData(val)
 }
 
+const categoryHandler = (val) => {
+  setSelectedMenu(val)
+  const param = {query: 'getArticleByCategoryLang', param: [val.id, selectedLang.tag]}
+
+  fetch(`${ROOT_URL}/api/knexApi`, {
+    method: "POST",
+    body: JSON.stringify(param),
+    headers: {
+      "Content-type": "application/json"
+    }
+  }).then((res) => res.json())
+    .then((data) => {
+      console.log("new list filtrer == ", data.result)
+      dispatchArticle({type: 'ALLCHANGE', result: data.result})
+    })
+
+}
+
+const langHandler = (val) => {
+  setSelectedLang(val)
+  const param = {query: 'getArticleByCategoryLang', param: [selectedMenu.id, val.tag]}
+
+  fetch(`${ROOT_URL}/api/knexApi`, {
+    method: "POST",
+    body: JSON.stringify(param),
+    headers: {
+      "Content-type": "application/json"
+    }
+  }).then((res) => res.json())
+    .then((data) => {
+      console.log("new list filtrer == ", data.result)
+      dispatchArticle({type: 'ALLCHANGE', result: data.result})
+    })
+
+}
   return (
     <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold tracking-wide">{header}</h3>
         <div className="flex gap-4">
           {!user && (
-            <Listbox value={selectedMenu} onChange={setSelectedMenu}>
+            <>
+            <Listbox value={selectedMenu} onChange={categoryHandler}>
               <div className="flex flex-col relative">
                 <Listbox.Button className="text-main-500 flex gap-4 items-center border rounded-full px-4 py-2 border-main-500">
-                  <p className="">{selectedMenu.k}</p>
+                  <p className="">{selectedMenu.fr}</p>
                   <ChevronDownIcon className="block h-4" />
                 </Listbox.Button>
                 <Listbox.Options className=" absolute top-12 border border-main-500 p-2 rounded-md shadow-md bg-white">
-                  {MenuFR.map((person) => (
+                  {listCategories.map((category) => (
                     <Listbox.Option
-                      key={person.k}
-                      value={person}
+                      key={uuidV4()}
+                      value={category}
                       className="ui-active:bg-main-500 rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
                     >
-                      {person.k}
+                      {category.fr}
                     </Listbox.Option>
                   ))}
                 </Listbox.Options>
               </div>
             </Listbox>
+            <Listbox value={selectedLang} onChange={langHandler}>
+              <div className="flex flex-col relative">
+                <Listbox.Button className="text-main-500 flex gap-4  items-center border rounded-full  px-6 py-2 border-main-500">
+                  <p className="">{selectedLang.langue}</p>
+                  <ChevronDownIcon className="block h-4" />
+                </Listbox.Button>
+                <Listbox.Options className="absolute top-12 border border-main-500 p-2  rounded-md shadow-md bg-white">
+                  {lang.map((item) => (
+                    <Listbox.Option
+                      key={uuidV4()}
+                      value={item}
+                      className="ui-active:bg-main-500 rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
+                    >
+                      {item.langue}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </div>
+          </Listbox>
+          </>
           )}
           {/*  Recherche*/}
           <div className="border border-main-500 py-2 px-4 rounded-full flex items-center w-[200px] h-fit">
@@ -105,9 +166,9 @@ const modifHandler = (val) => {
                   {/* eto hoe slide sa hot staff sa flash info */}
                   <td className="px-6 py-4">
                     <div className="flex gap-1">
-                      <BoltIcon className="h-5" />
-                      <HomeIcon className="h-5" />
-                      <FireIcon className="h-5" />
+                      <BoltIcon className={`h-5 ${article.flash && 'text-red-600'}`} />
+                      <HomeIcon className={`h-5 ${article.slide && 'text-blue-600'}`} />
+                      <FireIcon className={`h-5 ${article.hot && 'text-orange-600'}`} />
                     </div>
                   </td>
 

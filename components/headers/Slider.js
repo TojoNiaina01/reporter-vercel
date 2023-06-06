@@ -1,20 +1,42 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Hastag from "@/components/Hastag";
 import Image from "next/image";
 import { ArticleDemo } from "@/public/assets/img";
 import { Jost } from "next/font/google";
 import DateAuteur from "@/components/DateAuteur";
+import localStorage from "localStorage";
+import { useRouter } from "next/router";
 
 const jost = Jost({ subsets: ["latin"], weight: "400" });
 
-const Slider = () => {
+const Slider = ({dataSlide}) => {
+  const router = useRouter()
+  const lang = JSON.parse(localStorage.getItem('token')).lang
+  const [hastag, setHasTag] = useState()
+  const linkBeautify = (link) => {
+    return link.split(" ").join("-");
+  };
+
+  useEffect(() => {
+    if(lang === 'en'){
+      setHasTag(dataSlide.category_en)
+    }else{
+      setHasTag(dataSlide.category_fr)
+    }
+  },[])
+
+  const pushToArticleHandler = () => {
+    router.push(`/article/${dataSlide.id}/${linkBeautify(dataSlide.title)}`)
+  }
+
+  
   return (
     <div className="relative mx-3 border-[1px] border-gray-300 rounded-md shadow-md md:border-0 md:shadow-none md:h-[550px]  lg:mx-0 2xl:h-[700px]">
-      <Hastag style="absolute top-2 z-10  left-4 bg-main-400">politique</Hastag>
+      <Hastag style="absolute top-2 z-10  left-4 bg-main-400">{hastag}</Hastag>
       <div className="relative max-w-6xl">
         <div className="relative w-full h-[240px] md:h-[450px] 2xl:h-[600px] ">
           <Image
-            src={ArticleDemo}
+            src={`/uploads/images/${dataSlide.image[0].image_name}.${dataSlide.image[0].image_extension}`}
             fill
             alt="Article"
             className="object-cover"
@@ -31,14 +53,12 @@ const Slider = () => {
           <h3
             className={` text-[30px]  lg:text-3xl font-semibold  whitespace-nowrap 2xl:text-4xl ${jost.className}`}
           >
-            Réforme des Retraites
+           {dataSlide.title.length > 50 ? `${dataSlide.title.substring(0,50)}...` : dataSlide.title}
           </h3>
           <p className=" text-sm leading-5  text-gray-500 tracking-wide pb-4 break-normal 2xl:text-base">
-            Journée décisive pour la réforme des retraites : des manifestations
-            partout en France tandis que la commission mixte paritaire entame
-            ses travaux
+            {dataSlide.description.length > 255 ? `${dataSlide.description.substring(0,255)}` : dataSlide.description}
           </p>
-          <button className="text-white px-6 py-3 bg-main-400 rounded-full shadow-lg #F9E0E5 hover:underline active:scale-95">
+          <button onClick={pushToArticleHandler} className="text-white px-6 py-3 bg-main-400 rounded-full shadow-lg #F9E0E5 hover:underline active:scale-95">
             Read more
           </button>
         </div>

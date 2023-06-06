@@ -16,6 +16,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ConfirmAdd from "@/components/ConfirmAdd";
 import RichText from "@/components/RichText";
 import { ROOT_URL } from "@/env";
+import toast, { Toaster } from "react-hot-toast";
 
 const FormArticle = ({
   header,
@@ -24,7 +25,8 @@ const FormArticle = ({
   uploadFile,
   pushBtn,
   listCategories,
-  articleData
+  articleData,
+  dispatchArticle
 }) => {
   const lang = [
     {tag: "fr", langue: "français"},
@@ -34,9 +36,14 @@ const FormArticle = ({
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [confirmModal, setConfirmModal] = useState(false);
   const [value, setValue] = useState('');
-  const [title, setTitle] = useState('');
-  const [descript, setDescript] = useState('');
+  const [title, setTitle] = useState(articleData.title);
+  const [descript, setDescript] = useState(articleData.description);
   const [files, setFiles] = useState();
+  const [flash, setFlash] = useState(false)
+  const [hot, setHot] = useState(false)
+  const [slide, setSlide] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const newArticleData = articleData
   var richtextVal = ""
   const richTextHandler = (val) => {
     console.log("tap = ", val)
@@ -51,6 +58,7 @@ const FormArticle = ({
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    setIsLoading(true)
     const data = {}
     // console.log("selectedMenu == ", selectedMenu)
     // console.log("selectedLang == ", selectedLang)
@@ -170,10 +178,12 @@ const FormArticle = ({
                                                     }
                                                   }).then((res) => res.json())
                                                     .then(result => {
-                                                      alert("ok ok ok")
+                                                     setIsLoading(false)
                                                     })
                                               
                                               })
+                                            }else{
+                                              setIsLoading(false)
                                             }
                                           })
 
@@ -181,6 +191,8 @@ const FormArticle = ({
 
                                     
                                     })
+                                  }else{
+                                    setIsLoading(false)
                                   }
                                 })
                               
@@ -194,7 +206,48 @@ const FormArticle = ({
         /*                   REHEFA AO AMIN'NY MODIFICATION ARTICLE                   */
         /* -------------------------------------------------------------------------- */
 
-        
+        console.log('articleData.title == ', articleData.title)
+        console.log('title == ', title)
+        console.log('articleData.description == ', articleData.description)
+        console.log('Description == ', descript)
+        console.log('articleData.body == ', articleData.body)
+        console.log('body == ', value)
+
+        if(title && descript && value){
+          const modifData = {
+            id: articleData.id,
+            title: title,
+            description: descript,
+            body: value,
+            category_id: selectedMenu.id,
+            lang: selectedLang.tag
+          }
+
+          const paramModif = {query: 'updateArticle', param: [modifData]}
+          fetch(`${ROOT_URL}/api/knexApi`, {
+            method: "POST",
+            body: JSON.stringify(paramModif),
+            headers: {
+              "Content-type" : "application/json"
+            }
+          }).then((res) => res.json())
+            .then((data) => {
+              newArticleData.title = title
+              newArticleData.description = descript
+              newArticleData.body = value
+              newArticleData.lang = selectedLang.tag
+              newArticleData.category_en = selectedMenu.en
+              newArticleData.category_fr = selectedMenu.fr
+              dispatchArticle({type: 'ONECHANGE', result: newArticleData}) // pour changer instantanément la liste article
+
+              setIsLoading(false)
+              setModalShow(false)
+            })
+
+        }else{
+          setIsLoading(false)
+        }
+
       }
    
     
@@ -214,11 +267,127 @@ const FormArticle = ({
 
   useEffect(() => {
     setValue(articleData.body)
+    setFlash(articleData.flash)
+    setHot(articleData.hot)
+    setSlide(articleData.slide)
+
+    if(articleData.category_en){
+      setSelectedMenu(listCategories.find(item => item.en === articleData.category_en))
+    }
+
+    // if(articleData.lang){
+    //   setSelectedMenu(lang.find(item => item.tag === articleData.lang))
+    // }
   }, [])
+
+  const flashStyle = flash ? "bg-red-600" : "bg-main-500"
+  const hotStyle = hot ? "bg-orange-600" : "bg-main-500"
+  const slideStyle = slide ? "bg-blue-600" : "bg-main-500"
+
+  const flashHandler = () => {
+    const param = {query: 'checkFlash', param: [true, 'fr']}
+    fetch(`${ROOT_URL}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(param),
+      headers: {
+        "Content-type" : "application/json"
+      } 
+    }).then((res) => res.json())
+    .then(data => {
+      const numberOfFlash = data.result[0].flash
+      if(numberOfFlash > 3 && !flash){
+        toast.error('Nombre maximal atteint!')
+      }else{
+        const flashParam = {query: 'updateFlash', param: [articleData.id,!flash]}
+        fetch(`${ROOT_URL}/api/knexApi`, {
+          method: "POST",
+          body: JSON.stringify(flashParam),
+          headers: {
+            "Content-type" : "application/json"
+          }
+        }).then((res) => res.json())
+          .then(data => {
+            toast.success("mise à jour réussi avec succès!")
+            newArticleData.flash = !flash
+           dispatchArticle({type: 'ONECHANGE', result: newArticleData})
+            setFlash(!flash)
+          })
+      }
+    })
+  }
+
+
+  const slideHandler = () => {
+    const param = {query: 'checkSlide', param: [true, 'fr']}
+    fetch(`${ROOT_URL}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(param),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+    .then(data => {
+      const numberOfSlide = data.result[0].slide
+      if(numberOfSlide >= 4 && slide){
+        toast.error('Nombre maximal atteint!')
+      }else{
+        const slideParam = {query: 'updateSlide', param: [articleData.id,!slide]}
+        fetch(`${ROOT_URL}/api/knexApi`, {
+          method: "POST",
+          body: JSON.stringify(slideParam),
+          headers: {
+            "Content-type" : "application/json"
+          }
+        }).then((res) => res.json())
+          .then(data => {
+            toast.success("mise à jour réussi avec succès!")
+            newArticleData.slide = !slide
+            dispatchArticle({type: 'ONECHANGE', result: newArticleData})
+            setSlide(!slide)
+          })
+      }
+    })
+  }
+  const hotHandler = () => {
+    const param = {query: 'checkHot', param: [true, 'fr']}
+    fetch(`${ROOT_URL}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(param),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+    .then(data => {
+      const numberOfHot = data.result[0].hot
+      if(numberOfHot >= 1 && !hot){
+        toast.error('Nombre maximal atteint!')
+      }else{
+        const hotParam = {query: 'updateHot', param: [articleData.id,!hot]}
+        fetch(`${ROOT_URL}/api/knexApi`, {
+          method: "POST",
+          body: JSON.stringify(hotParam),
+          headers: {
+            "Content-type" : "application/json"
+          }
+        }).then((res) => res.json())
+          .then(data => {
+            toast.success("mise à jour réussi avec succès!")
+            newArticleData.hot = !hot
+            dispatchArticle({type: 'ONECHANGE', result: newArticleData})
+            setHot(!hot)
+          })
+      }
+    })
+  }
+
+
   return (
     <>
       <section className={`w-[90%] mx-auto`}>
-        <h3 className="text-xl font-semibold tracking-wide mb-4">{header}</h3>
+        <h3 className=" text-xl font-semibold tracking-wide mb-4">{header}</h3>
+        <Toaster toastOptions={{
+          className: 'text-sm'
+        }}/>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="flex gap-6 ">
             <div
@@ -289,15 +458,15 @@ const FormArticle = ({
               </div>
               {pushBtn && (
                 <div className="flex gap-3">
-                  <button className="flex items-center bg-main-500 gap-2 text-white p-2 rounded-lg active:scale-95 transition">
-                    <BoltIcon className="h-5 text-red-500" />
+                  <button type="button" className={`flex items-center ${flashStyle} gap-2 text-white p-2 rounded-lg active:scale-95 transition`} onClick={flashHandler}>
+                    <BoltIcon className="h-5" />
                     <span>Flash info</span>
                   </button>
-                  <button className="flex items-center bg-main-500 gap-2 text-white p-2 rounded-lg active:scale-95 transition">
+                  <button type="button" className={`flex items-center ${slideStyle} gap-2 text-white p-2 rounded-lg active:scale-95 transition`} onClick={slideHandler}>
                     <HomeIcon className="h-5" />
                     <span>Slider</span>
                   </button>
-                  <button className="flex items-center bg-main-500 gap-2 text-white p-2 rounded-lg active:scale-95 transition">
+                  <button type="button" className={`flex items-center ${hotStyle} gap-2 text-white p-2 rounded-lg active:scale-95 transition`} onClick={hotHandler}>
                     <FireIcon className="h-5" />
                     <span>Hot staff</span>
                   </button>
@@ -317,16 +486,25 @@ const FormArticle = ({
 
           <div className="flex gap-12 mt-8">
             <button
+              type="button"
               className="flex items-center bg-[#555555] text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md"
               onClick={() => setModalShow(false)}
+              disabled={isLoading}
             >
               <XMarkIcon className="h-5" />
               <span>Annuler</span>
             </button>
             <button
-              className="flex items-center bg-main-500 text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md"
-            >
-              <CheckIcon className="h-5" />
+              type="submit"
+              className={`flex items-center ${isLoading ? 'bg-gray-400' : 'bg-main-500'} text-white font-semibold gap-2 px-4 py-2 rounded-full active:scale-95 shadow-md`}
+              disabled={isLoading}
+           >
+              
+              {isLoading ? (<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>) : <CheckIcon className="h-5" />}
+
               <span>{submitBtn}</span>
             </button>
           </div>

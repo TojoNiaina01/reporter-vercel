@@ -1,29 +1,43 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import AsideRecentPopular from "@/components/pageIndiv/AsideRecentPopular";
 import HeaderCategory from "@/components/HeaderCategory";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
-import {
-  PauseCircleIcon,
-  PlayCircleIcon,
-  SpeakerWaveIcon,
-  SpeakerXMarkIcon,
-} from "@heroicons/react/24/solid";
 import Image from "next/image";
 import DateAuteur from "@/components/DateAuteur";
 import { Jost } from "next/font/google";
 import { NotFoundBg, Profil, PubliciteDeux } from "@/public/assets/img";
-import { Vector } from "@/public/assets/svg";
+//import { Vector } from "@/public/assets/svg";
 import Title from "@/components/Title";
 import Hastag from "@/components/Hastag";
 import ReviewWithStars from "@/components/ReviewWithStars";
+import moment from "moment";
+import parse from "html-react-parser"
+import { dataFilter } from "@/config/dataFilter";
+import localStorage from "localStorage";
 
-const jost = Jost({ subsets: ["latin"], weight: "600" });
+const jost = Jost({ subsets: ["latin"] });
 
-const Articless = ({ enCourData, articleRecent, articlePopular }) => {
+
+const Articless = ({ enCourData, articleRecent, articlePopular, articleData, listRecentArticlesEn, listRecentArticlesFr }) => {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlayed, setIsPlayed] = useState(true);
+  const [listRecent, setListRecent] = useState(listRecentArticlesEn)
+  const [body, setBody] = useState("")
   const videoRef = useRef();
+  const storage = JSON.parse(localStorage.getItem('token'))
+
+  console.log("list recent article en anglais ",listRecentArticlesEn)
+  useEffect(() => {
+    setBody(parse(articleData.body))
+
+    if(storage.lang === 'fr'){
+      setListRecent(listRecentArticlesFr)
+    }
+
+
+  },[])
+
   const play = () => {
     setIsPlayed((value) => !value);
     videoRef.current.play();
@@ -35,14 +49,14 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
   return (
     <>
       <Head>
-        <title>{enCourData.titre}</title>
+        <title>{articleData.title}</title>
       </Head>
       <section className="mt-10 mx-2">
         <div className="flex justify-between items-center gap-1 lg:items-start">
           <div>
             <HeaderCategory title="article" style />
             <p className="text-xs lg:text-sm font-semibold tracking-wide">
-              {enCourData.titre}
+              {articleData.title}
             </p>
           </div>
           <div className="z-10 absolute right-5 md:static">
@@ -60,117 +74,88 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
           {/*Main ariticles*/}
           <div>
             <div className="space-y-4">
-              <div className="relative w-full h-[250px] lg:h-[450px] lg:rounded">
-                <Image
-                  src={enCourData.img}
-                  className="object-cover"
-                  fill
-                  alt="Image article blog"
-                />
-              </div>
-              <div className="relative group ">
-                <video
-                  src={enCourData.video}
-                  type="video/mp4"
-                  play
-                  muted={isMuted}
-                  loop
-                  ref={videoRef}
-                />
-                <div className="absolute right-5 bottom-5 text-main-500">
-                  {isMuted ? (
-                    <SpeakerXMarkIcon
-                      className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={() => setIsMuted((value) => !value)}
-                    />
-                  ) : (
-                    <SpeakerWaveIcon
-                      className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={() => setIsMuted((value) => !value)}
-                    />
-                  )}
+            {articleData.image?.map((image) => (
+                  <div className="relative w-full h-[250px] lg:h-[450px] lg:rounded">
+                  <Image
+                    src={`/uploads/images/${image.image_name}.${image.image_extension}`}
+                    className="object-cover"
+                    fill
+                    alt="Image article blog"
+                  />
                 </div>
-                <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  {isPlayed ? (
-                    <PlayCircleIcon
-                      className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={play}
-                    />
-                  ) : (
-                    <PauseCircleIcon
-                      className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                      onClick={pause}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="relative w-full h-[250px] lg:h-[450px] lg:rounded">
-                <Image
-                  src={enCourData.img}
-                  className="object-cover"
-                  fill
-                  alt="Image article blog"
-                />
-              </div>
+                  ))}
+             
+              {
+              //   <div className="relative group ">
+              //   <video
+              //     src={enCourData.video}
+              //     type="video/mp4"
+              //     play
+              //     muted={isMuted}
+              //     loop
+              //     ref={videoRef}
+              //   />
+              //   <div className="absolute right-5 bottom-5 text-main-500">
+              //     {isMuted ? (
+              //       <SpeakerXMarkIcon
+              //         className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+              //         onClick={() => setIsMuted((value) => !value)}
+              //       />
+              //     ) : (
+              //       <SpeakerWaveIcon
+              //         className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+              //         onClick={() => setIsMuted((value) => !value)}
+              //       />
+              //     )}
+              //   </div>
+              //   <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              //     {isPlayed ? (
+              //       <PlayCircleIcon
+              //         className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+              //         onClick={play}
+              //       />
+              //     ) : (
+              //       <PauseCircleIcon
+              //         className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+              //         onClick={pause}
+              //       />
+              //     )}
+              //   </div>
+              // </div>
+              }
+
             </div>
-            <DateAuteur date={enCourData.date} auteur={enCourData.auteur} />
+            <DateAuteur date={moment(articleData.created_at).format('MMMM Do YYYY')} auteur={articleData.author} />
             <hr className="my-2" />
             <Title style="text-xl tracking-wide my-2 leading-6 lg:text-2xl lg:leading-5">
-              {enCourData.titre}
+              {articleData.title}
             </Title>
 
             <p className="text-sm tracking-wide text-gray-600">
-              {enCourData.description}
+              {articleData.description}
             </p>
-
-            <div className="relative w-full h-fit py-5 mt-10 px-10">
-              <Image
-                src={Vector}
-                className="absolute -top-5 w-[70px] h-[70px] lg:left-5"
-                alt="graphics decoration"
-              />
-              <Image src={NotFoundBg} fill alt="graphics decoration" />
-              <q className="text-[11px] tracking-wide uppercase font-semibold ">
-                As a participatory media culture, social media platforms or
-                social networking sites are forms of mass communication that,
-                through media technologies, allow large amounts of product and
-                distribution of content to reach the largest audience possible.
-              </q>
-              <span className="border-b-2 border-black block my-4" />
-              <p className={`${jost.className}`}>Ralph Edwardes</p>
-            </div>
-
-            <div className="mt-10">
-              <Title style="text-xl lg:text-2xl">
-                Pariatur cupidatat Lorem irure nisi Velit qui
-              </Title>
-              <p className="text-sm tracking-wide text-gray-600 my-2">
-                Pariatur cupidatat Lorem irure nisi. Velit qui irure consectetur
-                do cupi roident id est ex sunt nostrud nisi mine consectetur do
-                cupi roident id est ex sunt nostrud nisi minim ut. Cupidatat
-                velit dolore consectetur deserunt laboris magna eiusmod aliquip
-                consectetur commodo in eiusmod aliqua cupidatat. Nostrud laboris
-                et eu mollit qui esse dolore exercitation in dolore sint nisi eu
-                aliqua.
-              </p>
-              <ul className="list-decimal mx-4 text-sm text-gray-600">
-                <li className="my-4 tracking-wide">
-                  As a participatory media culture, social media platforms or
-                  social networking sites are forms of mass communication that,
-                  through media technologies.
-                </li>
-                <li className="my-4 tracking-wide">
-                  Allow large amounts of product and distribution of content to
-                  reach the largest audience possible.
-                </li>
-                <li className="my-4 tracking-wide">
-                  However, there are downsides to virtual promotions as servers,
-                  systems, and websites may crash, fail, or become overloaded
-                  with information. You also can stand risk of losing uploaded
-                  information and storage and at a use can also be effected by a
-                  number of outside variables.
-                </li>
-              </ul>
+              {
+              //    <div className="relative w-full h-fit py-5 mt-10 px-10">
+              //    <Image
+              //      src={Vector}
+              //      className="absolute -top-5 w-[70px] h-[70px] lg:left-5"
+              //      alt="graphics decoration"
+              //    />
+              //    <Image src={NotFoundBg} fill alt="graphics decoration" />
+              //    <q className="text-[11px] tracking-wide uppercase font-semibold ">
+              //      As a participatory media culture, social media platforms or
+              //      social networking sites are forms of mass communication that,
+              //      through media technologies, allow large amounts of product and
+              //      distribution of content to reach the largest audience possible.
+              //    </q>
+              //    <span className="border-b-2 border-black block my-4" />
+              //    <p className={`${jost.className}`}>Ralph Edwardes</p>
+              //  </div>
+   
+              }
+           
+            <div className={`${jost.className} mt-10`}>
+              {body}
             </div>
 
             <hr className="mt-10" />
@@ -214,7 +199,7 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
           </div>
           {/*Aside*/}
           <AsideRecentPopular
-            articleRecent={articleRecent}
+            articleRecent={listRecent}
             articlePopular={articlePopular}
           />
         </div>
@@ -235,38 +220,101 @@ const Articless = ({ enCourData, articleRecent, articlePopular }) => {
 export default Articless;
 
 export async function getStaticProps({ params }) {
-  const linkBeautify = (link) => {
-    return link.split(" ").join("-");
-  };
-  const { articless } = params;
-  const data = await import(`/data/articles.json`);
+  const baseUrl = process.env.ROOT_URL
+  const articleID = parseInt(params.articless[0])
+  let articleData = []
+  let listRecentArticlesFr = [] // asina ny liste ny recent article (6 farany)
+  let listRecentArticlesEn = [] // asina ny liste ny recent article (6 farany)
+
+    /* -------------------------------------------------------------------------- */
+    /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramArticle = {query: 'getArticle', param: [articleID]} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramArticle),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => articleData = data)
+
   const dataAside = await import(`/data/thumbnail.json`);
   const articleRecent = dataAside.ArticleRecentMain;
   const articlePopular = dataAside.ArticlePopular;
 
-  const enCourData = data.pages
-    .find((obj) => obj.name === "culture")
-    .data.find((obj) => linkBeautify(obj.titre) === articless[0]);
+   /* -------------------------------------------------------------------------- */
+    /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramRecentFr = {query: 'getRecentArticle', param: ['fr']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramRecentFr),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listRecentArticlesFr = data)
+
+
+    /* ----------------------------------- EN ----------------------------------- */
+
+    const paramRecentEn = {query: 'getRecentArticle', param: ['en']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramRecentEn),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listRecentArticlesEn = data)
+
 
   return {
     props: {
-      enCourData,
       articleRecent,
       articlePopular,
+      articleData: articleData.result[0],
+      listRecentArticlesEn: dataFilter(listRecentArticlesEn.result, "category_id", 3),
+      listRecentArticlesFr: dataFilter(listRecentArticlesFr.result, "category_id", 3)
     },
   };
 }
 
-export async function getStaticPaths(context) {
+export async function getStaticPaths() {
   const linkBeautify = (link) => {
     return link.split(" ").join("-");
   };
-  const data = await import(`/data/articles.json`);
-  const paths = data.pages
-    .find((obj) => obj.name === "culture")
-    .data.map((item) => ({
-      params: { articless: [linkBeautify(item.titre)] },
-    }));
+  const baseUrl = process.env.ROOT_URL
+  let listArticle = []
+
+   /* -------------------------------------------------------------------------- */
+    /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramArticle = {query: 'getFullArticles', param: false} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramArticle),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listArticle = data)
+
+     const paths = listArticle.result.map((article) => ({
+        params: {articless: [`${article.id}`, linkBeautify(article.title)]}
+      }))
+
+      console.log("paths == ", paths[0].params.articless)
 
   return {
     paths,

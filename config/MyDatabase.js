@@ -55,19 +55,29 @@ class MyDatabase {
 
     async getArticle(id) {
         const res = await knex({a: 'articles'})
-                     .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
-                     .select(
-                            'a.id', 
-                            'a.title', 
-                            'a.body', 
-                            'a.description', 
-                            'a.author', 
-                            {image_name: 'img.name'}, 
-                            {image_extension: 'img.extension'},
-                            {image_size: 'img.size'}, 
-                            {image_type: 'img.type'}
-                            
-                            )
+                    .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+                    .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+                    .select(
+                        'a.id', 
+                        'a.title', 
+                        'a.body', 
+                        'a.description', 
+                        'a.author', 
+                        'a.lang',
+                        'a.created_at',
+                        'a.flash', 
+                        'a.hot', 
+                        'a.slide', 
+                        'a.created_at',
+                        {category_fr: 'c.fr'},
+                        {category_en: 'c.en'},
+                        {category_id: 'c.id'},
+                        {image_name: 'img.name'}, 
+                        {image_extension: 'img.extension'},
+                        {image_size: 'img.size'}, 
+                        {image_type: 'img.type'}
+                        
+                        )
                       .where('a.id', id)
         
 
@@ -88,8 +98,13 @@ class MyDatabase {
                'a.author', 
                'a.lang',
                'a.created_at',
+               'a.flash', 
+               'a.hot', 
+               'a.slide', 
+               'a.created_at',
                {category_fr: 'c.fr'},
                {category_en: 'c.en'},
+               {category_id: 'c.id'},
                {image_name: 'img.name'}, 
                {image_extension: 'img.extension'},
                {image_size: 'img.size'}, 
@@ -115,14 +130,20 @@ class MyDatabase {
                             'a.description', 
                             'a.author', 
                             'a.lang',
+                            'a.flash', 
+                            'a.hot', 
+                            'a.slide', 
+                            'a.created_at',
                             {category_fr: 'c.fr'},
                             {category_en: 'c.en'},
+                            {category_id: 'c.id'},
                             {image_name: 'img.name'}, 
                             {image_extension: 'img.extension'},
                             {image_size: 'img.size'}, 
                             {image_type: 'img.type'}
                             
                             )
+                        .orderBy('a.id', 'desc')
         
 
         const resToJson = JSON.parse(JSON.stringify(res))
@@ -130,6 +151,172 @@ class MyDatabase {
         return ObjectFormater(resToJson, 'image')
     }
 
+    async getArticleByCategoryLang(category_id, lang){
+        const res = await knex({a: 'articles'})
+                     .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+                     .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+                     .select(
+                            'a.id', 
+                            'a.title', 
+                            'a.body', 
+                            'a.description', 
+                            'a.author', 
+                            'a.lang',
+                            'a.flash', 
+                            'a.hot', 
+                            'a.slide', 
+                            'a.created_at',
+                            {category_fr: 'c.fr'},
+                            {category_en: 'c.en'},
+                            {category_id: 'c.id'},
+                            {image_name: 'img.name'}, 
+                            {image_extension: 'img.extension'},
+                            {image_size: 'img.size'}, 
+                            {image_type: 'img.type'}
+                            
+                            )
+                        .where({'c.id': category_id, 'a.lang': lang})
+                        .orderBy('a.id', 'desc')
+        
+
+        const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
+
+   async getSlideByLang(lang){
+        const res = await knex({a: 'articles'})
+        .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+        .select(
+            'a.id', 
+            'a.title', 
+            'a.body', 
+            'a.description', 
+            'a.author', 
+            'a.lang',
+            'a.flash', 
+            'a.hot', 
+            'a.slide', 
+            'a.created_at',
+            {category_fr: 'c.fr'},
+            {category_en: 'c.en'},
+            {category_id: 'c.id'},
+            {image_name: 'img.name'}, 
+            {image_extension: 'img.extension'},
+            {image_size: 'img.size'}, 
+            {image_type: 'img.type'}
+            
+            )
+        .where({'a.lang': lang, 'a.slide': true})
+
+
+            const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
+
+
+   async getHotByLang(lang){
+        const res = await knex({a: 'articles'})
+        .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+        .select(
+            'a.id', 
+            'a.title', 
+            'a.body', 
+            'a.description', 
+            'a.author', 
+            'a.lang',
+            'a.flash', 
+            'a.hot', 
+            'a.slide', 
+            'a.created_at',
+            {category_fr: 'c.fr'},
+            {category_en: 'c.en'},
+            {category_id: 'c.id'},
+            {image_name: 'img.name'}, 
+            {image_extension: 'img.extension'},
+            {image_size: 'img.size'}, 
+            {image_type: 'img.type'}
+            
+            )
+        .where({'a.lang': lang, 'a.hot': true})
+
+
+            const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
+
+    async getRecentArticle(lang){
+        const res = await knex({a: 'articles'})
+        .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+        .select(
+            'a.id', 
+            'a.title', 
+            'a.body', 
+            'a.description', 
+            'a.author', 
+            'a.lang',
+            'a.flash', 
+            'a.hot', 
+            'a.slide', 
+            'a.created_at',
+            {category_fr: 'c.fr'},
+            {category_en: 'c.en'},
+            {category_id: 'c.id'},
+            {image_name: 'img.name'}, 
+            {image_extension: 'img.extension'},
+            {image_size: 'img.size'}, 
+            {image_type: 'img.type'}
+            
+            )
+        .where({'a.lang': lang})
+        .orderBy('a.id', 'desc')
+
+
+        const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
+
+
+    async getMostReadByLang(lang){
+        const res = await knex({a: 'articles'})
+        .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+        .select(
+            'a.id', 
+            'a.title', 
+            'a.body', 
+            'a.description', 
+            'a.author', 
+            'a.lang',
+            'a.flash', 
+            'a.hot', 
+            'a.slide', 
+            'a.created_at',
+            'a.views',
+            {category_fr: 'c.fr'},
+            {category_en: 'c.en'},
+            {category_id: 'c.id'},
+            {image_name: 'img.name'}, 
+            {image_extension: 'img.extension'},
+            {image_size: 'img.size'}, 
+            {image_type: 'img.type'}
+            
+            )
+        .where({'a.lang': lang})
+        .orderBy('a.views', 'desc')
+
+
+        const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
+    
     async addArticle({title, body, description, author, category_id, lang}){
        let articleID = await knex
                         .insert({
@@ -139,7 +326,10 @@ class MyDatabase {
                             author,
                             category_id,
                             created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
-                            lang
+                            lang,
+                            flash: false,
+                            hot: false,
+                            slide: false
                         }) 
                         .into('articles')
         articleID = JSON.parse(JSON.stringify(articleID))
@@ -147,6 +337,7 @@ class MyDatabase {
         return this.getArticle(articleID[0])
     }
 
+    
     async deleteArticle(id){
         await knex('articles')
              .where('id', id)
@@ -154,8 +345,56 @@ class MyDatabase {
         return id
     }
 
+    async updateArticle({id, title, description, body, category_id, lang}){
+        return await knex('articles')
+                    .where('id', id)
+                    .update({
+                        title,
+                        description,
+                        body,
+                        category_id,
+                        lang,
+                        created_at: moment().format("YYYY-MM-DD hh:mm:ss")
+                    })
+    }
 
+    async updateFlash(id, flash){
+        return await knex('articles')
+                    .where('id', id)
+                    .update({
+                        flash: flash
+                    })
+    }
+    async updateHot(id, hot){
+        return await knex('articles')
+                    .where('id', id)
+                    .update({
+                        hot: hot
+                    })
+    }
+    async updateSlide(id, slide){
+        return await knex('articles')
+                    .where('id', id)
+                    .update({
+                        slide: slide
+                    })
+    }
 
+    async checkFlash(flash, lang){
+        return await knex('articles')
+                    .count('*', {as: 'flash'})
+                    .where({flash: flash, lang: lang})
+    }
+    async checkSlide(slide, lang){
+        return await knex('articles')
+                    .count('*', {as: 'slide'})
+                    .where({slide: slide, lang: lang})
+    }
+    async checkHot(hot, lang){
+        return await knex('articles')
+                    .count('*', {as: 'hot'})
+                    .where({hot: hot, lang: lang})
+    }
 
 
 
@@ -284,6 +523,7 @@ class MyDatabase {
 
         return JSON.parse(JSON.stringify(res))
      }
+
 }
 
 export default MyDatabase;

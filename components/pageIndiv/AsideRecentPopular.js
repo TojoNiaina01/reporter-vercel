@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import HeaderCategory from "@/components/HeaderCategory";
 import { Publicite } from "@/public/assets/img";
 import Hastag from "@/components/Hastag";
@@ -9,6 +9,8 @@ import Title from "@/components/Title";
 import DateAuteur from "@/components/DateAuteur";
 import Image from "next/image";
 import Link from "next/link";
+import localStorage from "localStorage";
+import moment from "moment";
 
 const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
   const TagDeux = [
@@ -25,31 +27,39 @@ const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
     "maison blanche",
   ];
 
+  const [lang, setLang] = useState('en')
+
+  useEffect(() => {
+    setLang(JSON.parse(localStorage.getItem('token')).lang)
+  }, [])
+
   return (
     <aside className="lg:flex lg:flex-col lg:basis-1/5">
       <HeaderCategory title="Recent Articles" />
       <div className="space-y-7 lg:space-y-8">
         {articleRecent?.map(
-          ({ img, date, auteur, titre, description, category }) => (
+          (article) => (
             <div
               key={uuidv4()}
               className="group flex md:items-center gap-2 cursor-pointer md:gap-5 lg:flex-col lg:gap-0 lg:order-1"
             >
               <div className="relative w-[50%] h-[200px] md:w-[40%] lg:w-full lg:h-[150px]">
-                <Hastag style="absolute top-2 z-10  left-4">{category}</Hastag>
+                <Hastag style="absolute top-2 z-10  left-4">
+                  {(lang ? (lang === "fr" ? article.category_fr : article.category_en) : "")}
+                  </Hastag>
                 <Image
-                  src={img}
+                  src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                   fill
                   className="object-cover"
                   alt="Image article blog"
                 />
               </div>
               <div className="w-[55%] lg:w-full">
-                <Title>{titre}</Title>
+                <Title>{article.title.length > 50 ? `${article.title.substring(0,50)}...` : article.title}</Title>
                 <p className="text-xs  text-gray-500 md:p md:text-sm lg:hidden">
-                  {description}
+                {article.description.length > 255 ? `${article.description.substring(0,255)}...` : article.description}
                 </p>
-                <DateAuteur date={date} auteur={auteur} />
+                <DateAuteur  date={moment(article.created_at).format('MMMM Do YYYY')} auteur={article.author} />
               </div>
             </div>
           )

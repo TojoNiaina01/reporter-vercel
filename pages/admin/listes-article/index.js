@@ -1,10 +1,13 @@
-import React, {createContext} from "react";
+import React, {useReducer} from "react";
 import { ArticleOne } from "@/public/assets/img";
 import Article from "@/components/admin/Article";
-import {listCategories} from "@/context/allContext"
+import {listCategories, listArticlesContext} from "@/context/allContext"
+import { articleAction } from "@/context/allAction";
+import { getTest } from "@/config/storage";
 
 const ListeArticle = ({categories, listArticles}) => {
-
+console.log(getTest)
+  const [state, dispatch] = useReducer(articleAction, listArticles)
   
 
   const tabsHead = [
@@ -58,7 +61,9 @@ const ListeArticle = ({categories, listArticles}) => {
 
   return (
     <listCategories.Provider value={categories}>
-      <Article header="Listes Articles." tabhead={tabsHead} data={data} listArticles={listArticles} />;
+      <listArticlesContext.Provider value={{state, dispatch}}>
+        <Article header="Listes Articles." tabhead={tabsHead} data={data} listArticles={state} dispatchArticle={dispatch} listCategories={categories} />;
+      </listArticlesContext.Provider>
     </listCategories.Provider>
   )
 };
@@ -66,8 +71,9 @@ const ListeArticle = ({categories, listArticles}) => {
 export default ListeArticle;
 
 
-export async function getStaticProps(context){
+export async function getStaticProps(){
   const baseUrl = process.env.ROOT_URL
+  console.log(getTest)
   const param = {query: 'getFullCategories', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
   const paramArticle = {query: 'getArticlesByLang', param: ["fr"]}// query: ilay anaran'ilay méthode ao @ MyDatabase
   let listCategories = []

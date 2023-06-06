@@ -14,7 +14,7 @@ const ListUser = () => {
     { name: "Jean de Dieu", role: "Editeur" },
   ];
   return (
-    <Article header="Listes Utilisateurs." tabhead={tabhead} data={data} user />
+    <Article header="Listes Utilisateurs." tabhead={tabhead} data={data} user listCategories={[]} listArticles={[]} />
   );
 };
 
