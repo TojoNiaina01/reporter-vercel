@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Hastag from "@/components/Hastag";
 import Image from "next/image";
 import { ArticleDemo } from "@/public/assets/img";
@@ -9,33 +9,32 @@ import { useRouter } from "next/router";
 
 const jost = Jost({ subsets: ["latin"], weight: "400" });
 
-const Slider = ({dataSlide}) => {
-  const router = useRouter()
-  const lang = JSON.parse(localStorage.getItem('token')).lang
-  const [hastag, setHasTag] = useState()
+const Slider = ({ dataSlide }) => {
+  const router = useRouter();
+  const lang = JSON.parse(localStorage.getItem("token")).lang;
+  const [hastag, setHasTag] = useState();
   const linkBeautify = (link) => {
     const newLink = link.replace(/[;:',\s]/g, "-");
-    return newLink.toLowerCase()
+    return newLink.toLowerCase();
   };
 
   useEffect(() => {
-    if(lang === 'en'){
-      setHasTag(dataSlide.category_en)
-    }else{
-      setHasTag(dataSlide.category_fr)
+    if (lang === "en") {
+      setHasTag(dataSlide.category_en);
+    } else {
+      setHasTag(dataSlide.category_fr);
     }
-  },[])
+  }, []);
 
   const pushToArticleHandler = () => {
-    router.push(`/article/${dataSlide.id}/${linkBeautify(dataSlide.title)}`)
-  }
+    router.push(`/article/${dataSlide.id}/${linkBeautify(dataSlide.title)}`);
+  };
 
-  
   return (
-    <div className="relative mx-3 border-[1px] border-gray-300 rounded-md shadow-md md:border-0 md:shadow-none md:h-[550px]  lg:mx-0 2xl:h-[700px]">
+    <div className="relative mx-3 rounded-md border-[1px] border-gray-300 shadow-md md:h-[550px] md:border-0 md:shadow-none  lg:mx-0 2xl:h-[700px]">
       <Hastag style="absolute top-2 z-10  left-4 bg-main-400">{hastag}</Hastag>
       <div className="relative max-w-6xl">
-        <div className="relative w-full h-[240px] md:h-[450px] 2xl:h-[600px] ">
+        <div className="relative h-[240px] w-full md:h-[450px] 2xl:h-[600px] ">
           <Image
             src={`/uploads/images/${dataSlide.image[0].image_name}.${dataSlide.image[0].image_extension}`}
             fill
@@ -47,19 +46,26 @@ const Slider = ({dataSlide}) => {
           />
         </div>
         <div
-          className="bg-white px-6 py-4 w-full
-        md:w-fit md:px-10 md:absolute md:-bottom-24 md:right-1/2 md:translate-x-1/2 md:border-2 md:border-gray-200 z-50  rounded "
+          className="z-50 w-full rounded bg-white
+        px-6 py-4 md:absolute md:-bottom-24 md:right-1/2 md:w-fit md:translate-x-1/2 md:border-2 md:border-gray-200 md:px-10  lg:w-[70%] "
         >
           <DateAuteur date="JUL 06.2021" auteur="INDEPENDENT REPORTER" />
           <h3
-            className={` text-[30px]  lg:text-3xl font-semibold  whitespace-nowrap 2xl:text-4xl ${jost.className}`}
+            className={`  text-[30px] font-semibold  lg:text-3xl 2xl:text-4xl ${jost.className}`}
           >
-           {dataSlide.title.length > 50 ? `${dataSlide.title.substring(0,50)}...` : dataSlide.title}
+            {dataSlide.title.length > 50
+              ? `${dataSlide.title.substring(0, 50)}...`
+              : dataSlide.title}
           </h3>
-          <p className=" text-sm leading-5  text-gray-500 tracking-wide pb-4 break-normal 2xl:text-base">
-            {dataSlide.description.length > 255 ? `${dataSlide.description.substring(0,255)}` : dataSlide.description}
+          <p className=" break-normal pb-4  text-sm leading-5 tracking-wide text-gray-500 2xl:text-base">
+            {dataSlide.description.length > 255
+              ? `${dataSlide.description.substring(0, 255)}`
+              : dataSlide.description}
           </p>
-          <button onClick={pushToArticleHandler} className="text-white px-6 py-3 bg-main-400 rounded-full shadow-lg #F9E0E5 hover:underline active:scale-95">
+          <button
+            onClick={pushToArticleHandler}
+            className="#F9E0E5 rounded-full bg-main-400 px-6 py-3 text-white shadow-lg hover:underline active:scale-95"
+          >
             Read more
           </button>
         </div>

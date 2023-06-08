@@ -9,7 +9,7 @@ export const ModalContext = React.createContext(undefined, undefined);
 
 const Layout = ({ children, listCategories }) => {
   const [newsLetterModal, setNewsLetterModal] = useState(false);
-  console.log("list categ dans layout = ", listCategories)
+  console.log("list categ dans layout = ", listCategories);
   return (
     <div className="app">
       <ModalContext.Provider value={{ newsLetterModal, setNewsLetterModal }}>
@@ -17,7 +17,7 @@ const Layout = ({ children, listCategories }) => {
         <header>
           <Navbar />
           <Flash />
-          <Menu listCategories={listCategories}/>
+          <Menu listCategories={listCategories} />
         </header>
 
         {children}
