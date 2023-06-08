@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
-
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
-
+import { htmlToText } from "html-to-text";
 import "react-quill/dist/quill.snow.css";
+
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -12,7 +12,7 @@ const modules = {
     ["blockquote"],
     [{ indent: "-1" }, { indent: "+1" }],
     [{ direction: "rtl" }],
-    [{ color: [] }, { background: [] }],
+    [{ color: [] }, { background: ["transparent"] }],
     [{ align: [] }],
   ],
 };

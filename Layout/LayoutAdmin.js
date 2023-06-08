@@ -14,6 +14,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { Popover } from "@headlessui/react";
 import { Jost } from "next/font/google";
+import useMediaQuery from "@/hook/useMediaQuery";
+import Errors from "@/pages/404";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
@@ -34,6 +36,18 @@ const ActiveLink = ({ children, href }) => {
 
 const LayoutAdmin = ({ children }) => {
   const router = useRouter();
+
+  const isAboveScreen = useMediaQuery("(min-width: 1024px)");
+
+  if (!isAboveScreen)
+    return (
+      <Errors
+        alert="Page Not Supported"
+        message="this page is only supported on desktop screen!"
+        backHome
+      />
+    );
+
   return (
     <section className="admin w-full max-w-7xl py-4">
       {/* HEADER */}
