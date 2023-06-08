@@ -9,8 +9,8 @@ const jost = Jost({ subsets: ["latin"], weight: "700" });
 const Flash = ({listFlash}) => {
   const [articles, setArticles] = useState(listFlash)
   const settings = {
-    prevArrow: <div></div>,
-    nextArrow: <div></div>,
+    prevArrow: <div />,
+    nextArrow: <div />,
     pauseOnHover: true,
     canSwipe: true,
     easing: "ease-out",

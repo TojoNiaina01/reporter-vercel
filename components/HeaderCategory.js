@@ -6,12 +6,12 @@ import useMediaQuery from "@/hook/useMediaQuery";
 import { Jost } from "next/font/google";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
-const HeaderCategory = ({ title, all, banner, style }) => {
+const HeaderCategory = ({ title, banner, style }) => {
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
   return (
     <div className="flex items-center gap-4 ">
       <h4
-        className={`whitespace-nowrap text-xl md:text-2xl 2xl:text-3xl font-bold first-letter:uppercase ${
+        className={`whitespace-nowrap text-xl font-bold first-letter:uppercase md:text-2xl 2xl:text-3xl ${
           style && "uppercase"
         } ${jost.className}`}
       >
@@ -20,13 +20,6 @@ const HeaderCategory = ({ title, all, banner, style }) => {
       {banner && (
         <div>
           <Image src={Border} alt="Graphic decoration" />
-        </div>
-      )}
-
-      {all && isAboveScreen && (
-        <div className="flex items-center gap-2 whitespace-nowrap cursor-pointer">
-          <p className={`uppercase text-xs ${jost.className}`}>view all</p>
-          <ArrowSmallRightIcon className="h-5 text-main-500" />
         </div>
       )}
     </div>

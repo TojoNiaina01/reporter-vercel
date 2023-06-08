@@ -25,8 +25,8 @@ const ActiveLink = ({ children, href }) => {
     <Link href={href}>
       <p
         className={`${
-          router.pathname === href ? "bg-main-500 rounded-xl text-white" : ""
-        } flex items-center gap-2  font-semibold text-sm py-3 px-4`}
+          router.pathname === href ? "rounded-xl bg-main-500 text-white" : ""
+        } flex items-center gap-2  px-4 py-3 text-sm font-semibold`}
       >
         {children}
       </p>
@@ -51,16 +51,16 @@ const LayoutAdmin = ({ children }) => {
   return (
     <section className="admin w-full max-w-7xl py-4">
       {/* HEADER */}
-      <div className="flex justify-between  items-center">
+      <div className="flex items-center  justify-between">
         <div className="cursor-pointer">
-          <h2 className={` ${jost.className} text-main-400 text-lg`}>
+          <h2 className={` ${jost.className} text-lg text-main-400`}>
             Welcome !
           </h2>
           <h4 className={`uppercase  ${jost.className} text-xl `}>
             Independent R.
           </h4>
         </div>
-        <div className="flex gap-8 items-center">
+        <div className="flex items-center gap-8">
           <Popover className="relative">
             <Popover.Button>
               <div className="flex items-center gap-2">
@@ -68,26 +68,22 @@ const LayoutAdmin = ({ children }) => {
                   <p className="text-xl font-semibold tracking-wide">
                     Govina A.
                   </p>
-                  <span className="font-thin text-sm text-[#898997]">
+                  <span className="text-sm font-thin text-[#898997]">
                     Administrator
                   </span>
                 </div>
                 <ChevronDownIcon
-                  className={`ui-open:rotate-180 ui-open:transform h-5 text-main-500 `}
+                  className={`h-5 text-main-500 ui-open:rotate-180 ui-open:transform `}
                 />
               </div>
             </Popover.Button>
             <Popover.Panel className="absolute bg-white">
-              <ul className="flex flex-col border-[1px] rounded-2xl p-4 mt-2 shadow-md">
-                <li className="flex gap-3 items-center px-3 py-2 rounded-3xl hover:bg-gray-100 cursor-pointer">
+              <ul className="mt-2 flex flex-col rounded-2xl border-[1px] p-4 shadow-md">
+                <li className="flex cursor-pointer items-center gap-3 rounded-3xl px-3 py-2 hover:bg-gray-100">
                   <HomeIcon className="h-5" />
                   <Link href="#">Home</Link>
                 </li>
-                <li className="flex gap-3 items-center px-3 py-2 rounded-3xl hover:bg-gray-100 cursor-pointer">
-                  <Cog6ToothIcon className="h-5" />
-                  <Link href="#">Settings</Link>
-                </li>
-                <li className="flex gap-3 items-center px-3 py-2 rounded-3xl hover:bg-gray-100 cursor-pointer">
+                <li className="flex cursor-pointer items-center gap-3 rounded-3xl px-3 py-2 hover:bg-gray-100">
                   <ArrowLeftOnRectangleIcon className="h-5" />
                   <a href="#">Logout</a>
                 </li>
@@ -98,8 +94,8 @@ const LayoutAdmin = ({ children }) => {
       </div>
 
       {/* ADMIN PANEL */}
-      <div className="flex mt-10">
-        <div className=" flex flex-col gap-4 p-4 border-2 border-gray-200 rounded-xl bg-[#F5F5F5]/40 h-[85vh] 2xl:h-[70vh] ">
+      <div className="mt-10 flex">
+        <div className=" flex h-[85vh] flex-col gap-4 rounded-xl border-2 border-gray-200 bg-[#F5F5F5]/40 p-4 2xl:h-[70vh] ">
           <ActiveLink href="/admin/listes-article">
             <NewspaperIcon className="h-5" />
             <span className="whitespace-nowrap">Listes article</span>
@@ -125,7 +121,7 @@ const LayoutAdmin = ({ children }) => {
             <span className="whitespace-nowrap">Ajout utilisateur</span>
           </ActiveLink>
 
-          <button className="bg-secondary-500 text-white py-2 rounded active:scale-95 transition mt-8">
+          <button className="mt-8 rounded bg-secondary-500 py-2 text-white transition active:scale-95">
             Logout
           </button>
         </div>

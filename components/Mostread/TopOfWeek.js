@@ -21,7 +21,7 @@ const TopOfWeek = () => {
   };
   return (
     <section className="mt-10">
-      <HeaderCategory title="Top of the week" all banner />
+      <HeaderCategory title="Top of the week" banner />
       <div
         className="flex overflow-x-scroll scrollbar-hide gap-6 lg:justify-between"
         ref={ArticleRef}

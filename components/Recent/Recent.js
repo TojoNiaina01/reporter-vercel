@@ -31,11 +31,6 @@ const Recent = ({dataRecent}) => {
             <SecondaryArticle key={uuidv4()} articleData={article}/>
           ))} 
 
-          <button
-            className={`hidden lg:block uppercase text-white bg-secondary-500 rounded-full py-2 shadow-md active:scale-95 text-xs  tracking-wide ${jost.className}`}
-          >
-            view all
-          </button>
         </div>
       </div>
     </section>
