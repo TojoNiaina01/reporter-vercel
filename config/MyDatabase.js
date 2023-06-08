@@ -500,7 +500,7 @@ class MyDatabase {
         const res = await knex({c: 'categories'})
                           .leftJoin({a: 'articles'}, 'c.id', 'a.category_id')
                           .leftJoin({ha: 'hastag_articles'}, 'ha.article_id', 'a.id')
-                          .leftJoin({h: 'hastag'}, 'ha.hastag_id', 'h.id')
+                          .innerJoin({h: 'hastag'}, 'ha.hastag_id', 'h.id')
                           .select(
                             'h.id',
                            'h.name',
