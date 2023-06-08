@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Publicite } from "@/public/assets/img";
 import Hastag from "@/components/Hastag";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import {v4 as uuidV4} from 'uuid'
 
 const indicators = (index) => (
   <span className="cursor-pointer p-[4px] bg-gray-300 rounded-full mx-1 indicator xl:p-[5px]" />
@@ -31,15 +32,17 @@ const settings = {
   autoplay: true,
 };
 
-const Banner = () => {
+const Banner = ({dataSlide}) => {
+
   return (
     <section className="flex gap-4 pt-5 w-full 2xl:justify-between">
       <div className=" w-full lg:w-[70%]  relative group">
         <Slide {...settings}>
-          <Slider />
-          <Slider />
-          <Slider />
-          <Slider />
+          {
+            dataSlide?.map((slide) => (
+              <Slider key={uuidV4()} dataSlide={slide}/>
+            ))
+          }
         </Slide>
       </div>
 

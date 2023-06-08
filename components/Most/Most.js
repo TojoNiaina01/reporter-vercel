@@ -4,8 +4,9 @@ import MainMost from "@/components/Most/MainMost";
 import { ArticlesContext } from "@/pages";
 import SecondaryMost from "@/components/Most/SecondaryMost";
 import useMediaQuery from "@/hook/useMediaQuery";
+import {v4 as uuidv4} from "uuid";
 
-const Most = () => {
+const Most = ({dataMostRead}) => {
   const { ArticleMostMain } = useContext(ArticlesContext);
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
   return (
@@ -13,14 +14,9 @@ const Most = () => {
       <div className="lg:w-[65%]">
         <HeaderCategory title="Most Read" all banner />
         <div className="grid grid-cols-2 gap-2 md:gap-6">
-          {ArticleMostMain?.map(({ img, titre, date, auteur, category }) => (
-            <MainMost
-              img={img}
-              titre={titre}
-              date={date}
-              auteur={auteur}
-              category={category}
-            />
+          {dataMostRead?.map((article) => (
+            
+            <MainMost key={uuidv4()} articleData={article}/>
           ))}
         </div>
       </div>

@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, {useContext} from "react";
 import { Cross } from "@/public/assets/svg";
 import Image from "next/image";
 import FormArticle from "@/components/admin/FormArticle";
+import { listCategories, listArticlesContext } from "@/context/allContext";
 
-const ModalArticle = ({ setModalShow }) => {
+const ModalArticle = ({ setModalShow, articleData }) => {
+
+  const categories = useContext(listCategories)
+  const {state, dispatch} = useContext(listArticlesContext)
   return (
     <section className="fixed inset-0  bg-black/30 z-20 backdrop-blur-sm flex  justify-center items-center">
       <button
@@ -18,6 +22,9 @@ const ModalArticle = ({ setModalShow }) => {
           header="Edition d'une Article"
           submitBtn="Editer"
           setModalShow={setModalShow}
+          listCategories={categories}
+          articleData={state.find(item => item.id === articleData.id)}
+          dispatchArticle={dispatch}
           pushBtn
         />
       </div>

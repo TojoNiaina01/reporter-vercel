@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Listbox } from "@headlessui/react";
 import { MenuFR } from "@/constant/constant";
 import {
@@ -14,37 +14,109 @@ import {
 import Image from "next/image";
 import ModalArticle from "@/components/ModalArticle";
 import ConfirmDelete from "@/components/ConfirmDelete";
+import moment from "moment";
+import {v4 as uuidV4} from 'uuid';
+import { ROOT_URL } from "@/env";
 
-const Article = ({ header, tabhead, data, user }) => {
-  const [selectedMenu, setSelectedMenu] = useState(MenuFR[0]);
+
+const Article = ({ header, tabhead, data, user, listArticles, listCategories, dispatchArticle }) => {
+  const lang = [
+    {tag: "fr", langue: "français"},
+    {tag: "en", langue: "Anglais"},
+  ];
+  const [selectedMenu, setSelectedMenu] = useState(listCategories[0]);
+  const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [modalShow, setModalShow] = useState(false);
+  const [articleData, setArticleData] = useState()
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
-  console.log(typeof data);
+
+
+const modifHandler = (val) => {
+  setModalShow(!modalShow)
+  setArticleData(val)
+}
+
+const categoryHandler = (val) => {
+  setSelectedMenu(val)
+  const param = {query: 'getArticleByCategoryLang', param: [val.id, selectedLang.tag]}
+
+  fetch(`${ROOT_URL}/api/knexApi`, {
+    method: "POST",
+    body: JSON.stringify(param),
+    headers: {
+      "Content-type": "application/json"
+    }
+  }).then((res) => res.json())
+    .then((data) => {
+      console.log("new list filtrer == ", data.result)
+      dispatchArticle({type: 'ALLCHANGE', result: data.result})
+    })
+
+}
+
+const langHandler = (val) => {
+  setSelectedLang(val)
+  const param = {query: 'getArticleByCategoryLang', param: [selectedMenu.id, val.tag]}
+
+  fetch(`${ROOT_URL}/api/knexApi`, {
+    method: "POST",
+    body: JSON.stringify(param),
+    headers: {
+      "Content-type": "application/json"
+    }
+  }).then((res) => res.json())
+    .then((data) => {
+      console.log("new list filtrer == ", data.result)
+      dispatchArticle({type: 'ALLCHANGE', result: data.result})
+    })
+
+}
   return (
     <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold tracking-wide">{header}</h3>
         <div className="flex gap-4">
           {!user && (
-            <Listbox value={selectedMenu} onChange={setSelectedMenu}>
+            <>
+            <Listbox value={selectedMenu} onChange={categoryHandler}>
               <div className="flex flex-col relative">
                 <Listbox.Button className="text-main-500 flex gap-4 items-center border rounded-full px-4 py-2 border-main-500">
-                  <p className="">{selectedMenu.k}</p>
+                  <p className="">{selectedMenu.fr}</p>
                   <ChevronDownIcon className="block h-4" />
                 </Listbox.Button>
                 <Listbox.Options className=" absolute top-12 border border-main-500 p-2 rounded-md shadow-md bg-white">
-                  {MenuFR.map((person) => (
+                  {listCategories.map((category) => (
                     <Listbox.Option
-                      key={person.k}
-                      value={person}
+                      key={uuidV4()}
+                      value={category}
                       className="ui-active:bg-main-500 rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
                     >
-                      {person.k}
+                      {category.fr}
                     </Listbox.Option>
                   ))}
                 </Listbox.Options>
               </div>
             </Listbox>
+            <Listbox value={selectedLang} onChange={langHandler}>
+              <div className="flex flex-col relative">
+                <Listbox.Button className="text-main-500 flex gap-4  items-center border rounded-full  px-6 py-2 border-main-500">
+                  <p className="">{selectedLang.langue}</p>
+                  <ChevronDownIcon className="block h-4" />
+                </Listbox.Button>
+                <Listbox.Options className="absolute top-12 border border-main-500 p-2  rounded-md shadow-md bg-white">
+                  {lang.map((item) => (
+                    <Listbox.Option
+                      key={uuidV4()}
+                      value={item}
+                      className="ui-active:bg-main-500 rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
+                    >
+                      {item.langue}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </div>
+          </Listbox>
+          </>
           )}
           {/*  Recherche*/}
           <div className="border border-main-500 py-2 px-4 rounded-full flex items-center w-[200px] h-fit">
@@ -64,7 +136,7 @@ const Article = ({ header, tabhead, data, user }) => {
           <thead className="text-xs uppercase bg-main-500 text-white">
             <tr>
               {tabhead?.map((tab) => (
-                <th scope="col" className="px-6 py-3">
+                <th key={uuidV4()} scope="col" className="px-6 py-3">
                   {tab}
                 </th>
               ))}
@@ -72,13 +144,13 @@ const Article = ({ header, tabhead, data, user }) => {
           </thead>
           {!user && (
             <tbody>
-              {data?.map((item, i) => (
-                <tr key={item.name} className="bg-white border-b ">
+              {listArticles?.map((article, i) => (
+                <tr key={uuidV4()} className="bg-white border-b ">
                   <td className="px-6 py-4">{i}</td>
                   <td className="relative w-[100px] h-[100px]">
                     <Image
                       fill
-                      src={item.img}
+                      src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                       className=" object-contain"
                       alt="Article image blog"
                     />
@@ -87,25 +159,25 @@ const Article = ({ header, tabhead, data, user }) => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
-                    {item.titre}
+                    {(article.title.length > 40) ? `${article.title.substring(0,40)}...`: article.title}
                   </th>
-                  <td className="px-6 py-4">{item.category}</td>
+                  <td className="px-6 py-4">{article.category_fr}</td>
 
                   {/* eto hoe slide sa hot staff sa flash info */}
                   <td className="px-6 py-4">
                     <div className="flex gap-1">
-                      <BoltIcon className="h-5" />
-                      <HomeIcon className="h-5" />
-                      <FireIcon className="h-5" />
+                      <BoltIcon className={`h-5 ${article.flash && 'text-red-600'}`} />
+                      <HomeIcon className={`h-5 ${article.slide && 'text-blue-600'}`} />
+                      <FireIcon className={`h-5 ${article.hot && 'text-orange-600'}`} />
                     </div>
                   </td>
 
-                  <td className="px-6 py-4">{item.date}</td>
+                  <td className="px-6 py-4">{moment(article.created_at).format('DD/MM/YYYY')}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
                       <PencilSquareIcon
                         className="h-5 text-main-500 cursor-pointer"
-                        onClick={() => setModalShow(!modalShow)}
+                        onClick={() => modifHandler(article)}
                       />
                       <TrashIcon
                         className="h-5 text-red-500 cursor-pointer"
@@ -123,7 +195,7 @@ const Article = ({ header, tabhead, data, user }) => {
           {user && (
             <tbody>
               {data?.map((item, i) => (
-                <tr key={item.name} className="bg-white border-b ">
+                <tr key={uuidV4()} className="bg-white border-b ">
                   <td className="px-6 py-4">{i}</td>
                   <th
                     scope="row"
@@ -157,7 +229,7 @@ const Article = ({ header, tabhead, data, user }) => {
         <div>PAGINATION</div>
       </div>
 
-      {modalShow && <ModalArticle setModalShow={setModalShow} />}
+      {modalShow && <ModalArticle setModalShow={setModalShow} articleData={articleData}/>}
       {modalDeleteConfirm && (
         <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
       )}

@@ -7,8 +7,9 @@ import Modal from "@/components/Modal";
 
 export const ModalContext = React.createContext(undefined, undefined);
 
-const Layout = ({ children }) => {
+const Layout = ({ children, listCategories }) => {
   const [newsLetterModal, setNewsLetterModal] = useState(false);
+  console.log("list categ dans layout = ", listCategories)
   return (
     <div className="app">
       <ModalContext.Provider value={{ newsLetterModal, setNewsLetterModal }}>
@@ -16,7 +17,7 @@ const Layout = ({ children }) => {
         <header>
           <Navbar />
           <Flash />
-          <Menu />
+          <Menu listCategories={listCategories}/>
         </header>
 
         {children}

@@ -9,11 +9,40 @@ import { Logo } from "@/public/assets/img";
 import { MenuBurger, Cross } from "@/public/assets/svg";
 import useMediaQuery from "@/hook/useMediaQuery";
 import { ModalContext } from "@/Layout/Layout";
+import localStorage from "localStorage";
+import { ROOT_URL } from "@/env";
+import {v4 as uuidv4} from "uuid";
 
 const Navbar = ({ clickHandler }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const { newsLetterModal, setNewsLetterModal } = useContext(ModalContext);
+  const lang = JSON.parse(localStorage.getItem('token')).lang
+  const rating = JSON.parse(localStorage.getItem('token')).rating
+  const [option, setOption] = useState()
+
+  const changeLangHandler = (e) => {
+    localStorage.setItem('token', JSON.stringify({lang: e.target.value, rating}))
+    window.location = ROOT_URL
+  }
+
+  useEffect(() => {
+    if(lang === 'en'){
+      const listOpt = [
+        {value: 'en', tag: 'EN'},
+        {value: 'fr', tag: 'FR'},
+      ]
+
+      setOption(listOpt)
+    }else{
+      const listOpt = [
+        {value: 'fr', tag: 'FR'},
+        {value: 'en', tag: 'EN'},
+      ]
+
+      setOption(listOpt)
+    }
+  },[])
 
   return (
     <nav className="flex items-center justify-between relative md:pt-5 lg:pt-2">
@@ -35,9 +64,12 @@ const Navbar = ({ clickHandler }) => {
 
       {isAboveMediumScreens && (
         <div className="flex items-center gap-4 lg:gap-7 lg:order-3">
-          <select className="cursor-pointer outline-none text-sm font-semibold">
-            <option value="fr">FR</option>
-            <option value="en">EN</option>
+          <select className="cursor-pointer outline-none text-sm font-semibold" onChange={changeLangHandler}>
+            {
+              option?.map((item) => (
+                <option key={uuidv4()} value={item.value}>{item.tag}</option>
+              ))
+            }
           </select>
           <button
             className="flex items-center active:scale-95 transition duration-150 bg-main-400
@@ -67,9 +99,12 @@ const Navbar = ({ clickHandler }) => {
           {toggleMenu && (
             <div className="absolute z-20 bg-white border  border-gray-200 shadow-md p-2 rounded-md top-12 right-0">
               <div className="flex gap-4">
-                <select className="cursor-pointer bg-white outline-none text-sm font-semibold">
-                  <option value="fr">FR</option>
-                  <option value="en">EN</option>
+                <select className="cursor-pointer bg-white outline-none text-sm font-semibold" onChange={changeLangHandler}>
+                {
+                  option?.map((item) => (
+                    <option key={uuidv4()} value={item.value}>{item.tag}</option>
+                  ))
+                }
                 </select>
                 <button
                   className="flex items-center outline-none bg-main-400 focus:outline-none text-white py-2 px-4 rounded-full gap-2"
