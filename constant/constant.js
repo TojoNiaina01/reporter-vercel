@@ -8,10 +8,10 @@ export const MenuFR = [
   { k: "diaspora", href: "/diaspora" },
   { k: "industrie", href: "/industrie" },
   { k: "life-art", href: "/life-art" },
-  { k: "environement", href: "/environement" },
+  { k: "environnement", href: "/environnement" },
   { k: "infrastructure", href: "/infrastructure" },
   { k: "tourisme", href: "/tourisme" },
-  { k: "video", href: "/video" },
+  // { k: "video", href: "/video" },
 ];
 // export const MenuEN = [
 //   "home",
