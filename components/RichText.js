@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
-import { htmlToText } from "html-to-text";
 import "react-quill/dist/quill.snow.css";
 
 const testHandler = () => {

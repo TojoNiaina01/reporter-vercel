@@ -304,13 +304,7 @@ export async function getStaticProps() {
   const ArticleTopOfWeek = allArticlesData.ArticleTopOfWeek;
   return {
     props: {
-      ArticleRecentMain,
-      ArticleRecentSecondary,
-      ArticlePopular,
-      ArticlePopularSeconde,
-      ArticleMostMain,
-      ArticleTopOfWeek,
-      data,
+    
       listSlideFr: listSlideFr.result,
       listSlideEn: listSlideEn.result,
       listCategories: listCategories.result,

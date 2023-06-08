@@ -76,6 +76,7 @@ const FormArticle = ({
     /* -------------------------------------------------------------------------- */
     if(!pushBtn){  //condition oe reef ao amin'ny ajout article
      
+      if(files){
         if(files[0]){
           formData1.append('file', files[0])
         }
@@ -85,6 +86,7 @@ const FormArticle = ({
         if(files[2]){
           formData3.append('file', files[2])
         }
+      }
 
         data.title = title
         data.description = descript
@@ -99,7 +101,8 @@ const FormArticle = ({
         
         if(!isEmpty && value.length !== 11){ // 11 satria io no valeur reef tsis soratra "<p><br></p>"
 
-          const param = {query: 'addArticle', param: [data]}
+          if(files){
+            const param = {query: 'addArticle', param: [data]}
               fetch(`${ROOT_URL}/api/knexApi`, {
                 method: "POST",
                 body: JSON.stringify(param),
@@ -200,7 +203,14 @@ const FormArticle = ({
                      }
 
                 })
-        }
+            }else{
+              toast.error("Image obligatoire")
+              setIsLoading(false)
+            }
+          }else{
+            toast.error("Tous les champs sont obligatoire")
+            setIsLoading(false)
+          }
       }else{
         /* -------------------------------------------------------------------------- */
         /*                   REHEFA AO AMIN'NY MODIFICATION ARTICLE                   */

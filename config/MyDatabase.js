@@ -227,6 +227,37 @@ class MyDatabase {
 
         return ObjectFormater(resToJson, 'image')
     }
+   async getFlashByLang(lang){
+        const res = await knex({a: 'articles'})
+        .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+        .select(
+            'a.id', 
+            'a.title', 
+            'a.body', 
+            'a.description', 
+            'a.author', 
+            'a.lang',
+            'a.flash', 
+            'a.hot', 
+            'a.slide', 
+            'a.created_at',
+            {category_fr: 'c.fr'},
+            {category_en: 'c.en'},
+            {category_id: 'c.id'},
+            {image_name: 'img.name'}, 
+            {image_extension: 'img.extension'},
+            {image_size: 'img.size'}, 
+            {image_type: 'img.type'}
+            
+            )
+        .where({'a.lang': lang, 'a.flash': true})
+
+
+            const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
 
 
    async getHotByLang(lang){
