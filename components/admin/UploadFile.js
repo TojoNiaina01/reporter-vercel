@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { log } from "next/dist/server/typescript/utils";
+import {v4 as uuidv4} from "uuid";
 
 const UploadFile = ({onChangeFile}) => {
   const [files, setFiles] = useState();
@@ -74,7 +75,7 @@ const UploadFile = ({onChangeFile}) => {
           <ul>
             {Array.from(files).map((file, idx) => (
               <li
-                key={idx}
+                key={uuidv4()}
                 className="font-semibold py-1 flex items-center gap-4"
               >
                 <Image

@@ -10,6 +10,7 @@ import DateAuteur from "@/components/DateAuteur";
 import Title from "@/components/Title";
 import Image from "next/image";
 import { PolitiqueArticleOne } from "@/public/assets/img";
+import {v4 as uuidv4} from "uuid";
 
 const search = ({ articleRecent, articlePopular }) => {
   const [order, setOrder] = useState(false);
@@ -53,7 +54,7 @@ const search = ({ articleRecent, articlePopular }) => {
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
             {[1, 2, 3, 4, 5, 6, 8].map((item) => (
-              <div className="group cursor-pointer flex flex-col bg-[#EFF2FB]  mb-2 rounded overflow-hidden lg:flex-row">
+              <div key={uuidv4()} className="group cursor-pointer flex flex-col bg-[#EFF2FB]  mb-2 rounded overflow-hidden lg:flex-row">
                 <Image
                   src={PolitiqueArticleOne}
                   className="h-[150px] object-cover md:w-full/2 md:h-full/2 lg:w-[250px] lg:h-full"
@@ -94,7 +95,8 @@ const search = ({ articleRecent, articlePopular }) => {
 
 export default search;
 
-export async function getStaticProps() {
+export async function getServerSideProps({query}) {
+  
   const dataAside = await import(`/data/thumbnail.json`);
   const articleRecent = dataAside.ArticleRecentMain;
   const articlePopular = dataAside.ArticlePopular;

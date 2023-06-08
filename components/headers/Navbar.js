@@ -11,16 +11,18 @@ import useMediaQuery from "@/hook/useMediaQuery";
 import { ModalContext } from "@/Layout/Layout";
 import localStorage from "localStorage";
 import { ROOT_URL } from "@/env";
+import {v4 as uuidv4} from "uuid";
 
 const Navbar = ({ clickHandler }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const { newsLetterModal, setNewsLetterModal } = useContext(ModalContext);
   const lang = JSON.parse(localStorage.getItem('token')).lang
+  const rating = JSON.parse(localStorage.getItem('token')).rating
   const [option, setOption] = useState()
 
   const changeLangHandler = (e) => {
-    localStorage.setItem('token', JSON.stringify({lang: e.target.value}))
+    localStorage.setItem('token', JSON.stringify({lang: e.target.value, rating}))
     window.location = ROOT_URL
   }
 
@@ -65,7 +67,7 @@ const Navbar = ({ clickHandler }) => {
           <select className="cursor-pointer outline-none text-sm font-semibold" onChange={changeLangHandler}>
             {
               option?.map((item) => (
-                <option value={item.value}>{item.tag}</option>
+                <option key={uuidv4()} value={item.value}>{item.tag}</option>
               ))
             }
           </select>
@@ -100,7 +102,7 @@ const Navbar = ({ clickHandler }) => {
                 <select className="cursor-pointer bg-white outline-none text-sm font-semibold" onChange={changeLangHandler}>
                 {
                   option?.map((item) => (
-                    <option value={item.value}>{item.tag}</option>
+                    <option key={uuidv4()} value={item.value}>{item.tag}</option>
                   ))
                 }
                 </select>

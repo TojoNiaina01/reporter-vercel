@@ -195,7 +195,7 @@ const langHandler = (val) => {
           {user && (
             <tbody>
               {data?.map((item, i) => (
-                <tr key={item.name} className="bg-white border-b ">
+                <tr key={uuidV4()} className="bg-white border-b ">
                   <td className="px-6 py-4">{i}</td>
                   <th
                     scope="row"

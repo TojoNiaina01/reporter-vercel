@@ -12,6 +12,7 @@ import { Publicite } from "@/public/assets/img";
 import Image from "next/image";
 import ConfirmDelete from "@/components/ConfirmDelete";
 import EditAds from "@/components/admin/EditAds";
+import {v4 as uuidv4} from "uuid"
 
 const AdsManager = () => {
   const state = [
@@ -37,7 +38,7 @@ const AdsManager = () => {
               <Listbox.Options className=" absolute top-12 border border-main-500 p-2 rounded-md shadow-md bg-white">
                 {state.map((person) => (
                   <Listbox.Option
-                    key={person.k}
+                    key={uuidv4()}
                     value={person}
                     className="ui-active:bg-main-500 whitespace-nowrap rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
                   >
@@ -89,7 +90,7 @@ const AdsManager = () => {
           </thead>
           <tbody>
             {[1, 2, 3, 4, 5].map((table) => (
-              <tr key={table} className="bg-white border-b ">
+              <tr key={uuidv4()} className="bg-white border-b ">
                 <td className="px-6 py-4">{table}</td>
                 <td className="relative w-[100px] h-[100px]">
                   <Image

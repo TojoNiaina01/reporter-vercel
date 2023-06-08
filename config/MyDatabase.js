@@ -42,6 +42,18 @@ const ObjectFormater = (parent, type) => {
     }
 }
 
+const filterElement = (obj, type) => { // mba i-combinena izay mitovy valeur (obj: ilay tableau; type: ilay i-filtre-na anazy)
+
+    const result = []
+    obj.forEach((element, key) => {
+        if(!result.find(item => item[type] === element[type])){
+            result.push(element)
+        }
+    })
+
+    return result
+}
+
 
 class MyDatabase {
 
@@ -316,6 +328,41 @@ class MyDatabase {
 
         return ObjectFormater(resToJson, 'image')
     }
+
+
+    async getMostPopular(lang){
+        const res = await knex({a: 'articles'})
+        .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+        .select(
+            'a.id', 
+            'a.title', 
+            'a.body', 
+            'a.description', 
+            'a.author', 
+            'a.lang',
+            'a.flash', 
+            'a.hot', 
+            'a.slide', 
+            'a.created_at',
+            'a.views',
+            {category_fr: 'c.fr'},
+            {category_en: 'c.en'},
+            {category_id: 'c.id'},
+            {image_name: 'img.name'}, 
+            {image_extension: 'img.extension'},
+            {image_size: 'img.size'}, 
+            {image_type: 'img.type'}
+            
+            )
+        .where({'a.lang': lang})
+        .orderBy('a.rating', 'desc')
+
+
+        const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
     
     async addArticle({title, body, description, author, category_id, lang}){
        let articleID = await knex
@@ -396,8 +443,112 @@ class MyDatabase {
                     .where({hot: hot, lang: lang})
     }
 
+    async incrementViews(id){
+        return await knex('articles')
+                    .where('id', id)
+                    .increment('views', 1)
+    }
+    
+    async incrementRating(id){
+        return await knex('articles')
+                    .where('id', id)
+                    .increment('rating', 1)
+    }
 
 
+
+     /**========================================================================
+     **                          HASTAG ARTICLES
+     * @getHastagByCategory           : maka ny hastag rehetra par category
+     * @getHastagByArticle            : maka ny hastag rehetra isakin'ny article
+     * @getArticlesByHasTag           : maka ny articles rehetra isakin'ny hastag
+     * @getAllHastag                  : alaina ny hastag rehetra
+     *========================================================================**/
+
+     async getHastagByCategory(categoryID, lang){
+        const res = await knex({c: 'categories'})
+                          .leftJoin({a: 'articles'}, 'c.id', 'a.category_id')
+                          .leftJoin({ha: 'hastag_articles'}, 'ha.article_id', 'a.id')
+                          .leftJoin({h: 'hastag'}, 'ha.hastag_id', 'h.id')
+                          .select(
+                            'h.id',
+                           'h.name',
+                           'h.lang',
+                           {articleID: 'a.id'}
+                          )
+                          .where({'c.id': categoryID, 'a.lang': lang})
+
+        const result = JSON.parse(JSON.stringify(res))
+        return filterElement(result, "id")
+     }
+    
+    
+     async getHastagByArticle(articleID){
+        const res = await knex({c: 'categories'})
+                          .leftJoin({a: 'articles'}, 'c.id', 'a.category_id')
+                          .leftJoin({ha: 'hastag_articles'}, 'ha.article_id', 'a.id')
+                          .leftJoin({h: 'hastag'}, 'ha.hastag_id', 'h.id')
+                          .select(
+                            'h.id',
+                           'h.name',
+                           'h.lang',
+                           {articleID: 'a.id'}
+                          )
+                          .where('a.id', articleID)
+
+        const result = JSON.parse(JSON.stringify(res))
+        return filterElement(result, "id")
+     }
+     
+     
+     async getArticlesByHasTag(hastagID){
+        const res = await knex({a: 'articles'})
+                        .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+                        .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+                        .leftJoin({ha: 'hastag_articles'}, 'ha.article_id', 'a.id')
+                        .leftJoin({h: 'hastag'}, 'ha.hastag_id', 'h.id')
+                        .select(
+                            'a.id', 
+                            'a.title', 
+                            'a.body', 
+                            'a.description', 
+                            'a.author', 
+                            'a.lang',
+                            'a.flash', 
+                            'a.hot', 
+                            'a.slide', 
+                            'a.created_at',
+                            'a.views',
+                            {category_fr: 'c.fr'},
+                            {category_en: 'c.en'},
+                            {category_id: 'c.id'},
+                            {image_name: 'img.name'}, 
+                            {image_extension: 'img.extension'},
+                            {image_size: 'img.size'}, 
+                            {image_type: 'img.type'}
+                        )
+                        .where('h.id', hastagID)
+
+            const resToJson = JSON.parse(JSON.stringify(res))
+
+            return ObjectFormater(resToJson, 'image')
+     }
+
+
+     async getAllHastag() {
+        let res = await knex('hastag')
+        .select('*')
+
+        return JSON.parse(JSON.stringify(res))
+     }
+
+     async getHastagByID(id){
+        let res = await knex('hastag')
+        .select('*')
+        .where('id', id)
+
+return JSON.parse(JSON.stringify(res))
+     }
      /**========================================================================
      **                          IMAGES
      * @addImage           : ajouter une image

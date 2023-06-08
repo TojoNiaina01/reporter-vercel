@@ -7,6 +7,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import {v4 as uuidv4} from "uuid"
 
 const FormAds = ({ submitBtn, setModalShow, header }) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -56,7 +57,7 @@ const FormAds = ({ submitBtn, setModalShow, header }) => {
                 <Listbox.Options className=" absolute top-12 border border-main-500 p-2 rounded-md shadow-md bg-white">
                   {menu.map((person) => (
                     <Listbox.Option
-                      key={person.name}
+                      key={uuidv4()}
                       value={person}
                       className="ui-active:bg-main-500 rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
                     >

@@ -4,6 +4,7 @@ import Input from "@/components/Input";
 import Image from "next/image";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import {v4 as uuidv4} from "uuid"
 
 const AddUser = () => {
   const roles = ["admin", "editeur"];
@@ -25,7 +26,7 @@ const AddUser = () => {
               <Listbox.Options className=" absolute top-12 border border-main-500 p-2 rounded-md shadow-md bg-white">
                 {roles?.map((person) => (
                   <Listbox.Option
-                    key={person}
+                    key={uuidv4()}
                     value={person}
                     className="ui-active:bg-main-500 rounded-lg px-2 py-1 cursor-pointer ui-active:text-white"
                   >

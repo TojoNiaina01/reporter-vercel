@@ -5,6 +5,7 @@ import { PubliciteTrois } from "@/public/assets/img";
 import Hastag from "@/components/Hastag";
 import { MenuFR } from "@/constant/constant";
 import Link from "next/link";
+import {v4 as uuidv4} from "uuid"
 
 const SecondaryMost = () => {
   return (
@@ -13,7 +14,7 @@ const SecondaryMost = () => {
       <ul>
         {MenuFR?.map((menu) => (
           <>
-            <li className="uppercase text-xs font-semibold py-[12px] cursor-pointer transition duration-200 ease-out hover:font-bold hover:text-secondary-500">
+            <li key={uuidv4()} className="uppercase text-xs font-semibold py-[12px] cursor-pointer transition duration-200 ease-out hover:font-bold hover:text-secondary-500">
               <Link href={menu.href}>
                 {menu.k} <span className="font-normal">(10)</span>{" "}
               </Link>

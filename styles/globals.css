@@ -57,3 +57,12 @@
     animation: marquee 20s linear infinite;
 }
 
+/* ---------------------------- Pagination style ---------------------------- */
+
+.paginateList :nth-child(2){
+     border-radius: 50% 0 0 50%;
+}
+
+.paginateList :nth-last-child(2){
+     border-radius: 0 50% 50% 0;
+}

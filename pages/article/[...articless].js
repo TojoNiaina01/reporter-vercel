@@ -15,24 +15,50 @@ import moment from "moment";
 import parse from "html-react-parser"
 import { dataFilter } from "@/config/dataFilter";
 import localStorage from "localStorage";
+import { ROOT_URL } from "@/env";
+import {v4 as uuidv4} from "uuid";
+import { useRouter } from "next/router";
 
 const jost = Jost({ subsets: ["latin"] });
 
 
-const Articless = ({ enCourData, articleRecent, articlePopular, articleData, listRecentArticlesEn, listRecentArticlesFr }) => {
+const Articless = ({ articleData, listRecentArticlesEn, listRecentArticlesFr, listMostPopularEn, listMostPopularFr, listHastag }) => {
+  const router = useRouter()
   const [isMuted, setIsMuted] = useState(true);
   const [isPlayed, setIsPlayed] = useState(true);
   const [listRecent, setListRecent] = useState(listRecentArticlesEn)
+  const [listPopular, setListPopular] = useState(listMostPopularEn)
+  const [rateArticle, setRateArticle] = useState(0)
   const [body, setBody] = useState("")
   const videoRef = useRef();
   const storage = JSON.parse(localStorage.getItem('token'))
+  const rating = JSON.parse(localStorage.getItem('token')).rating
+
+  const linkBeautify = (link) => {
+    const newLink = link.replace(/[;:',\s]/g, "-");
+    return newLink.toLowerCase()
+  };  
+
 
   console.log("list recent article en anglais ",listRecentArticlesEn)
   useEffect(() => {
-    setBody(parse(articleData.body))
+    setBody(parse(articleData.body)) // tsy maintsy parse-na ilay body satria HTML type string
+    const param = {query: 'incrementViews', param: [articleData.id]}
+    fetch(`${ROOT_URL}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(param),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
 
     if(storage.lang === 'fr'){
       setListRecent(listRecentArticlesFr)
+      setListPopular(listMostPopularFr)
+    }
+
+    if(rating.find(item => item.id === articleData.id)){
+      setRateArticle(rating[rating.findIndex(item => item.id === articleData.id)].rate)
     }
 
 
@@ -46,6 +72,12 @@ const Articless = ({ enCourData, articleRecent, articlePopular, articleData, lis
     setIsPlayed((value) => !value);
     videoRef.current.pause();
   };
+
+  const redirectHandler = (id, title) => {
+    router.push(`/hastag/${id}/${linkBeautify(title)}`)
+  }
+
+
   return (
     <>
       <Head>
@@ -75,7 +107,7 @@ const Articless = ({ enCourData, articleRecent, articlePopular, articleData, lis
           <div>
             <div className="space-y-4">
             {articleData.image?.map((image) => (
-                  <div className="relative w-full h-[250px] lg:h-[450px] lg:rounded">
+                  <div key={uuidv4()} className="relative w-full h-[250px] lg:h-[450px] lg:rounded">
                   <Image
                     src={`/uploads/images/${image.image_name}.${image.image_extension}`}
                     className="object-cover"
@@ -163,18 +195,24 @@ const Articless = ({ enCourData, articleRecent, articlePopular, articleData, lis
             <div className="mt-5 flex items-center gap-4">
               <HeaderCategory title="Tags :" />
               <ul className="flex gap-4 ">
-                <li className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
-                  election
-                </li>
-                <li className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
-                  maison blanche
-                </li>
-                <li className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer">
-                  office
-                </li>
+
+
+                {
+                  listHastag?.map((hastag) => (
+                    <li 
+                    key={uuidv4()} 
+                    className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer"
+                    onClick={() => redirectHandler(hastag.id, hastag.name)}
+                    >
+                      {hastag.name}
+                    </li>
+                  ))
+                }
+               
+                
               </ul>
             </div>
-            <div className="bg-main-400 flex gap-6 items-center my-6 rounded">
+            {/* <div className="bg-main-400 flex gap-6 items-center my-6 rounded">
               <div className="relative w-[200px] h-[180px] rounded-r-full overflow-hidden">
                 <Image
                   src={Profil}
@@ -192,15 +230,15 @@ const Articless = ({ enCourData, articleRecent, articlePopular, articleData, lis
                   world-class level.
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className=" h-24">
-              <ReviewWithStars />
+              <ReviewWithStars rate={rateArticle} articleID={articleData.id}/>
             </div>
           </div>
           {/*Aside*/}
           <AsideRecentPopular
             articleRecent={listRecent}
-            articlePopular={articlePopular}
+            listPopular={listPopular}
           />
         </div>
       </section>
@@ -225,6 +263,9 @@ export async function getStaticProps({ params }) {
   let articleData = []
   let listRecentArticlesFr = [] // asina ny liste ny recent article (6 farany)
   let listRecentArticlesEn = [] // asina ny liste ny recent article (6 farany)
+  let listMostPopularEn = [] // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+  let listMostPopularFr = [] // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+  let listHastag = []
 
     /* -------------------------------------------------------------------------- */
     /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
@@ -241,10 +282,23 @@ export async function getStaticProps({ params }) {
       }
     }).then((res) => res.json())
       .then(data => articleData = data)
+    
+    
+      /* -------------------------------------------------------------------------- */
+    /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
+    /* -------------------------------------------------------------------------- */
 
-  const dataAside = await import(`/data/thumbnail.json`);
-  const articleRecent = dataAside.ArticleRecentMain;
-  const articlePopular = dataAside.ArticlePopular;
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramHastag = {query: 'getHastagByArticle', param: [articleID]} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramHastag),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listHastag = data)
 
    /* -------------------------------------------------------------------------- */
     /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
@@ -274,22 +328,53 @@ export async function getStaticProps({ params }) {
       }
     }).then((res) => res.json())
       .then(data => listRecentArticlesEn = data)
+    
+       /* -------------------------------------------------------------------------- */
+    /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramMostPopularFr = {query: 'getMostPopular', param: ['fr']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramMostPopularFr),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listMostPopularFr = data)
+
+
+    /* ----------------------------------- EN ----------------------------------- */
+
+    const paramMostPopularEn = {query: 'getMostPopular', param: ['en']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramMostPopularEn),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listMostPopularEn = data)
 
 
   return {
     props: {
-      articleRecent,
-      articlePopular,
       articleData: articleData.result[0],
       listRecentArticlesEn: dataFilter(listRecentArticlesEn.result, "category_id", 3),
-      listRecentArticlesFr: dataFilter(listRecentArticlesFr.result, "category_id", 3)
+      listRecentArticlesFr: dataFilter(listRecentArticlesFr.result, "category_id", 3),
+      listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 4),
+      listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 4),
+      listHastag: listHastag.result
     },
   };
 }
 
 export async function getStaticPaths() {
   const linkBeautify = (link) => {
-    return link.split(" ").join("-");
+    const newLink = link.replace(/[;:',\s]/g, "-");
+    return newLink.toLowerCase()
   };
   const baseUrl = process.env.ROOT_URL
   let listArticle = []

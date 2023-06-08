@@ -11,6 +11,7 @@ import TopOfWeek from "@/components/Mostread/TopOfWeek";
 import Banner from "@/components/headers/Banner";
 import MyDatabase from '../config/MyDatabase';
 import localStorage from "localStorage";
+import { dataFilter } from "@/config/dataFilter";
 
 
 
@@ -29,6 +30,8 @@ const Home = ({
   listRecentArticlesFr,
   listMostReadEn,
   listMostReadFr,
+  listMostPopularEn,
+  listMostPopularFr,
   hotEn,
   hotFr
 }) => {
@@ -42,12 +45,13 @@ const Home = ({
   const [listSlide, setListSlide] = useState(listSlideEn)
   const [listRecent, setListRecent] = useState(listRecentArticlesEn)
   const [listMostRead, setListMostRead] = useState(listMostReadEn)
+  const [listMostPopular, setListMostPopular] = useState(listMostPopularEn)
   const [hot, setHot] = useState(hotEn)
 
   const storage = JSON.parse(localStorage.getItem('token'))
 
   const getValue = async() => {
-    const data = {query: 'getFullArticles', param: false} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    const data = {query: 'getArticlesByHasTag', param: [47]} // query: ilay anaran'ilay méthode ao @ MyDatabase
     await fetch('/api/knexApi', {
       method: "POST",
       body: JSON.stringify(data),
@@ -55,7 +59,7 @@ const Home = ({
         "Content-type" : "application/json"
       }
     }).then((res) => res.json())
-      .then(data => console.log('data === ', data))
+      .then(data => console.log('data hastag === ', data))
   }
 
   useEffect(() => {
@@ -69,6 +73,7 @@ const Home = ({
       setListRecent(listRecentArticlesFr)
       setListMostRead(listMostReadFr)
       setHot(hotFr)
+      setListMostPopular(listMostPopularFr)
     }
 
    getValue()
@@ -98,7 +103,7 @@ const Home = ({
         />  
       </div>
       <Recent dataRecent={listRecent}/>
-      <Popular />
+      <Popular dataMostPopular={listMostPopular}/>
       <Most dataMostRead={listMostRead}/>
       <NewLetter />
       <Hotstaff dataHot={hot}/>
@@ -124,6 +129,8 @@ export async function getStaticProps() {
   let listRecentArticlesEn = [] // asina ny liste ny recent article (6 farany)
   let listMostReadEn = [] // asina ny liste ny most read en (6 farany)
   let listMostReadFr = [] // asina ny liste ny most read fr (6 farany)
+  let listMostPopularEn = [] // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+  let listMostPopularFr = [] // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
   let hotEn = []
   let hotFr = []
  
@@ -227,6 +234,35 @@ export async function getStaticProps() {
       }
     }).then((res) => res.json())
       .then(data => listMostReadEn = data)
+
+    /* -------------------------------------------------------------------------- */
+    /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramMostPopularFr = {query: 'getMostPopular', param: ['fr']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramMostPopularFr),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listMostPopularFr = data)
+
+
+    /* ----------------------------------- EN ----------------------------------- */
+
+    const paramMostPopularEn = {query: 'getMostPopular', param: ['en']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramMostPopularEn),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listMostPopularEn = data)
     
     
       /* -------------------------------------------------------------------------- */
@@ -284,6 +320,8 @@ export async function getStaticProps() {
       listMostReadEn: listMostReadEn.result.length > 4 ? listMostReadEn.result.slice(0,4): listMostReadEn.result,
       hotEn: hotEn.result[0],
       hotFr: hotFr.result[0],
+      listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 5),
+      listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 5)
     },
   };
 }

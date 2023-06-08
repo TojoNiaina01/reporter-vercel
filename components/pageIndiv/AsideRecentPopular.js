@@ -11,41 +11,51 @@ import Image from "next/image";
 import Link from "next/link";
 import localStorage from "localStorage";
 import moment from "moment";
+import { useRouter } from "next/router";
 
-const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
-  const TagDeux = [
-    "election",
-    "office",
-    "university",
-    "study",
-    "communication",
-    "president",
-    "business",
-    "tax",
-    "money",
-    "bank",
-    "maison blanche",
-  ];
+const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listHastag }) => {
+  const router = useRouter()
+  const [recentTitle, setRecentTitle] = useState("Recent Articles")
+  const [followTitle, setFollowTitle] = useState("Follow Us")
+  const [popularTitle, setPopularTitle] = useState("Popular")
+  const [lang2, setLang2] = useState('en')
+  const lang = JSON.parse(localStorage.getItem('token')).lang
 
-  const [lang, setLang] = useState('en')
+  const linkBeautify = (link) => {
+    const newLink = link.replace(/[;:',\s]/g, "-");
+      return newLink.toLowerCase()
+  };
+  
+  console.log("list hastag === ", listHastag)
+
+  const redirectHandler = (id, title) => {
+    router.push(`/article/${id}/${linkBeautify(title)}`)
+  }
 
   useEffect(() => {
-    setLang(JSON.parse(localStorage.getItem('token')).lang)
+    console.log("most == ", listPopular)
+    if(lang === "fr"){
+      setRecentTitle("Articles récents")
+      setFollowTitle("Suivez-nous")
+      setPopularTitle("Populaires")
+      setLang2('fr')
+    }
   }, [])
 
   return (
     <aside className="lg:flex lg:flex-col lg:basis-1/5">
-      <HeaderCategory title="Recent Articles" />
+      <HeaderCategory title={recentTitle} />
       <div className="space-y-7 lg:space-y-8">
         {articleRecent?.map(
           (article) => (
             <div
               key={uuidv4()}
               className="group flex md:items-center gap-2 cursor-pointer md:gap-5 lg:flex-col lg:gap-0 lg:order-1"
+              onClick={() => redirectHandler(article.id, article.title)}
             >
               <div className="relative w-[50%] h-[200px] md:w-[40%] lg:w-full lg:h-[150px]">
                 <Hastag style="absolute top-2 z-10  left-4">
-                  {(lang ? (lang === "fr" ? article.category_fr : article.category_en) : "")}
+                  {lang2 === 'fr' ? article.category_fr : article.category_en}
                   </Hastag>
                 <Image
                   src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
@@ -65,31 +75,37 @@ const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
           )
         )}
       </div>
-      <div className="hidden lg:block mt-10 lg:order-2">
+
+
+      {!hastagPage && 
+     ( 
+     <div className="hidden lg:block mt-10 lg:order-2">
         <HeaderCategory title="Tag" />
         <ul className="flex flex-wrap gap-4 pt-4">
-          {TagDeux?.map((tag) => (
+          {listHastag?.map((tag) => (
             <li
               key={uuidv4()}
               className="tagBg text-center w-fit px-2 border-[1px] border-gray-300 rounded font-bold uppercase cursor-pointer"
             >
               <Link
-                href={`/${name}&${tag}`}
+                href={`/hastag/${tag.id}/${linkBeautify(tag.name)}`}
                 className="whitespace-nowrap text-[10px] leading-[12px]"
               >
-                {tag}
+                {tag.name}
               </Link>
             </li>
           ))}
         </ul>
       </div>
+      )
+      }
       <div className="relative w-full h-[437px] mt-5 md:h-[752px] lg:h-[300px] lg:order-3">
         <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
         <Image src={Publicite} fill className="object-cover" alt="Publicite" />
       </div>
       {/*Follow us*/}
       <div className="mt-10 hidden lg:block">
-        <HeaderCategory title="Follow Us" />
+        <HeaderCategory title={followTitle} />
         <ul className="flex gap-3 mt-4">
           <li>
             <SocialIcon
@@ -145,17 +161,10 @@ const AsideRecentPopular = ({ articlePopular, articleRecent, name }) => {
       </div>
 
       <div className="mt-10 lg:order-4">
-        <HeaderCategory title="Popular" />
+        <HeaderCategory title={popularTitle} />
         <div className="md:flex  gap-2 lg:pt-2 lg:flex-col">
-          {articlePopular?.map(({ img, titre, date, auteur }) => (
-            <MainPopular
-              key={uuidv4()}
-              img={img}
-              auteur={auteur}
-              date={date}
-              titre={titre}
-              dateStyle
-            />
+          {listPopular?.map((article) => (
+              <MainPopular key={uuidv4()} articleData={article}/>
           ))}
         </div>
       </div>

@@ -3,6 +3,7 @@ import HeaderCategory from "@/components/HeaderCategory";
 import MainTopOfWeek from "@/components/Mostread/MainTopOfWeek";
 import { ArticlesContext } from "@/pages";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import {v4 as uuidv4} from "uuid";
 
 const TopOfWeek = () => {
   const { ArticleTopOfWeek } = useContext(ArticlesContext);
@@ -27,6 +28,7 @@ const TopOfWeek = () => {
       >
         {ArticleTopOfWeek?.map(({ img, category, titre, date, auteur }) => (
           <MainTopOfWeek
+            key={uuidv4()}
             img={img}
             category={category}
             titre={titre}

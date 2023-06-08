@@ -12,23 +12,42 @@ import Hastag from "@/components/Hastag";
 import { dataFilter } from "@/config/dataFilter";
 import localStorage from "localStorage";
 import moment from "moment";
+import Paginate from "@/components/Paginate";
 
-const ArticlePrincipale = ({ listArticlesByCategoriesEn, listArticlesByCategoriesFr, articlePopular, listRecentArticlesEn, listRecentArticlesFr }) => {
+const ArticlePrincipale = ({ listArticlesByCategoriesEn, listArticlesByCategoriesFr, listRecentArticlesEn, listRecentArticlesFr, listMostPopularEn, listMostPopularFr, listHastagEn, listHastagFr }) => {
   const [listRecent, setListRecent] = useState(listRecentArticlesEn)
-  const [listArticles, setListArticles] = useState(listArticlesByCategoriesEn)
+  const [listPopular, setListPopular] = useState(listMostPopularEn)
+  const [listHastag, setListHastag] = useState(listHastagEn)
   const storage = JSON.parse(localStorage.getItem('token'))
   const [lang, setLang] = useState("en")
+  const [listArticles, setListArticles] = useState(listArticlesByCategoriesEn)
+  const [currentArticles, setCurrentArticles] = useState()
+
+
   const linkBeautify = (link) => {
-    return link.replace(/\s+/g, "-");
+    const newLink = link.replace(/[;:',\s]/g, "-");
+    return newLink.toLowerCase()
   };
 
+  /* ------------------------------- pagination ------------------------------- */
+  const [itemOffset, setItemOffset] = useState(null)
+  const itemsPerPage = 4
+  const handlerPageClick = (e) => {
+    const newOffset = (e.selected * itemsPerPage) % listArticles.length;
+    setItemOffset(newOffset)
+  }
+
   useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage
+    setCurrentArticles(listArticles.slice(itemOffset, endOffset))
     if(storage.lang === "fr"){
       setListRecent(listRecentArticlesFr)
       setListArticles(listArticlesByCategoriesFr)
+      setListPopular(listMostPopularFr)
+      setListHastag(listHastagFr)
       setLang("fr")
     }
-  })
+  }, [itemOffset, itemsPerPage, listArticles])
   return (
     <>
       <section className="mt-10 mx-2">
@@ -65,7 +84,7 @@ const ArticlePrincipale = ({ listArticlesByCategoriesEn, listArticlesByCategorie
           {/*Main ariticles*/}
           <div className="">
             <div className="grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-4 lg:grid-cols-1">
-              {listArticles?.map((article) => (
+              {currentArticles?.map((article) => (
                 <article key={uuidv4()} className="cursor-pointer group">
                   <figure className="relative w-full h-[250px] lg:h-[450px]">
                     <Image
@@ -90,13 +109,14 @@ const ArticlePrincipale = ({ listArticlesByCategoriesEn, listArticlesByCategorie
                 </article>
               ))}
             </div>
-            <h6 className="text-4xl font-bold py-6 text-center">PAGINATION</h6>
+            <div className="mt-10 mb-10">
+              {
+              listArticles.length > 4 && <Paginate itemsPerPage={itemsPerPage} handlerPage={handlerPageClick} items={listArticles}/>
+              }
+            </div>
           </div>
           {/*Aside*/}
-          <AsideRecentPopular
-            articleRecent={listRecent}
-            articlePopular={articlePopular}
-            name={listArticles.length > 0 ? listArticles[0].category_fr : ""}
+          <AsideRecentPopular articleRecent={listRecent} listPopular={listPopular} listHastag={listHastag}  name={listArticles.length > 0 ? (lang&&listArticles[0][`category_${lang}`]) : ""}
           />
         </div>
       </section>
@@ -125,7 +145,11 @@ export async function getStaticProps({ params }) {
   let listRecentArticlesEn = [] // asina ny liste ny recent article (6 farany)
   let listArticlesByCategoriesEn = [] // asina ny liste ny article par category en (6 farany)
   let listArticlesByCategoriesFr = [] // asina ny liste ny article par category fr (6 farany)
+  let listMostPopularEn = [] // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+  let listMostPopularFr = [] // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
   let articleData = []
+  let listHastagFr = []
+  let listHastagEn = []
 
    /* -------------------------------------------------------------------------- */
     /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
@@ -186,14 +210,76 @@ export async function getStaticProps({ params }) {
     }).then((res) => res.json())
       .then(data => listArticlesByCategoriesEn = data)
 
+   /* -------------------------------------------------------------------------- */
+    /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramMostPopularFr = {query: 'getMostPopular', param: ['fr']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramMostPopularFr),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listMostPopularFr = data)
+
+
+    /* ----------------------------------- EN ----------------------------------- */
+
+    const paramMostPopularEn = {query: 'getMostPopular', param: ['en']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramMostPopularEn),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listMostPopularEn = data)
+  
+  
+    /* -------------------------------------------------------------------------- */
+    /*                   ALAINA NY LISTE NY HASTAG PAR CATEGORIES                  */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------------------- FR ----------------------------------- */
+
+    const paramHastagFr = {query: 'getHastagByCategory', param: [categoryID, 'fr']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramHastagFr),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listHastagFr = data)
+
+
+    /* ----------------------------------- EN ----------------------------------- */
+
+    const paramHastagEn = {query: 'getHastagByCategory', param: [categoryID, 'en']} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    await fetch(`${baseUrl}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramHastagEn),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => listHastagEn = data)
+
 
   return {
     props: {
-      articlePopular,
       listRecentArticlesEn: dataFilter(listRecentArticlesEn.result, "category_id", 3),
       listRecentArticlesFr: dataFilter(listRecentArticlesFr.result, "category_id", 3),
       listArticlesByCategoriesEn: listArticlesByCategoriesEn.result,
-      listArticlesByCategoriesFr: listArticlesByCategoriesFr.result
+      listArticlesByCategoriesFr: listArticlesByCategoriesFr.result,
+      listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 4),
+      listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 4),
+      listHastagEn: listHastagEn.result,
+      listHastagFr: listHastagFr.result
     },
   };
 }

@@ -6,8 +6,12 @@ import { ROOT_URL } from "@/env";
 import { useState, useEffect } from "react";
 
 export default function App({ Component, pageProps, router }) {
+  const data = {
+    lang: 'en',
+    rating: []
+  }
   if(!localStorage.getItem('token')){
-    localStorage.setItem('token', JSON.stringify({lang: 'en'})) 
+    localStorage.setItem('token', JSON.stringify(data)) 
   }
 
   const [categories, setCategories] = useState()

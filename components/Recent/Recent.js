@@ -5,6 +5,7 @@ import SecondaryArticle from "@/components/Recent/SecondaryArticle";
 import { Jost } from "next/font/google";
 import { ArticlesContext } from "@/pages";
 import moment from "moment";
+import {v4 as uuidv4} from "uuid";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 const Recent = ({dataRecent}) => {
@@ -19,7 +20,7 @@ const Recent = ({dataRecent}) => {
         <div className="space-y-7 lg:w-[80%] lg:space-y-8">
           {dataRecent.slice(0,3)?.map(
             (article) => (
-              <MainArticle articleData={article}/>
+              <MainArticle key={uuidv4()} articleData={article}/>
             )
           )}
         </div>
@@ -27,7 +28,7 @@ const Recent = ({dataRecent}) => {
         {/*  Right Panel*/}
         <div className=" flex overflow-x-scroll gap-4 pt-5 scrollbar-hide lg:flex-col lg:pt-0 lg:gap-6">
           {dataRecent.slice(3,6)?.map((article) => (
-            <SecondaryArticle articleData={article}/>
+            <SecondaryArticle key={uuidv4()} articleData={article}/>
           ))} 
 
           <button

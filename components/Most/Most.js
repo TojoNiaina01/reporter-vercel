@@ -4,6 +4,7 @@ import MainMost from "@/components/Most/MainMost";
 import { ArticlesContext } from "@/pages";
 import SecondaryMost from "@/components/Most/SecondaryMost";
 import useMediaQuery from "@/hook/useMediaQuery";
+import {v4 as uuidv4} from "uuid";
 
 const Most = ({dataMostRead}) => {
   const { ArticleMostMain } = useContext(ArticlesContext);
@@ -14,7 +15,8 @@ const Most = ({dataMostRead}) => {
         <HeaderCategory title="Most Read" all banner />
         <div className="grid grid-cols-2 gap-2 md:gap-6">
           {dataMostRead?.map((article) => (
-            <MainMost articleData={article}/>
+            
+            <MainMost key={uuidv4()} articleData={article}/>
           ))}
         </div>
       </div>
