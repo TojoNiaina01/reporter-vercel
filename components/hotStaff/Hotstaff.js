@@ -59,7 +59,7 @@ const Hotstaff = ({ dataHot }) => {
             <hr className="pb-4 text-white " />
             <DateAuteur
               style="text-gray-300 text-sm lg:text-xs"
-              date={moment(dataHot.created_at).format("MMMM Do YYYY")}
+              date={dataHot.created_at}
               auteur={dataHot.author}
             />
 

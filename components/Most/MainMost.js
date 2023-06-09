@@ -35,7 +35,7 @@ const MainMost = ({articleData}) => {
         />
       </div>
       <div className="p-2">
-      <DateAuteur date={moment(articleData.created_at).format('MMMM Do YYYY')} auteur={articleData.author} />
+      <DateAuteur date={articleData.created_at} auteur={articleData.author} />
         <hr />
         <Title>{articleData.title}</Title>
       </div>

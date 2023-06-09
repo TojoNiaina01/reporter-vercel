@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Hastag from "@/components/Hastag";
 import Image from "next/image";
-import { ArticleDemo } from "@/public/assets/img";
 import { Jost } from "next/font/google";
 import DateAuteur from "@/components/DateAuteur";
 import localStorage from "localStorage";
 import { useRouter } from "next/router";
-import moment from "moment";
-//const frLocale = require('moment/locale/fr');
 
 const jost = Jost({ subsets: ["latin"], weight: "400" });
 
@@ -15,6 +12,7 @@ const Slider = ({ dataSlide }) => {
   const router = useRouter();
   const lang = JSON.parse(localStorage.getItem("token")).lang;
   const [hastag, setHasTag] = useState();
+  const [formatedDate, setFormatedDate] = useState();
   const linkBeautify = (link) => {
     const newLink = link.replace(/[';:,\s\u2019]/g, "-");
     return newLink.toLowerCase();
@@ -51,10 +49,7 @@ const Slider = ({ dataSlide }) => {
           className="z-50 w-full rounded bg-white
         px-6 py-4 md:absolute md:-bottom-24 md:right-1/2 md:w-fit md:translate-x-1/2 md:border-2 md:border-gray-200 md:px-10  lg:w-[70%] "
         >
-          <DateAuteur
-            date={moment(dataSlide.created_at).format("MMMM Do YYYY")}
-            auteur={dataSlide.author}
-          />
+          <DateAuteur date={dataSlide.created_at} auteur={dataSlide.author} />
           <h3
             className={`  text-[30px] font-semibold  lg:text-3xl 2xl:text-4xl ${jost.className}`}
           >

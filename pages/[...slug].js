@@ -111,7 +111,7 @@ const ArticlePrincipale = ({
                   </figure>
                   <div className="mx-1">
                     <DateAuteur
-                      date={moment(article.created_at).format("MMMM Do YYYY")}
+                      date={article.created_at}
                       auteur={article.author}
                     />
                     <Title style="text-xl tracking-wide leading-6 group-hover:underline lg:text-2xl lg:leading-5">

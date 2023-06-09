@@ -1,16 +1,15 @@
-import React from "react";
-import Image from "next/image";
-import { Profil } from "@/public/assets/img";
+import moment from "moment";
 
 const DateAuteur = ({ date, auteur, style, wrap }) => {
   return (
     <div
       className={`${
-        style ? style : "text-secondary-500  py-2"
-      } uppercase tracking-wide font-semibold text-[11px] sm:flex items-center gap-1`}
+        style ? style : "py-2  text-secondary-500"
+      } items-center gap-1 text-[11px] font-semibold uppercase tracking-wide sm:flex`}
     >
       <p className="whitespace-nowrap">
-        {date} <span className={`${style ? style : "text-black"}`}> - </span>
+        {moment(date).format("YYYY-MM-DD")}
+        <span className={`${style ? style : "text-black"}`}> - </span>
       </p>
       <p className="lg:whitespace-nowrap">{auteur}</p>
     </div>

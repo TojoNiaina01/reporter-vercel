@@ -104,7 +104,7 @@ const Hastag = ({
                     {articleData.title}
                   </Title>
                   <DateAuteur
-                    date={moment(articleData.created_at).format("MMMM Do YYYY")}
+                    date={articleData.created_at}
                     auteur={articleData.author}
                     style="text-secondary-500 py-1 "
                   />

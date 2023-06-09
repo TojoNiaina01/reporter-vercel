@@ -164,7 +164,7 @@ const Articless = ({
               }
             </div>
             <DateAuteur
-              date={moment(articleData.created_at).format("MMMM Do YYYY")}
+              date={articleData.created_at}
               auteur={articleData.author}
             />
             <hr className="my-2" />
