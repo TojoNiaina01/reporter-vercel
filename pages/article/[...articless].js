@@ -1,7 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import AsideRecentPopular from "@/components/pageIndiv/AsideRecentPopular";
 import HeaderCategory from "@/components/HeaderCategory";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  MagnifyingGlassIcon,
+  PauseCircleIcon,
+  PlayCircleIcon,
+  SpeakerWaveIcon,
+  SpeakerXMarkIcon,
+} from "@heroicons/react/24/outline";
 import Head from "next/head";
 import Image from "next/image";
 import DateAuteur from "@/components/DateAuteur";
@@ -113,7 +119,7 @@ const Articless = ({
               {articleData.image?.map((image) => (
                 <div
                   key={uuidv4()}
-                  className="relative h-[50px] w-full lg:h-[450px] lg:rounded"
+                  className="relative h-[250px] w-full md:h-[350px] lg:h-[450px] lg:rounded"
                 >
                   <Image
                     src={`/uploads/images/${image.image_name}.${image.image_extension}`}
@@ -123,45 +129,44 @@ const Articless = ({
                   />
                 </div>
               ))}
-
-              {
-                //   <div className="relative group ">
-                //   <video
-                //     src={enCourData.video}
-                //     type="video/mp4"
-                //     play
-                //     muted={isMuted}
-                //     loop
-                //     ref={videoRef}
-                //   />
-                //   <div className="absolute right-5 bottom-5 text-main-500">
-                //     {isMuted ? (
-                //       <SpeakerXMarkIcon
-                //         className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                //         onClick={() => setIsMuted((value) => !value)}
-                //       />
-                //     ) : (
-                //       <SpeakerWaveIcon
-                //         className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                //         onClick={() => setIsMuted((value) => !value)}
-                //       />
-                //     )}
-                //   </div>
-                //   <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                //     {isPlayed ? (
-                //       <PlayCircleIcon
-                //         className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                //         onClick={play}
-                //       />
-                //     ) : (
-                //       <PauseCircleIcon
-                //         className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                //         onClick={pause}
-                //       />
-                //     )}
-                //   </div>
-                // </div>
-              }
+              {/* Video  */}
+              <div className="group relative ">
+                <video
+                  src="/assets/video/video1.mp4"
+                  type="video/mp4"
+                  play
+                  muted={isMuted}
+                  loop
+                  ref={videoRef}
+                  className="mx-auto h-auto"
+                />
+                <div className="absolute bottom-5 right-5 text-main-500">
+                  {isMuted ? (
+                    <SpeakerXMarkIcon
+                      className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                      onClick={() => setIsMuted((value) => !value)}
+                    />
+                  ) : (
+                    <SpeakerWaveIcon
+                      className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                      onClick={() => setIsMuted((value) => !value)}
+                    />
+                  )}
+                </div>
+                <div className="absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-main-500">
+                  {isPlayed ? (
+                    <PlayCircleIcon
+                      className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                      onClick={play}
+                    />
+                  ) : (
+                    <PauseCircleIcon
+                      className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                      onClick={pause}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
             <DateAuteur
               date={articleData.created_at}
