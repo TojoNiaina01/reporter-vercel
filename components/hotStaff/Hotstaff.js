@@ -64,7 +64,9 @@ const Hotstaff = ({ dataHot }) => {
             />
 
             <Link href="#" className="flex items-center gap-1 pt-3 lg:pt-6">
-              <span className={`uppercase ${jost.className}`}>read more</span>
+              <span className={`uppercase tracking-wide ${jost.className}`}>
+                Explorer
+              </span>
               <ArrowSmallRightIcon className="h-5" />
             </Link>
           </div>

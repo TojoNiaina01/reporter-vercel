@@ -66,7 +66,7 @@ const Slider = ({ dataSlide }) => {
             onClick={pushToArticleHandler}
             className="#F9E0E5 rounded-full bg-main-400 px-6 py-3 text-white shadow-lg hover:underline active:scale-95"
           >
-            {lang === "en" ? "Read More" : "Voir plus"}
+            {/* {lang === "en" ? "Read More" : "Voir plus"} */} Explorer
           </button>
         </div>
       </div>
