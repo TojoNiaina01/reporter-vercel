@@ -108,7 +108,7 @@ const Home = ({
       <Most dataMostRead={listMostRead} />
       <NewLetter />
       <Hotstaff dataHot={hot} />
-      <TopOfWeek />
+      {/* <TopOfWeek /> */}
     </ArticlesContext.Provider>
   );
 };
