@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Listbox } from "@headlessui/react";
 import { MenuFR } from "@/constant/constant";
 import {
@@ -17,9 +17,10 @@ import ConfirmDelete from "@/components/ConfirmDelete";
 import moment from "moment";
 import {v4 as uuidV4} from 'uuid';
 import { ROOT_URL } from "@/env";
+import Paginate from "@/components/Paginate";
 
 
-const Article = ({ header, tabhead, data, user, listArticles, listCategories, dispatchArticle }) => {
+const Article = ({ header, tabhead, data, user, listArticles, listCategories, dispatchArticle, listUsers }) => {
   const lang = [
     {tag: "fr", langue: "français"},
     {tag: "en", langue: "Anglais"},
@@ -29,6 +30,23 @@ const Article = ({ header, tabhead, data, user, listArticles, listCategories, di
   const [modalShow, setModalShow] = useState(false);
   const [articleData, setArticleData] = useState()
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
+
+  /* -------------------------------- list user ------------------------------- */
+  const [listNewUsers, setListNewUsers] = useState(listUsers)
+
+   /* ------------------------------- pagination ------------------------------- */
+   const [itemOffset, setItemOffset] = useState(null)
+   const [currentArticles, setCurrentArticles] = useState()
+   const itemsPerPage = 6
+   const handlerPageClick = (e) => {
+     const newOffset = (e.selected * itemsPerPage) % listArticles.length;
+     setItemOffset(newOffset)
+   }
+
+   useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage
+    setCurrentArticles(listArticles.slice(itemOffset, endOffset))
+   },[itemOffset, itemsPerPage, listArticles])
 
 
 const modifHandler = (val) => {
@@ -71,6 +89,118 @@ const langHandler = (val) => {
     })
 
 }
+
+const supprArticles = async (article) => {
+  const image = article.image
+ if(image[0].image_id){
+  console.log("image == ", image)
+  for(const key in image){
+    const paramDelImage = {query: 'deleteImage', param: [image[key].image_id]}
+    await fetch(`${ROOT_URL}/api/knexApi`, {
+      method: "POST",
+      body: JSON.stringify(paramDelImage),
+      headers: {
+        "Content-type" : "application/json"
+      }
+    }).then((res) => res.json())
+      .then(data => {
+        const dataImg = {
+          name: image[key].image_name,
+          extension: image[key].image_extension
+        }
+
+
+          fetch(`${ROOT_URL}/api/deleteFile`, {
+            method: "POST",
+            body: JSON.stringify(dataImg),
+            headers: {
+              "Content-type" : "application/json"
+            }
+          }).then((res) => res.json())
+            .then(data => {
+              console.log(`suppression image ${image[key].image_id}`)
+            })
+        
+        
+      })
+  }
+ }
+
+  const paramDelArticle = {query: 'deleteArticle', param: [article.id]}
+  await fetch(`${ROOT_URL}/api/knexApi`, {
+    method: "POST",
+    body: JSON.stringify(paramDelArticle),
+    headers: {
+      "Content-type" : "application/json"
+    }
+  }).then((res) => res.json()) 
+   .then(data => {
+      console.log("article id == ", article.id)
+        console.log("selectedMenu.id == ", selectedMenu.id)
+        console.log("selectedLang.tag == ", selectedLang.tag)
+        const paramNewListArticles = {query: 'getArticleByCategoryLang', param: [selectedMenu.id, selectedLang.tag]}
+        fetch(`${ROOT_URL}/api/knexApi`, {
+          method: "POST",
+          body: JSON.stringify(paramNewListArticles),
+          headers: {
+            "Content-type" : "application/json"
+          }
+        }).then((res) => res.json())
+        .then(newListUsers => {
+          console.log("suppression article")
+          dispatchArticle({type: 'ALLCHANGE', result: newListUsers.result})
+        })
+   })
+}
+
+
+
+const deleteUserHandler = (userID) => {
+  const userElement = document.getElementById(`user${userID}`)
+  userElement.classList.add("opacity-30")
+
+          const paramUser = {query: 'deleteUser', param: [userID]}
+          fetch(`${ROOT_URL}/api/knexApi`, {
+            method: "POST",
+            body: JSON.stringify(paramUser),
+            headers: {
+              "Content-type" : "application/json"
+            }
+          }).then((res) => res.json())
+          .then(user => {
+            const paramNewList = {query: 'getUsers', param: false}
+            fetch(`${ROOT_URL}/api/knexApi`, {
+              method: "POST",
+              body: JSON.stringify(paramNewList),
+              headers: {
+                "Content-type" : "application/json"
+              }
+            }).then((res) => res.json())
+            .then(newListUsers => {
+              setListNewUsers(newListUsers.result)
+            })
+          })
+    }
+
+    const deleteArticleHandler = (articleID) => {
+      const articleElement = document.getElementById(`article${articleID}`)
+      articleElement.classList.add("opacity-30")
+
+      const paramArticle = {query: 'getArticle', param: [articleID]}
+      fetch(`${ROOT_URL}/api/knexApi`, {
+        method: "POST",
+        body: JSON.stringify(paramArticle),
+        headers: {
+          "Content-type" : "application/json"
+        }
+      }).then((res) => res.json())
+        .then(article => {
+            supprArticles(article.result[0])
+        })
+
+    }
+
+
   return (
     <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-between">
@@ -144,9 +274,9 @@ const langHandler = (val) => {
           </thead>
           {!user && (
             <tbody>
-              {listArticles?.map((article, i) => (
-                <tr key={uuidV4()} className="bg-white border-b ">
-                  <td className="px-6 py-4">{i}</td>
+              {currentArticles?.map((article) => (
+                <tr id={`article${article.id}`} key={uuidV4()} className="bg-white border-b ">
+                  <td className="px-6 py-4">{article.id}</td>
                   <td className="relative w-[100px] h-[100px]">
                     <Image
                       fill
@@ -182,7 +312,7 @@ const langHandler = (val) => {
                       <TrashIcon
                         className="h-5 text-red-500 cursor-pointer"
                         onClick={() =>
-                          setModalDeleteConfirm(!modalDeleteConfirm)
+                          deleteArticleHandler(article.id)
                         }
                       />
                     </div>
@@ -194,16 +324,16 @@ const langHandler = (val) => {
 
           {user && (
             <tbody>
-              {data?.map((item, i) => (
-                <tr key={uuidV4()} className="bg-white border-b ">
-                  <td className="px-6 py-4">{i}</td>
+              {listNewUsers?.map((user) => (
+                <tr id={`user${user.id}`} key={uuidV4()} className="bg-white border-b ">
+                  <td className="px-6 py-4">{user.id}</td>
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
-                    {item.name}
+                    {user.name}
                   </th>
-                  <td className="px-6 py-4">{item.role}</td>
+                  <td className="px-6 py-4">{user.type.toUpperCase()}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
                       <PencilSquareIcon
@@ -212,9 +342,7 @@ const langHandler = (val) => {
                       />
                       <TrashIcon
                         className="h-5 text-red-500 cursor-pointer"
-                        onClick={() =>
-                          setModalDeleteConfirm(!modalDeleteConfirm)
-                        }
+                        onClick={() => deleteUserHandler(user.id)}
                       />
                     </div>
                   </td>
@@ -226,7 +354,11 @@ const langHandler = (val) => {
       </div>
       <div className="flex justify-between items-center mt-5">
         <div />
-        <div>PAGINATION</div>
+        <div>
+        {
+              listArticles.length > 6 && <Paginate itemsPerPage={itemsPerPage} handlerPage={handlerPageClick} items={listArticles}/>
+          }
+        </div>
       </div>
 
       {modalShow && <ModalArticle setModalShow={setModalShow} articleData={articleData}/>}

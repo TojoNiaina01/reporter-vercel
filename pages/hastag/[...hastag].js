@@ -25,7 +25,7 @@ const Hastag = ({ listMostPopularEn, listMostPopularFr, listRecentArticlesEn, li
   const rating = JSON.parse(localStorage.getItem('token')).rating
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[;:',\s]/g, "-");
+    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };  
 
@@ -59,7 +59,7 @@ const Hastag = ({ listMostPopularEn, listMostPopularFr, listRecentArticlesEn, li
         <div>
           <HeaderCategory title={`#${hastagData.name}`} style />
           <p className="text-xs lg:text-sm font-thin tracking-wide">
-          Hastag - page
+          Hashtag - page
           </p>
         </div>
         <div className="z-10 absolute right-5 md:static">
@@ -251,7 +251,7 @@ export async function getStaticPaths(){
   const baseUrl = process.env.ROOT_URL
   
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[;:',\s]/g, "-");
+    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
       return newLink.toLowerCase()
   };
 

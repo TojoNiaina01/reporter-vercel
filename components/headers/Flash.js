@@ -3,11 +3,13 @@ import { Jost } from "next/font/google";
 import Title from "@/components/Title";
 import { Slide } from "react-slideshow-image";
 import {v4 as uuidv4} from "uuid";
+import { useRouter } from "next/router";
 
 const jost = Jost({ subsets: ["latin"], weight: "700" });
 
 const Flash = ({listFlash}) => {
   const [articles, setArticles] = useState(listFlash)
+  const router = useRouter()
   const settings = {
     prevArrow: <div />,
     nextArrow: <div />,
@@ -19,10 +21,19 @@ const Flash = ({listFlash}) => {
     autoplay: true,
   };
 
+  const linkBeautify = (link) => {
+    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
+      return newLink.toLowerCase()
+  };
+  
+
   useEffect(() => {
     setArticles(listFlash)
-    console.log("change flash")
   },[listFlash])
+
+  const redirectHandler = (id, title) => {
+    router.push(`/article/${id}/${linkBeautify(title)}`)
+  }
 
   console.log("flash info == ",listFlash)
 
@@ -42,7 +53,7 @@ const Flash = ({listFlash}) => {
               <Slide {...settings}>
                 {
                   articles.map((article) => (
-                    <div key={uuidv4()} className="group cursor-pointer">
+                    <div key={uuidv4()} className="group cursor-pointer"  onClick={() => redirectHandler(article.id, article.title)}>
                       <Title style="text-lg text-gray-600">
                         {article.title}
                       </Title>

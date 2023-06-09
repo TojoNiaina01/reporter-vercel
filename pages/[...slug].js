@@ -25,7 +25,7 @@ const ArticlePrincipale = ({ listArticlesByCategoriesEn, listArticlesByCategorie
 
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[;:',\s]/g, "-");
+    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };
 

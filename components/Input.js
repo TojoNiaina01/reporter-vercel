@@ -10,11 +10,13 @@ const Input = ({
   textarea,
   placeholder,
   onChange,
-  defaultValue
+  defaultValue,
+  status
 }) => {
   const [hide, setHide] = useState(true);
   const [textValue, setTextValue] = useState('')
   const [value, setValue] = useState('')
+  const [typeInput, setTypeInput] = useState(type)
 
 
   const textareaHandler = (e) => {
@@ -39,8 +41,14 @@ const Input = ({
     }else{
       setValue(defaultValue)
     }
-
-  },[])
+    if(password){
+      if(!hide){
+        setTypeInput("text")
+      }else{
+        setTypeInput("password")
+      }
+    }
+  },[hide])
 
   return (
     <div className="w-full relative">
@@ -66,7 +74,7 @@ const Input = ({
         />
       ) : (
         <input
-          type={type}
+          type={typeInput}
           id={id}
           placeholder=" "
           className={`peer

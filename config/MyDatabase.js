@@ -84,6 +84,7 @@ class MyDatabase {
                         {category_fr: 'c.fr'},
                         {category_en: 'c.en'},
                         {category_id: 'c.id'},
+                        {image_id: 'img.id'}, 
                         {image_name: 'img.name'}, 
                         {image_extension: 'img.extension'},
                         {image_size: 'img.size'}, 
@@ -124,6 +125,7 @@ class MyDatabase {
                
                )
         .where('a.lang', lang)
+        .orderBy('a.id', 'desc')
 
 
         const resToJson = JSON.parse(JSON.stringify(res))
@@ -188,6 +190,42 @@ class MyDatabase {
                             
                             )
                         .where({'c.id': category_id, 'a.lang': lang})
+                        .orderBy('a.id', 'desc')
+        
+
+        const resToJson = JSON.parse(JSON.stringify(res))
+
+        return ObjectFormater(resToJson, 'image')
+    }
+   
+   
+    async searchArticle(tag, lang){
+        const res = await knex({a: 'articles'})
+                     .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+                     .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
+                     .select(
+                            'a.id', 
+                            'a.title', 
+                            'a.body', 
+                            'a.description', 
+                            'a.author', 
+                            'a.lang',
+                            'a.flash', 
+                            'a.hot', 
+                            'a.slide', 
+                            'a.created_at',
+                            {category_fr: 'c.fr'},
+                            {category_en: 'c.en'},
+                            {category_id: 'c.id'},
+                            {image_name: 'img.name'}, 
+                            {image_extension: 'img.extension'},
+                            {image_size: 'img.size'}, 
+                            {image_type: 'img.type'}
+                            
+                            )
+                        .whereILike("a.title", `%${tag}%`)
+                        .andWhereILike("a.description", `%${tag}%`)
+                        .where('a.lang', lang)
                         .orderBy('a.id', 'desc')
         
 
@@ -580,6 +618,38 @@ class MyDatabase {
 
 return JSON.parse(JSON.stringify(res))
      }
+
+     async addHastag(tabHastag, lang){
+        const result = []
+        try {
+            for (const hashtag of tabHastag) {
+              const existingHashtag = await knex('hastag').where({'name': hashtag.toUpperCase(), lang: lang}).first();
+                
+              if (!existingHashtag) {
+                let newHastag = await knex('hastag').insert({ name: hashtag.toUpperCase(), lang: lang });
+                console.log(`Le hashtag '${hashtag}' a été inséré.`);
+                result.push(newHastag[0])
+                console.log("new == ",JSON.parse(JSON.stringify(newHastag)))
+              } else {
+                const newhas = JSON.parse(JSON.stringify(existingHashtag))
+                console.log(`Le hashtag '${hashtag}' existe déjà.`);
+                console.log("exist tag == ",JSON.parse(JSON.stringify(existingHashtag)))
+                result.push(newhas.id)
+              }
+            }
+          } catch (error) {
+            console.error('Erreur lors de la vérification et de l\'insertion des hashtags :', error);
+          }
+          return result
+     }
+
+     async addHastagArticle(data){
+            await knex('hastag_articles')
+                  .insert(data)
+            return data
+     }
+
+
      /**========================================================================
      **                          IMAGES
      * @addImage           : ajouter une image
@@ -703,6 +773,67 @@ return JSON.parse(JSON.stringify(res))
                         .select('*')
                         .where('id', id)
 
+        return JSON.parse(JSON.stringify(res))
+     }
+
+     /**========================================================================
+     **                             USERS
+     * @addUser            : mi-ajout user
+     * @getUsers           : maka ny user rehetra
+     * @checkMail          : mi-vérifier an'ilay olona
+     * @getUser            : maka user
+     * @deleteUser         : mamafa user
+     * @findUser           : mitady user
+     *========================================================================**/
+
+     async getUsers(){
+        let res =  await knex('users')
+                        .select('*')
+                        .orderBy('id', 'desc')
+                return JSON.parse(JSON.stringify(res))
+     }
+
+     async addUser({name, email, password, type, token}){
+        let res = await knex('users')
+                           .insert({
+                            name,
+                            email,
+                            password,
+                            type,
+                            token,
+                            created_at: moment().format("YYYY-MM-DD hh:mm:ss")
+                           })
+            let userID = JSON.parse(JSON.stringify(res))
+            return await this.getFlashinfo(userID[0])
+     }
+
+     async getUser(id){
+        let res =  await knex('users')
+                        .select('*')
+                        .where('id', id)
+        return JSON.parse(JSON.stringify(res))
+     }
+
+     async checkMail(email){
+        let res = await knex('users')
+                        .count("*", {as: 'email'})
+                        .where('email', email)
+        
+        return JSON.parse(JSON.stringify(res))
+     }
+
+     async deleteUser(id){
+        await knex('users')
+            .where('id', id)
+            .del()
+
+        return id
+     }
+
+     async findUser(email){
+        let res =  await knex('users')
+                        .select('*')
+                        .where('email', email)
         return JSON.parse(JSON.stringify(res))
      }
 

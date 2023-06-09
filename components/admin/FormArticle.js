@@ -37,12 +37,15 @@ const FormArticle = ({
   const [confirmModal, setConfirmModal] = useState(false);
   const [value, setValue] = useState('');
   const [title, setTitle] = useState(articleData.title);
+  const [author, setAuthor] = useState("");
   const [descript, setDescript] = useState(articleData.description);
+  const [hastag, setHastag] = useState()
   const [files, setFiles] = useState();
   const [flash, setFlash] = useState(false)
   const [hot, setHot] = useState(false)
   const [slide, setSlide] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [status, setStatus] = useState(false)
   const newArticleData = articleData
   var richtextVal = ""
   const richTextHandler = (val) => {
@@ -52,9 +55,17 @@ const FormArticle = ({
   const getTitle = (val) => {
     setTitle(val)
   }
+  const getAuthor = (val) => {
+    setAuthor(val)
+  }
   const getDescript = (val) => {
     setDescript(val)
   }
+
+  const getHastag = (val) => {
+    setHastag(val)
+  }
+
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -88,10 +99,12 @@ const FormArticle = ({
         }
       }
 
+    
+
         data.title = title
         data.description = descript
+        data.author = author
         data.body = value
-        data.author = "Mandreshi"
         data.category_id = selectedMenu.id
         data.lang = selectedLang.tag
 
@@ -102,6 +115,7 @@ const FormArticle = ({
         if(!isEmpty && value.length !== 11){ // 11 satria io no valeur reef tsis soratra "<p><br></p>"
 
           if(files){
+            setStatus(false)
             const param = {query: 'addArticle', param: [data]}
               fetch(`${ROOT_URL}/api/knexApi`, {
                 method: "POST",
@@ -111,7 +125,57 @@ const FormArticle = ({
                 }
               }).then((res) => res.json())
                 .then(article => {
-                  
+
+                    /* -------------------------------------------------------------------------- */
+                    /*                                HASTAG SYSTEM                               */
+                    /* -------------------------------------------------------------------------- */
+
+                    const hastag_articles = []
+
+                    if(hastag){
+                      const tabHastag = hastag.trim().split(",")
+                      const listHastag = tabHastag.map((hastag) => {
+                        return hastag.trim()
+                      })
+                      console.log("hastag liste == ", listHastag)
+                      const paramHastag = {query: 'addHastag', param: [listHastag, selectedLang.tag]}
+                            fetch(`${ROOT_URL}/api/knexApi`, {
+                              method: "POST",
+                              body: JSON.stringify(paramHastag),
+                              headers: {
+                                "Content-type" : "application/json"
+                              }
+                            }).then((res) => res.json())
+                            .then(data => {
+                              console.log("les id de hastag == ", data)
+                              data.result.forEach((hastagID) => {
+                                hastag_articles.push({article_id: article.result[0].id, hastag_id: hastagID})
+                              })
+
+
+                              /* -------------------------------------------------------------------------- */
+                              /*                            AJOUT HASTAG ARTICLE                            */
+                              /* -------------------------------------------------------------------------- */
+
+                              const paramHastagArticle = {query: 'addHastagArticle', param: [hastag_articles]}
+                              fetch(`${ROOT_URL}/api/knexApi`, {
+                                method: "POST",
+                                body: JSON.stringify(paramHastagArticle),
+                                headers: {
+                                  "Content-type" : "application/json"
+                                }
+                              }).then((res) => res.json())
+                              .then(data => {
+                                alert("ajout hastag ok ok")
+                              })
+
+                            })
+
+
+                    }
+
+                    /* ------- *********************************************************** ------ */
+
                     /* -------------------------------------------------------------------------- */
                     /*                        mi-upload ny image voalohany                        */
                     /* -------------------------------------------------------------------------- */
@@ -182,6 +246,8 @@ const FormArticle = ({
                                                   }).then((res) => res.json())
                                                     .then(result => {
                                                      setIsLoading(false)
+                                                     window.location = ROOT_URL
+
                                                     })
                                               
                                               })
@@ -405,7 +471,7 @@ const FormArticle = ({
                 uploadFile ? "w-1/2" : "w-full"
               } h-fit`}
             >
-              <Input id="titre" label="Titre" required type="text" onChange={getTitle} defaultValue={articleData.title}/>
+              <Input id="titre" label="Titre" required type="text" onChange={getTitle} defaultValue={articleData.title} status={status}/>
               <Input
                 id="description"
                 required
@@ -416,6 +482,8 @@ const FormArticle = ({
                 onChange={getDescript}
                 defaultValue={articleData.description}
               />
+              {!pushBtn && <Input id="auteur" label="Auteur" required type="text" onChange={getAuthor} defaultValue={""} />}
+
               <div className="flex gap-4 w-full">
                 <Listbox value={selectedMenu} onChange={setSelectedMenu}>
                   <div className="flex flex-col relative w-full">
@@ -459,10 +527,11 @@ const FormArticle = ({
               <div>
                 <Input
                   id="tags"
-                  label="Enter all of the choices divided by a comma (',')."
+                  label="#Hashtag séparé par virgule(,)"
                   name="tags"
                   required
                   type="text"
+                  onChange={getHastag}
                   defaultValue={""}
                 />
               </div>

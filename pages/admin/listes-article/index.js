@@ -1,15 +1,16 @@
-import React, {useReducer} from "react";
+import React, {useReducer, useEffect} from "react";
 import { ArticleOne } from "@/public/assets/img";
 import Article from "@/components/admin/Article";
 import {listCategories, listArticlesContext} from "@/context/allContext"
 import { articleAction } from "@/context/allAction";
 import { getTest } from "@/config/storage";
+import { ROOT_URL } from "@/env";
+import { getCookie } from "cookies-next";
 
 const ListeArticle = ({categories, listArticles}) => {
 console.log(getTest)
   const [state, dispatch] = useReducer(articleAction, listArticles)
-  
-
+ 
   const tabsHead = [
     "id",
     "medias",
@@ -62,7 +63,7 @@ console.log(getTest)
   return (
     <listCategories.Provider value={categories}>
       <listArticlesContext.Provider value={{state, dispatch}}>
-        <Article header="Listes Articles." tabhead={tabsHead} data={data} listArticles={state} dispatchArticle={dispatch} listCategories={categories} />;
+        <Article header="Listes Articles." tabhead={tabsHead} data={data} listArticles={state} dispatchArticle={dispatch} listCategories={categories} listUsers={[]} />;
       </listArticlesContext.Provider>
     </listCategories.Provider>
   )
@@ -71,9 +72,17 @@ console.log(getTest)
 export default ListeArticle;
 
 
-export async function getStaticProps(){
+export async function getServerSideProps({req, res}){
+
+  if(!getCookie('token_', {req, res})){
+    return {
+      redirect: {
+        destination: "/admin/login"
+      }
+    }
+  }
+
   const baseUrl = process.env.ROOT_URL
-  console.log(getTest)
   const param = {query: 'getFullCategories', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
   const paramArticle = {query: 'getArticlesByLang', param: ["fr"]}// query: ilay anaran'ilay méthode ao @ MyDatabase
   let listCategories = []

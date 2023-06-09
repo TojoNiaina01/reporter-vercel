@@ -35,7 +35,7 @@ const Articless = ({ articleData, listRecentArticlesEn, listRecentArticlesFr, li
   const rating = JSON.parse(localStorage.getItem('token')).rating
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[;:',\s]/g, "-");
+    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };  
 
@@ -373,7 +373,7 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[;:',\s]/g, "-");
+    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };
   const baseUrl = process.env.ROOT_URL

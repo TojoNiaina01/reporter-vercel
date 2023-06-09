@@ -12,6 +12,8 @@ import Banner from "@/components/headers/Banner";
 import MyDatabase from '../config/MyDatabase';
 import localStorage from "localStorage";
 import { dataFilter } from "@/config/dataFilter";
+import { ROOT_URL } from "@/env";
+import bcrypt from "bcryptjs";
 
 
 
@@ -49,17 +51,21 @@ const Home = ({
   const [hot, setHot] = useState(hotEn)
 
   const storage = JSON.parse(localStorage.getItem('token'))
+  // const saltPassword = bcrypt.genSaltSync(10)
+  // const passwordHash = bcrypt.hashSync('Admin@@123', saltPassword)
+
+  // console.log("pass == ", passwordHash)
 
   const getValue = async() => {
-    const data = {query: 'getArticlesByHasTag', param: [47]} // query: ilay anaran'ilay méthode ao @ MyDatabase
-    await fetch('/api/knexApi', {
+    const paramFind = {query: 'findUser', param: ["email"]}
+    fetch(`${ROOT_URL}/api/knexApi`, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(paramFind),
       headers: {
         "Content-type" : "application/json"
       }
     }).then((res) => res.json())
-      .then(data => console.log('data hastag === ', data))
+      .then(data => console.log('search data === ', data))
   }
 
   useEffect(() => {

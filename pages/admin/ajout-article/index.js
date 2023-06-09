@@ -1,5 +1,6 @@
 import React from "react";
 import AddArticle from "@/components/admin/AddArticle";
+import { getCookie } from "cookies-next";
 
 const index = ({listCategories}) => {
   return <AddArticle listCategories={listCategories}/>;
@@ -7,7 +8,15 @@ const index = ({listCategories}) => {
 
 export default index;
 
-export async function getStaticProps(context){
+export async function getServerSideProps({req, res}){
+
+  if(!getCookie('token_', {req, res})){
+    return {
+      redirect: {
+        destination: "/admin/login"
+      }
+    }
+  }
   const baseUrl = process.env.ROOT_URL
   const param = {query: 'getFullCategories', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
   let listCategories = []
@@ -19,7 +28,6 @@ export async function getStaticProps(context){
       }
     }).then((res) => res.json())
       .then(data => listCategories = data)
-console.log("conext == ", context.req)
       return {
         props: {
           listCategories: listCategories.result

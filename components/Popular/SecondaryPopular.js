@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 const SecondaryPopular = ({article}) => {
 const router = useRouter()
 const linkBeautify = (link) => {
-  const newLink = link.replace(/[;:',\s]/g, "-");
+  const newLink = link.replace(/[';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
 };
   return (

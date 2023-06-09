@@ -4,6 +4,8 @@ import LayoutAdmin from "@/Layout/LayoutAdmin";
 import localStorage from "localStorage";
 import { ROOT_URL } from "@/env";
 import { useState, useEffect } from "react";
+import { Provider } from "react-redux";
+import store from "@/config/redux/store";
 
 export default function App({ Component, pageProps, router }) {
   const data = {
@@ -52,11 +54,15 @@ export default function App({ Component, pageProps, router }) {
 
     if (router.pathname.startsWith("/admin")) {
       return (
-        <LayoutAdmin>
-          <Component {...pageProps} />
-        </LayoutAdmin>
+       <Provider store={store}>
+          <LayoutAdmin>
+            <Component {...pageProps} />
+          </LayoutAdmin>
+       </Provider>
       );
+  
     }
+
 
     return (
       <Layout listCategories={categories} listFlash={listFlash}>

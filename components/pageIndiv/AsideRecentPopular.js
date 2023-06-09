@@ -22,7 +22,7 @@ const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listH
   const lang = JSON.parse(localStorage.getItem('token')).lang
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[;:',\s]/g, "-");
+    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
       return newLink.toLowerCase()
   };
   
