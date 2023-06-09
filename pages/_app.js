@@ -7,49 +7,49 @@ import { useState, useEffect } from "react";
 
 export default function App({ Component, pageProps, router }) {
   const data = {
-    lang: 'en',
-    rating: []
-  }
-  if(!localStorage.getItem('token')){
-    localStorage.setItem('token', JSON.stringify(data)) 
+    lang: "en",
+    rating: [],
+  };
+  if (!localStorage.getItem("token")) {
+    localStorage.setItem("token", JSON.stringify(data));
   }
 
-  const [categories, setCategories] = useState()
-  const [listFlash, setListFlash] = useState()
-  const storage = JSON.parse(localStorage.getItem('token'))
+  const [categories, setCategories] = useState();
+  const [listFlash, setListFlash] = useState();
+  const storage = JSON.parse(localStorage.getItem("token"));
 
   const getCategories = async () => {
-    const paramCategory = {query: 'getFullCategories', param: false} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    const paramCategory = { query: "getFullCategories", param: false }; // query: ilay anaran'ilay méthode ao @ MyDatabase
     await fetch(`${ROOT_URL}/api/knexApi`, {
       method: "POST",
       body: JSON.stringify(paramCategory),
       headers: {
-        "Content-type" : "application/json"
-      }
-    }).then((res) => res.json())
-      .then(data => setCategories(data.result))
-  }
-  
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setCategories(data.result));
+  };
+
   const getListFlash = async (lang) => {
-    const paramFlash = {query: 'getFlashByLang', param: [lang]} // query: ilay anaran'ilay méthode ao @ MyDatabase
+    const paramFlash = { query: "getFlashByLang", param: [lang] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
     await fetch(`${ROOT_URL}/api/knexApi`, {
       method: "POST",
       body: JSON.stringify(paramFlash),
       headers: {
-        "Content-type" : "application/json"
-      }
-    }).then((res) => res.json())
-      .then(data => setListFlash(data.result))
-  }
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setListFlash(data.result));
+  };
 
   useEffect(() => {
-    getCategories()
-    getListFlash(storage.lang)
-  },[])
+    getCategories();
+    getListFlash(storage.lang);
+  }, []);
 
   const getLayout = () => {
-
-
     if (router.pathname.startsWith("/admin")) {
       return (
         <LayoutAdmin>
@@ -66,5 +66,3 @@ export default function App({ Component, pageProps, router }) {
   };
   return getLayout();
 }
-
-
