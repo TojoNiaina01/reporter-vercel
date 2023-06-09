@@ -25,7 +25,6 @@ const Slider = ({ dataSlide }) => {
       setHasTag(dataSlide.category_en);
     } else {
       setHasTag(dataSlide.category_fr);
-      
     }
   }, []);
 
@@ -52,7 +51,10 @@ const Slider = ({ dataSlide }) => {
           className="z-50 w-full rounded bg-white
         px-6 py-4 md:absolute md:-bottom-24 md:right-1/2 md:w-fit md:translate-x-1/2 md:border-2 md:border-gray-200 md:px-10  lg:w-[70%] "
         >
-          <DateAuteur date={moment(dataSlide.created_at).format('MMMM Do YYYY')} auteur={dataSlide.author} />
+          <DateAuteur
+            date={moment(dataSlide.created_at).format("MMMM Do YYYY")}
+            auteur={dataSlide.author}
+          />
           <h3
             className={`  text-[30px] font-semibold  lg:text-3xl 2xl:text-4xl ${jost.className}`}
           >
@@ -69,7 +71,7 @@ const Slider = ({ dataSlide }) => {
             onClick={pushToArticleHandler}
             className="#F9E0E5 rounded-full bg-main-400 px-6 py-3 text-white shadow-lg hover:underline active:scale-95"
           >
-            Read more
+            {lang === "en" ? "Read More" : "Voir plus"}
           </button>
         </div>
       </div>
