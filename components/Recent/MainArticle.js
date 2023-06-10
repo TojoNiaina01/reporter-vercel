@@ -6,7 +6,6 @@ import DateAuteur from "@/components/DateAuteur";
 import Title from "@/components/Title";
 import { v4 as uuidv4 } from "uuid";
 import localStorage from "localStorage";
-import moment from "moment";
 import { useRouter } from "next/router";
 
 
@@ -61,7 +60,7 @@ const MainArticle = ({articleData}) => {
             <ChevronRightIcon className="text-white w-4 h-4 " />
           </button>
         </div>
-        <DateAuteur date={moment(articleData.created_at).format('MMMM Do YYYY')} auteur={articleData.author} />
+        <DateAuteur date={articleData.created_at} auteur={articleData.author} />
       </div>
     </div>
   );

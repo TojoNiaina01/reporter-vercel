@@ -24,7 +24,7 @@ const linkBeautify = (link) => {
         />
       </div>
       <div className="absolute bg-white w-[65%] py-2 px-4 md:px-6 left-4 bottom-0 md:w-[45%] md:left-9 lg:w-[50%]">
-        <DateAuteur date={moment(article.created_at).format('MMMM Do YYYY')} auteur={article.author} />
+        <DateAuteur date={article.created_at} auteur={article.author} />
         <Title>{article.title.length > 50 ? `${article.title.substring(0,50)}...` : article.title}</Title>
         <p className="text-xs pt-1 text-gray-500 md:text-sm 2xl:text-base lg:pb-0">
         {article.description.length > 255 ? `${article.description.substring(0,255)}...` : article.description}

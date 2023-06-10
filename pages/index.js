@@ -49,23 +49,24 @@ const Home = ({
   const [listMostPopular, setListMostPopular] = useState(listMostPopularEn);
   const [hot, setHot] = useState(hotEn[0]&&hotEn[0]);
 
-  const storage = JSON.parse(localStorage.getItem('token'))
+  const storage = JSON.parse(localStorage.getItem("token"));
   // const saltPassword = bcrypt.genSaltSync(10)
   // const passwordHash = bcrypt.hashSync('Admin@@123', saltPassword)
 
   // console.log("pass == ", passwordHash)
 
-  const getValue = async() => {
-    const paramFind = {query: 'findUser', param: ["email"]}
+  const getValue = async () => {
+    const paramFind = { query: "findUser", param: ["email"] };
     fetch(`${ROOT_URL}/api/knexApi`, {
       method: "POST",
       body: JSON.stringify(paramFind),
       headers: {
-        "Content-type" : "application/json"
-      }
-    }).then((res) => res.json())
-      .then(data => console.log('search data === ', data))
-  }
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("search data === ", data));
+  };
 
   useEffect(() => {
 

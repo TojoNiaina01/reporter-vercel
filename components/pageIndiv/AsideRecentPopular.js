@@ -69,7 +69,7 @@ const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listH
                 <p className="text-xs  text-gray-500 md:p md:text-sm lg:hidden">
                 {article.description.length > 255 ? `${article.description.substring(0,255)}...` : article.description}
                 </p>
-                <DateAuteur  date={moment(article.created_at).format('MMMM Do YYYY')} auteur={article.author} />
+                <DateAuteur  date={article.created_at} auteur={article.author} />
               </div>
             </div>
           )

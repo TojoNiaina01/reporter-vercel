@@ -59,12 +59,14 @@ const Hotstaff = ({ dataHot }) => {
             <hr className="pb-4 text-white " />
             <DateAuteur
               style="text-gray-300 text-sm lg:text-xs"
-              date={moment(dataHot.created_at).format("MMMM Do YYYY")}
+              date={dataHot.created_at}
               auteur={dataHot.author}
             />
 
             <Link href="#" className="flex items-center gap-1 pt-3 lg:pt-6">
-              <span className={`uppercase ${jost.className}`}>read more</span>
+              <span className={`uppercase tracking-wide ${jost.className}`}>
+                Explorer
+              </span>
               <ArrowSmallRightIcon className="h-5" />
             </Link>
           </div>

@@ -39,7 +39,7 @@ const MainPopular = ({ articleData, styleHidden, dateStyle }) => {
             style={`text-secondary-500 md:order-1 ${
               !dateStyle ? "" : "lg:pt-0"
             } pt-2 lg:order-2`}
-            date={moment(articleData.created_at).format('MMMM Do YYYY')} 
+            date={articleData.created_at} 
             auteur={articleData.author}
           />
         </div>
