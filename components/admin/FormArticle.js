@@ -17,6 +17,7 @@ import ConfirmAdd from "@/components/ConfirmAdd";
 import RichText from "@/components/RichText";
 import { ROOT_URL } from "@/env";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const FormArticle = ({
   header,
@@ -32,6 +33,7 @@ const FormArticle = ({
     {tag: "fr", langue: "français"},
     {tag: "en", langue: "Anglais"},
   ];
+  const router = useRouter()
   const [selectedMenu, setSelectedMenu] = useState(listCategories[0]);
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -99,7 +101,7 @@ const FormArticle = ({
         }
       }
 
-    
+    console.log("files == ", files)
 
         data.title = title
         data.description = descript
@@ -166,7 +168,6 @@ const FormArticle = ({
                                 }
                               }).then((res) => res.json())
                               .then(data => {
-                                alert("ajout hastag ok ok")
                               })
 
                             })
@@ -177,9 +178,10 @@ const FormArticle = ({
                     /* ------- *********************************************************** ------ */
 
                     /* -------------------------------------------------------------------------- */
-                    /*                        mi-upload ny image voalohany                        */
+                    /*              mi-upload ny image voalohany mo mety ho video                 */
                     /* -------------------------------------------------------------------------- */
                      if(files[0]){
+                      const type1 = files[0].type.split("/")
                       fetch(`${ROOT_URL}/api/upload`, {   ///mi-ajout ny image 1 
                         method: "POST",
                         body: formData1,
@@ -187,83 +189,361 @@ const FormArticle = ({
                       }).then(res => res.json())
                       .then(data => {
 
-                              const image1 = {article_id: article.result[0].id, ...data.result}
-                            /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
-                              const param1 = {query: 'addImage', param: [image1]}
-                              fetch(`${ROOT_URL}/api/knexApi`, {
-                                method: "POST",
-                                body: JSON.stringify(param1),
-                                headers: {
-                                  "Content-type" : "application/json"
-                                }
-                              }).then((res) => res.json())
-                                .then(data => {
 
-                                  /* -------------------------------------------------------------------------- */
-                                  /*                   mi-upload ny image 2 indray ra mi-exist                  */
-                                  /* -------------------------------------------------------------------------- */
-                                  if(files[1]){
-                                    fetch(`${ROOT_URL}/api/upload`, {   ///mi-ajout ny image 2
-                                      method: "POST",
-                                      body: formData2,
-                                      "content-type": "multipart/form-data"
-                                    }).then(res => res.json())
-                                    .then(data2 => {
-
-                                      const image2 = {article_id: article.result[0].id, ...data2.result}
-                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
-                                        const param2 = {query: 'addImage', param: [image2]}
-                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                              if(type1[0] === "image"){
+                                const image1 = {article_id: article.result[0].id, ...data.result}
+                                /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                  const param7 = {query: 'addImage', param: [image1]}
+                                  fetch(`${ROOT_URL}/api/knexApi`, {
+                                    method: "POST",
+                                    body: JSON.stringify(param7),
+                                    headers: {
+                                      "Content-type" : "application/json"
+                                    }
+                                  }).then((res) => res.json())
+                                    .then(data => {
+                                      /* -------------------------------------------------------------------------- */
+                                      /*                   mi-upload ny image 2 indray ra mi-exist                  */
+                                      /* -------------------------------------------------------------------------- */
+                                      if(files[1]){
+                                        const type2 = files[1].type.split("/")
+                                        fetch(`${ROOT_URL}/api/upload`, {   ///mi-ajout ny image 2
                                           method: "POST",
-                                          body: JSON.stringify(param2),
-                                          headers: {
-                                            "Content-type" : "application/json"
-                                          }
-                                        }).then((res) => res.json())
-                                          .then(data => {
-
-
-                                            /* -------------------------------------------------------------------------- */
-                                            /*                             mi-ajout ny image 3                            */
-                                            /* -------------------------------------------------------------------------- */
-                                            if(files[2]){
-                                              fetch(`${ROOT_URL}/api/upload`, {  ///mi-ajout ny image 3
+                                          body: formData2,
+                                          "content-type": "multipart/form-data"
+                                        }).then(res => res.json())
+                                        .then(data2 => {
+                                          
+                                          if(type2[0] === "image"){
+                                            const image2 = {article_id: article.result[0].id, ...data2.result}
+                                            /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                              const param2 = {query: 'addImage', param: [image2]}
+                                              fetch(`${ROOT_URL}/api/knexApi`, {
                                                 method: "POST",
-                                                body: formData3,
-                                                "content-type": "multipart/form-data"
-                                              }).then(res => res.json())
-                                              .then(data3 => {
-
-                                                const image3 = {article_id: article.result[0].id, ...data3.result}
-                                                /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
-                                                  const param3 = {query: 'addImage', param: [image3]}
-                                                  fetch(`${ROOT_URL}/api/knexApi`, {
+                                                body: JSON.stringify(param2),
+                                                headers: {
+                                                  "Content-type" : "application/json"
+                                                }
+                                              }).then((res) => res.json())
+                                                .then(data => {
+      
+      
+                                                  
+                                                /* -------------------------------------------------------------------------- */
+                                                /*                             mi-ajout ny image 3                            */
+                                                /* -------------------------------------------------------------------------- */
+                                                if(files[2]){
+                                                  const type3 = files[2].type.split("/")
+                                                  fetch(`${ROOT_URL}/api/upload`, {  ///mi-ajout ny image 3
                                                     method: "POST",
-                                                    body: JSON.stringify(param3),
-                                                    headers: {
-                                                      "Content-type" : "application/json"
+                                                    body: formData3,
+                                                    "content-type": "multipart/form-data"
+                                                  }).then(res => res.json())
+                                                  .then(data33 => {
+                                                    console.log("data3 == ", data33)
+
+                                                    if(type3[0] === "image"){
+                                                      const image3 = {article_id: article.result[0].id, ...data33.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param3 = {query: 'addImage', param: [image3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param3),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                          router.refresh()
+      
+                                                          })
+                                                    }else{
+                                                   
+                                                      const video3 = {article_id: article.result[0].id, ...data33.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param6 = {query: 'addVideo', param: [video3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param6),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                           router.refresh()
+      
+                                                          })
                                                     }
-                                                  }).then((res) => res.json())
-                                                    .then(result => {
-                                                     setIsLoading(false)
-                                                     window.location = ROOT_URL
+                                                   
+                                                  
+                                                  })
+                                                }else{
+                                                  setIsLoading(false)
+                                                  router.refresh()
+                                                }
+                                                })
+      
+      
+                                          }else{
+                                            const video2 = {article_id: article.result[0].id, ...data2.result}
+                                          /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                            const param5 = {query: 'addVideo', param: [video2]}
+                                            fetch(`${ROOT_URL}/api/knexApi`, {
+                                              method: "POST",
+                                              body: JSON.stringify(param5),
+                                              headers: {
+                                                "Content-type" : "application/json"
+                                              }
+                                            }).then((res) => res.json())
+                                              .then(data => {
+    
+    
+                                                /* -------------------------------------------------------------------------- */
+                                                /*                             mi-ajout ny image 3                            */
+                                                /* -------------------------------------------------------------------------- */
+                                                if(files[2]){
+                                                  const type3 = files[2].type.split("/")
+                                                  fetch(`${ROOT_URL}/api/upload`, {  ///mi-ajout ny image 3
+                                                    method: "POST",
+                                                    body: formData3,
+                                                    "content-type": "multipart/form-data"
+                                                  }).then(res => res.json())
+                                                  .then(data3 => {
+    
 
-                                                    })
-                                              
+                                                    if(type3[0] === "image"){
+                                                      const image3 = {article_id: article.result[0].id, ...data3.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param3 = {query: 'addImage', param: [image3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param3),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                           router.refresh()
+      
+                                                          })
+                                                    }else{
+                                                      const video3 = {article_id: article.result[0].id, ...data3.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param6 = {query: 'addVideo', param: [video3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param6),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                           router.refresh()
+      
+                                                          })
+                                                    }
+                                                   
+                                                  
+                                                  })
+                                                }else{
+                                                  setIsLoading(false)
+                                                  router.refresh()
+                                                }
                                               })
-                                            }else{
-                                              setIsLoading(false)
-                                            }
-                                          })
-
-
-
-                                    
+    
+    
+                                          }
+                                          
+    
+                                        
+                                        })
+                                      }else{
+                                        setIsLoading(false)
+                                        router.refresh()
+                                      }
                                     })
-                                  }else{
-                                    setIsLoading(false)
-                                  }
-                                })
+                              }else{
+                                const video1 = {article_id: article.result[0].id, ...data.result}
+                                /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                  const param1 = {query: 'addVideo', param: [video1]}
+                                  fetch(`${ROOT_URL}/api/knexApi`, {
+                                    method: "POST",
+                                    body: JSON.stringify(param1),
+                                    headers: {
+                                      "Content-type" : "application/json"
+                                    }
+                                  }).then((res) => res.json())
+                                    .then(data => {
+    
+                                     /* -------------------------------------------------------------------------- */
+                                      /*                   mi-upload ny image 2 indray ra mi-exist                  */
+                                      /* -------------------------------------------------------------------------- */
+                                      if(files[1]){
+                                        const type2 = files[1].type.split("/")
+                                        fetch(`${ROOT_URL}/api/upload`, {   ///mi-ajout ny image 2
+                                          method: "POST",
+                                          body: formData2,
+                                          "content-type": "multipart/form-data"
+                                        }).then(res => res.json())
+                                        .then(data2 => {
+                                          
+                                          if(type2[0] === "image"){
+                                            const image2 = {article_id: article.result[0].id, ...data2.result}
+                                            /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                              const param2 = {query: 'addImage', param: [image2]}
+                                              fetch(`${ROOT_URL}/api/knexApi`, {
+                                                method: "POST",
+                                                body: JSON.stringify(param2),
+                                                headers: {
+                                                  "Content-type" : "application/json"
+                                                }
+                                              }).then((res) => res.json())
+                                                .then(data => {
+      
+      
+                                                  
+                                                /* -------------------------------------------------------------------------- */
+                                                /*                             mi-ajout ny image 3                            */
+                                                /* -------------------------------------------------------------------------- */
+                                                if(files[2]){
+                                                  const type3 = files[2].type.split("/")
+                                                  fetch(`${ROOT_URL}/api/upload`, {  ///mi-ajout ny image 3
+                                                    method: "POST",
+                                                    body: formData3,
+                                                    "content-type": "multipart/form-data"
+                                                  }).then(res => res.json())
+                                                  .then(data3 => {
+    
+
+                                                    if(type3[0] === "image"){
+                                                      const image3 = {article_id: article.result[0].id, ...data3.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param3 = {query: 'addImage', param: [image3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param3),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                           router.refresh()
+      
+                                                          })
+                                                    }else{
+                                                      const video3 = {article_id: article.result[0].id, ...data3.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param6 = {query: 'addVideo', param: [video3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param6),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                           router.refresh()
+      
+                                                          })
+                                                    }
+                                                   
+                                                  
+                                                  })
+                                                }else{
+                                                  setIsLoading(false)
+                                                  router.refresh()
+                                                }
+                                                })
+      
+      
+                                          }else{
+                                            const video2 = {article_id: article.result[0].id, ...data2.result}
+                                          /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                            const param5 = {query: 'addVideo', param: [video2]}
+                                            fetch(`${ROOT_URL}/api/knexApi`, {
+                                              method: "POST",
+                                              body: JSON.stringify(param5),
+                                              headers: {
+                                                "Content-type" : "application/json"
+                                              }
+                                            }).then((res) => res.json())
+                                              .then(data => {
+    
+    
+                                                /* -------------------------------------------------------------------------- */
+                                                /*                             mi-ajout ny image 3                            */
+                                                /* -------------------------------------------------------------------------- */
+                                                if(files[2]){
+                                                  const type3 = files[2].type.split("/")
+                                                  fetch(`${ROOT_URL}/api/upload`, {  ///mi-ajout ny image 3
+                                                    method: "POST",
+                                                    body: formData3,
+                                                    "content-type": "multipart/form-data"
+                                                  }).then(res => res.json())
+                                                  .then(data3 => {
+    
+
+                                                    if(type3[0] === "image"){
+                                                      const image3 = {article_id: article.result[0].id, ...data3.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param3 = {query: 'addImage', param: [image3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param3),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                           router.refresh()
+      
+                                                          })
+                                                    }else{
+                                                      const video3 = {article_id: article.result[0].id, ...data3.result}
+                                                      /* ----------------------------- ajout ao am DBB ndray ---------------------------- */
+                                                        const param6 = {query: 'addVideo', param: [video3]}
+                                                        fetch(`${ROOT_URL}/api/knexApi`, {
+                                                          method: "POST",
+                                                          body: JSON.stringify(param6),
+                                                          headers: {
+                                                            "Content-type" : "application/json"
+                                                          }
+                                                        }).then((res) => res.json())
+                                                          .then(result => {
+                                                           setIsLoading(false)
+                                                           router.refresh()
+      
+                                                          })
+                                                    }
+                                                   
+                                                  
+                                                  })
+                                                }else{
+                                                  setIsLoading(false)
+                                                  router.refresh()
+                                                }
+                                              })
+    
+    
+                                          }
+                                          
+    
+                                        
+                                        })
+                                      }else{
+                                        setIsLoading(false)
+                                        router.refresh()
+                                      }
+                                    })
+                              }
+                             
                               
                       })
                      }
@@ -555,7 +835,7 @@ const FormArticle = ({
 
             {uploadFile && (
               <div className="flex-1">
-                <UploadFile onChangeFile={setFiles}/>
+                <UploadFile onChangeFile={setFiles} isMultiple={true}/>
               </div>
             )}
           </div>

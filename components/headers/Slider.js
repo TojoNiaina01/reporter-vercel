@@ -16,7 +16,7 @@ const Slider = ({ dataSlide }) => {
   const lang = JSON.parse(localStorage.getItem("token")).lang;
   const [hastag, setHasTag] = useState();
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
     return newLink.toLowerCase();
   };
 

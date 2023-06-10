@@ -21,7 +21,7 @@ const Layout = ({ children, listCategories, listFlash }) => {
         </header>
 
         {children}
-        <Footer />
+        <Footer listCategories={listCategories}/>
       </ModalContext.Provider>
     </div>
   );

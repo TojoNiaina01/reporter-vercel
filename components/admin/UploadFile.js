@@ -4,7 +4,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { log } from "next/dist/server/typescript/utils";
 import {v4 as uuidv4} from "uuid";
 
-const UploadFile = ({onChangeFile}) => {
+const UploadFile = ({onChangeFile, isMultiple}) => {
   const [files, setFiles] = useState();
   const inputRef = useRef(null);
   const handleDragOver = (event) => {
@@ -13,8 +13,15 @@ const UploadFile = ({onChangeFile}) => {
 
   const handleDrop = (event) => {
     event.preventDefault();
-    setFiles(event.dataTransfer.files);
-    onChangeFile(event.dataTransfer.files)
+    console.log("Media == ",event.dataTransfer.files)
+    if(isMultiple){
+      setFiles(event.dataTransfer.files);
+      onChangeFile(event.dataTransfer.files)
+    }else{
+      setFiles([event.dataTransfer.files[0]]);
+      onChangeFile([event.dataTransfer.files[0]])
+    }
+   
   };
 
   const removeFile = (e, fileName) => {
@@ -22,6 +29,12 @@ const UploadFile = ({onChangeFile}) => {
     setFiles(Array.from(files).filter((file) => file.name !== fileName));
     onChangeFile(Array.from(files).filter((file) => file.name !== fileName))
   };
+  
+  const changeHandler = (event) => {
+    setFiles(event.target.files)
+    onChangeFile(event.target.files)
+
+  }
 
   return (
     <div
@@ -57,8 +70,8 @@ const UploadFile = ({onChangeFile}) => {
             <p className="text-xs text-gray-500 dark:text-gray-400">PNG, JPG</p>
           </div>
           <input
-            multiple
-            onChange={(event) => setFiles(event.target.files)}
+            multiple={isMultiple}
+            onChange={changeHandler}
             id="dropzone-file"
             type="file"
             accept="image/png, image/jpeg"

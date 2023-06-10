@@ -68,6 +68,7 @@ class MyDatabase {
     async getArticle(id) {
         const res = await knex({a: 'articles'})
                     .leftJoin({img: 'images'}, 'a.id', 'img.article_id')
+                    .leftJoin({v : 'videos'}, 'v.article_id', 'a.id')
                     .leftJoin({c : 'categories'}, 'c.id', 'a.category_id')
                     .select(
                         'a.id', 
@@ -88,15 +89,20 @@ class MyDatabase {
                         {image_name: 'img.name'}, 
                         {image_extension: 'img.extension'},
                         {image_size: 'img.size'}, 
-                        {image_type: 'img.type'}
+                        {image_type: 'img.type'},
+                        {video_name: 'v.name'}, 
+                        {video_extension: 'v.extension'},
+                        {video_id: 'v.id'}
                         
                         )
                       .where('a.id', id)
-        
+            if(res){
+            const resToJson = JSON.parse(JSON.stringify(res))
 
-        const resToJson = JSON.parse(JSON.stringify(res))
-
-        return ObjectFormater(resToJson, 'image')
+                return ObjectFormater(ObjectFormater(resToJson, 'image'), 'video')
+        }else{
+            return null
+        }
     }
 
     async getArticlesByLang(lang){
@@ -127,10 +133,13 @@ class MyDatabase {
         .where('a.lang', lang)
         .orderBy('a.id', 'desc')
 
+        if(res){
+            const resToJson = JSON.parse(JSON.stringify(res))
 
-        const resToJson = JSON.parse(JSON.stringify(res))
-
-        return ObjectFormater(resToJson, 'image')
+             return ObjectFormater(resToJson, 'image')
+        }else{
+            return null
+        }
     }
 
     async getFullArticles(){
@@ -160,9 +169,13 @@ class MyDatabase {
                         .orderBy('a.id', 'desc')
         
 
-        const resToJson = JSON.parse(JSON.stringify(res))
+            if(res){
+                const resToJson = JSON.parse(JSON.stringify(res))
 
-        return ObjectFormater(resToJson, 'image')
+                    return ObjectFormater(resToJson, 'image')
+            }else{
+                return null
+            }
     }
 
     async getArticleByCategoryLang(category_id, lang){
@@ -192,10 +205,13 @@ class MyDatabase {
                         .where({'c.id': category_id, 'a.lang': lang})
                         .orderBy('a.id', 'desc')
         
+            if(res){
+                const resToJson = JSON.parse(JSON.stringify(res))
 
-        const resToJson = JSON.parse(JSON.stringify(res))
-
-        return ObjectFormater(resToJson, 'image')
+                    return ObjectFormater(resToJson, 'image')
+            }else{
+                return null
+            }
     }
    
    
@@ -229,9 +245,13 @@ class MyDatabase {
                         .orderBy('a.id', 'desc')
         
 
-        const resToJson = JSON.parse(JSON.stringify(res))
+            if(res){
+                const resToJson = JSON.parse(JSON.stringify(res))
 
-        return ObjectFormater(resToJson, 'image')
+                    return ObjectFormater(resToJson, 'image')
+            }else{
+                return null
+            }
     }
 
    async getSlideByLang(lang){
@@ -260,10 +280,13 @@ class MyDatabase {
             )
         .where({'a.lang': lang, 'a.slide': true})
 
-
+        if(res){
             const resToJson = JSON.parse(JSON.stringify(res))
 
-        return ObjectFormater(resToJson, 'image')
+             return ObjectFormater(resToJson, 'image')
+        }else{
+            return null
+        }
     }
    async getFlashByLang(lang){
         const res = await knex({a: 'articles'})
@@ -291,10 +314,13 @@ class MyDatabase {
             )
         .where({'a.lang': lang, 'a.flash': true})
 
-
+        if(res){
             const resToJson = JSON.parse(JSON.stringify(res))
 
-        return ObjectFormater(resToJson, 'image')
+             return ObjectFormater(resToJson, 'image')
+        }else{
+            return null
+        }
     }
 
 
@@ -325,9 +351,13 @@ class MyDatabase {
         .where({'a.lang': lang, 'a.hot': true})
 
 
+        if(res){
             const resToJson = JSON.parse(JSON.stringify(res))
 
-        return ObjectFormater(resToJson, 'image')
+             return ObjectFormater(resToJson, 'image')
+        }else{
+            return null
+        }
     }
 
     async getRecentArticle(lang){
@@ -358,9 +388,13 @@ class MyDatabase {
         .orderBy('a.id', 'desc')
 
 
-        const resToJson = JSON.parse(JSON.stringify(res))
+        if(res){
+            const resToJson = JSON.parse(JSON.stringify(res))
 
-        return ObjectFormater(resToJson, 'image')
+             return ObjectFormater(resToJson, 'image')
+        }else{
+            return null
+        }
     }
 
 
@@ -393,9 +427,13 @@ class MyDatabase {
         .orderBy('a.views', 'desc')
 
 
-        const resToJson = JSON.parse(JSON.stringify(res))
+        if(res){
+            const resToJson = JSON.parse(JSON.stringify(res))
 
-        return ObjectFormater(resToJson, 'image')
+             return ObjectFormater(resToJson, 'image')
+        }else{
+            return null
+        }
     }
 
 
@@ -427,10 +465,14 @@ class MyDatabase {
         .where({'a.lang': lang})
         .orderBy('a.rating', 'desc')
 
+            if(res){
+                const resToJson = JSON.parse(JSON.stringify(res))
 
-        const resToJson = JSON.parse(JSON.stringify(res))
-
-        return ObjectFormater(resToJson, 'image')
+                 return ObjectFormater(resToJson, 'image')
+            }else{
+                return null
+            }
+        
     }
     
     async addArticle({title, body, description, author, category_id, lang}){
@@ -547,8 +589,12 @@ class MyDatabase {
                           )
                           .where({'c.id': categoryID, 'a.lang': lang})
 
-        const result = JSON.parse(JSON.stringify(res))
-        return filterElement(result, "id")
+                if(res){
+                const result = JSON.parse(JSON.stringify(res))
+                return filterElement(result, "id")
+            }else{
+                return null
+            }
      }
     
     
@@ -565,8 +611,13 @@ class MyDatabase {
                           )
                           .where('a.id', articleID)
 
-        const result = JSON.parse(JSON.stringify(res))
-        return filterElement(result, "id")
+            if(res){
+                const result = JSON.parse(JSON.stringify(res))
+                return filterElement(result, "id")
+            }else{
+                return null
+            }
+        
      }
      
      
@@ -598,9 +649,15 @@ class MyDatabase {
                         )
                         .where('h.id', hastagID)
 
-            const resToJson = JSON.parse(JSON.stringify(res))
+                if(res){
+                    const resToJson = JSON.parse(JSON.stringify(res))
 
-            return ObjectFormater(resToJson, 'image')
+                    return ObjectFormater(resToJson, 'image')
+                }else{
+                    return null
+                }
+
+            
      }
 
 
@@ -608,7 +665,11 @@ class MyDatabase {
         let res = await knex('hastag')
         .select('*')
 
-        return JSON.parse(JSON.stringify(res))
+        if(res){
+            return JSON.parse(JSON.stringify(res))
+        }else{
+            return null
+        }
      }
 
      async getHastagByID(id){
@@ -616,7 +677,11 @@ class MyDatabase {
         .select('*')
         .where('id', id)
 
-return JSON.parse(JSON.stringify(res))
+        if(res){
+            return JSON.parse(JSON.stringify(res))
+        }else{
+            return null
+        }
      }
 
      async addHastag(tabHastag, lang){
@@ -651,7 +716,7 @@ return JSON.parse(JSON.stringify(res))
 
 
      /**========================================================================
-     **                          IMAGES
+     **                          IMAGES & VIDEO
      * @addImage           : ajouter une image
      * @deleteImage        : effacer une image avec son ID
      *========================================================================**/
@@ -671,6 +736,24 @@ return JSON.parse(JSON.stringify(res))
 
         return imgID[0]
      }
+     
+     
+     async addVideo({article_id, name, extension}){
+        let videoID = await knex
+                        .insert({
+                            article_id,
+                            name,
+                            extension,
+                            created_at:  moment().format("YYYY-MM-DD hh:mm:ss")
+                        })
+                        .into('videos')
+
+            videoID = JSON.parse(JSON.stringify(videoID))
+
+        return videoID[0]
+     }
+
+
     //  async addImage(article_id, name, extension, size, type){
     //     let imgID = await knex
     //                     .insert({
@@ -712,14 +795,22 @@ return JSON.parse(JSON.stringify(res))
                         .select('*')
                         .where('id', id)
 
-        return JSON.parse(JSON.stringify(res))
+                if(res){
+                    return JSON.parse(JSON.stringify(res))
+                }else{
+                    return null
+                }
      }
 
      async getFullFlashinfo(){
         let res = await knex('flashInfo')
                         .select('*')
         
-        return JSON.parse(JSON.stringify(res))
+            if(res){
+                return JSON.parse(JSON.stringify(res))
+            }else{
+                return null
+            }
      }
 
      async getFlashinfoByLang(lang){
@@ -727,7 +818,11 @@ return JSON.parse(JSON.stringify(res))
                         .select('*')
                         .where('lang', lang)
         
-        return JSON.parse(JSON.stringify(res))
+            if(res){
+                return JSON.parse(JSON.stringify(res))
+            }else{
+                return null
+            }
      }
 
      async deleteFlashinfo(id){
@@ -765,7 +860,11 @@ return JSON.parse(JSON.stringify(res))
         let res = await knex('categories')
                         .select('*')
 
-        return JSON.parse(JSON.stringify(res))
+            if(res){
+                return JSON.parse(JSON.stringify(res))
+            }else{
+                return null
+            }
      }
      
      async getCategory(id){
@@ -773,7 +872,11 @@ return JSON.parse(JSON.stringify(res))
                         .select('*')
                         .where('id', id)
 
-        return JSON.parse(JSON.stringify(res))
+            if(res){
+                return JSON.parse(JSON.stringify(res))
+            }else{
+                return null
+            }
      }
 
      /**========================================================================
@@ -790,7 +893,11 @@ return JSON.parse(JSON.stringify(res))
         let res =  await knex('users')
                         .select('*')
                         .orderBy('id', 'desc')
+            if(res){
                 return JSON.parse(JSON.stringify(res))
+            }else{
+                return null
+            }
      }
 
      async addUser({name, email, password, type, token}){
@@ -811,7 +918,11 @@ return JSON.parse(JSON.stringify(res))
         let res =  await knex('users')
                         .select('*')
                         .where('id', id)
-        return JSON.parse(JSON.stringify(res))
+        if(res){
+            return JSON.parse(JSON.stringify(res))
+        }else{
+            return null
+        }
      }
 
      async checkMail(email){
@@ -819,8 +930,12 @@ return JSON.parse(JSON.stringify(res))
                         .count("*", {as: 'email'})
                         .where('email', email)
         
-        return JSON.parse(JSON.stringify(res))
-     }
+        if(res){
+            return JSON.parse(JSON.stringify(res))
+        }else{
+            return null
+        }
+}
 
      async deleteUser(id){
         await knex('users')
@@ -834,9 +949,164 @@ return JSON.parse(JSON.stringify(res))
         let res =  await knex('users')
                         .select('*')
                         .where('email', email)
-        return JSON.parse(JSON.stringify(res))
+        if(res){
+            return JSON.parse(JSON.stringify(res))
+        }else{
+            return null
+        }
      }
 
+    /**========================================================================
+     **                             ADS GESTION
+     * @getAdsbyDate            : récupérer l'ads encore valide
+     * @addAds                  : ajouter une ads
+     * @checkDateAds                  : vérifie-na ra mbola dispo ilay date
+     *========================================================================**/
+
+     async getAllAds(){
+        let res =  await knex('ads')
+                        .select('*')
+                        
+        if(res){
+            return JSON.parse(JSON.stringify(res))
+        }else{
+            return null
+        }
+     }
+
+     async getAdsAndImages(){
+            const res = await knex({a: 'ads'})
+            .leftJoin({img: 'ads_images'}, 'a.id', 'img.ads_id')
+            .select(
+                'a.id', 
+                'a.title', 
+                'a.link', 
+                'a.format', 
+                'a.date_start', 
+                'a.date_end',
+                {image_id: 'img.id'},
+                {image_name: 'img.name'},
+                {image_extension: 'img.extension'}
+                )
+
+
+    if(res){
+        return JSON.parse(JSON.stringify(res))
+    }else{
+        return null
+    }
+     }
+
+     async getAds(id){
+        const res = await knex({a: 'ads'})
+                        .leftJoin({img: 'ads_images'}, 'a.id', 'img.ads_id')
+                        .select(
+                            'a.id', 
+                            'a.title', 
+                            'a.link', 
+                            'a.format', 
+                            'a.date_start', 
+                            'a.date_end',
+                            {image_id: 'img.id'},
+                            {image_name: 'img.name'},
+                            {image_extension: 'img.extension'}
+                            )
+                        .where('a.id', id)
+
+
+            if(res){
+                return JSON.parse(JSON.stringify(res))
+            }else{
+                return null
+            }
+
+              
+     }
+
+     async addAds({title, link, format, date_start, date_end}){
+        let res = await knex('ads')
+                        .insert({
+                            title,
+                            link,
+                            format,
+                            date_start,
+                            date_end
+                        })
+
+            let userAds = JSON.parse(JSON.stringify(res))
+            return await this.getAds(userAds[0])
+     }
+
+     async getAdsByDate(format){
+            const today = new Date();
+            let res = await knex({a: 'ads'})
+                            .leftJoin({img: 'ads_images'}, 'a.id', 'img.ads_id')
+                            .select(
+                                'a.id', 
+                                'a.title', 
+                                'a.link', 
+                                'a.format', 
+                                'a.date_start', 
+                                'a.date_end',
+                                {image_id: 'img.id'},
+                                {image_name: 'img.name'},
+                                {image_extension: 'img.extension'}
+                                )
+                            .where('a.date_start', '<=', today)
+                            .where('a.date_end', '>=', today)
+                            .where('a.format', format)
+            console.log("res == ", res)
+            if(res){
+                return JSON.parse(JSON.stringify(res))
+            }else{
+                return null
+            }
+     }
+
+     async checkDateAds(date_start, date_end){
+                let res = await knex('ads')
+                                .count("*", {as: 'id'})
+                                .whereNotBetween('date_start', [date_start, date_end])
+                                .andWhereNotBetween('date_end', [date_start, date_end])
+
+                if(res){
+                    return JSON.parse(JSON.stringify(res))
+                }else{
+                    return null
+                }
+     }
+
+     async addImageAds({ads_id, name, extension, size, type}){
+        let imgID = await knex
+                        .insert({
+                            ads_id,
+                            name,
+                            extension,
+                            size,
+                            type
+                        })
+                        .into('ads_images')
+
+        imgID = JSON.parse(JSON.stringify(imgID))
+
+        return imgID[0]
+     }
+
+     async deleteImageAds(id){
+        await knex('ads_images')
+            .where('id', id)
+            .del()
+
+        return id
+     }
+
+     async deleteAds(id){
+        await knex('ads')
+        .where('id', id)
+        .del()
+
+    return id
+     }
 }
 
 export default MyDatabase;

@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import AsideRecentPopular from "@/components/pageIndiv/AsideRecentPopular";
 import HeaderCategory from "@/components/HeaderCategory";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import Image from "next/image";
 import DateAuteur from "@/components/DateAuteur";
@@ -18,6 +17,13 @@ import localStorage from "localStorage";
 import { ROOT_URL } from "@/env";
 import {v4 as uuidv4} from "uuid";
 import { useRouter } from "next/router";
+import {
+  MagnifyingGlassIcon,
+  PauseCircleIcon,
+  PlayCircleIcon,
+  SpeakerWaveIcon,
+  SpeakerXMarkIcon,
+} from "@heroicons/react/24/outline";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -35,9 +41,10 @@ const Articless = ({ articleData, listRecentArticlesEn, listRecentArticlesFr, li
   const rating = JSON.parse(localStorage.getItem('token')).rating
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };  
+
 
 
   console.log("list recent article en anglais ",listRecentArticlesEn)
@@ -77,7 +84,7 @@ const Articless = ({ articleData, listRecentArticlesEn, listRecentArticlesFr, li
     router.push(`/hastag/${id}/${linkBeautify(title)}`)
   }
 
-
+  console.log("article data == ", articleData)
   return (
     <>
       <Head>
@@ -118,42 +125,46 @@ const Articless = ({ articleData, listRecentArticlesEn, listRecentArticlesFr, li
                   ))}
              
               {
-              //   <div className="relative group ">
-              //   <video
-              //     src={enCourData.video}
-              //     type="video/mp4"
-              //     play
-              //     muted={isMuted}
-              //     loop
-              //     ref={videoRef}
-              //   />
-              //   <div className="absolute right-5 bottom-5 text-main-500">
-              //     {isMuted ? (
-              //       <SpeakerXMarkIcon
-              //         className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-              //         onClick={() => setIsMuted((value) => !value)}
-              //       />
-              //     ) : (
-              //       <SpeakerWaveIcon
-              //         className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-              //         onClick={() => setIsMuted((value) => !value)}
-              //       />
-              //     )}
-              //   </div>
-              //   <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              //     {isPlayed ? (
-              //       <PlayCircleIcon
-              //         className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-              //         onClick={play}
-              //       />
-              //     ) : (
-              //       <PauseCircleIcon
-              //         className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-              //         onClick={pause}
-              //       />
-              //     )}
-              //   </div>
-              // </div>
+                articleData.video[0].video_name&&(
+                  articleData.video?.map(video => (
+                  <div className="relative group "> 
+                      <video
+                        src={`/uploads/videos/${video.video_name}.${video.video_extension}`}
+                        type="video/mp4"
+                        play
+                        muted={isMuted}
+                        loop
+                        ref={videoRef}
+                      />
+                      <div className="absolute right-5 bottom-5 text-main-500">
+                        {isMuted ? (
+                          <SpeakerXMarkIcon
+                            className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={() => setIsMuted((value) => !value)}
+                          />
+                        ) : (
+                          <SpeakerWaveIcon
+                            className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={() => setIsMuted((value) => !value)}
+                          />
+                        )}
+                      </div>
+                      <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        {isPlayed ? (
+                          <PlayCircleIcon
+                            className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={play}
+                          />
+                        ) : (
+                          <PauseCircleIcon
+                            className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={pause}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))
+                )
               }
 
             </div>
@@ -373,7 +384,7 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };
   const baseUrl = process.env.ROOT_URL

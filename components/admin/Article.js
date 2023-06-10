@@ -336,10 +336,6 @@ const deleteUserHandler = (userID) => {
                   <td className="px-6 py-4">{user.type.toUpperCase()}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
-                      <PencilSquareIcon
-                        className="h-5 text-main-500 cursor-pointer"
-                        onClick={() => setModalShow(!modalShow)}
-                      />
                       <TrashIcon
                         className="h-5 text-red-500 cursor-pointer"
                         onClick={() => deleteUserHandler(user.id)}

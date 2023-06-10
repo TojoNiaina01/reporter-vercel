@@ -25,7 +25,7 @@ const Hastag = ({ listMostPopularEn, listMostPopularFr, listRecentArticlesEn, li
   const rating = JSON.parse(localStorage.getItem('token')).rating
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };  
 
@@ -251,7 +251,7 @@ export async function getStaticPaths(){
   const baseUrl = process.env.ROOT_URL
   
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
       return newLink.toLowerCase()
   };
 

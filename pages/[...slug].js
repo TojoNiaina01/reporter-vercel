@@ -25,7 +25,7 @@ const ArticlePrincipale = ({ listArticlesByCategoriesEn, listArticlesByCategorie
 
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };
 
@@ -69,16 +69,16 @@ const ArticlePrincipale = ({ listArticlesByCategoriesEn, listArticlesByCategorie
           </div>
         </div>
         {/* Tag top article */}
-        {/* <ul className="flex gap-4 overflow-scroll scrollbar-hide pt-4 lg:justify-between">
-          {tag.map((tag) => (
+        <ul className="flex gap-4 overflow-scroll scrollbar-hide pt-4">
+          {listHastag?.map((tag) => (
             <li
               key={uuidv4()}
               className="tagBg px-2 py-1 border-[1px] border-gray-300 rounded font-bold uppercase text-xs cursor-pointer"
             >
-              <Link href={`/${name}&${tag}`}>{tag}</Link>
+              <Link href={`/hastag/${tag.id}/${linkBeautify(tag.name)}`}>{tag.name}</Link>
             </li>
           ))}
-        </ul> */}
+        </ul>
         {/*Main [...article] + aside */}
         <div className="lg:flex gap-8 justify-between mt-10">
           {/*Main ariticles*/}

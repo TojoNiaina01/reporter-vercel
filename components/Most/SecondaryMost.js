@@ -6,18 +6,22 @@ import Hastag from "@/components/Hastag";
 import { MenuFR } from "@/constant/constant";
 import Link from "next/link";
 import {v4 as uuidv4} from "uuid"
+import localStorage from "localStorage";
+import { ROOT_URL } from "@/env";
 
-const SecondaryMost = () => {
+const SecondaryMost = ({listCategories}) => {
+  const lang = JSON.parse(localStorage.getItem('token')).lang
   return (
     <div className="lg:w-[25%]">
       <HeaderCategory title="Categories" banner />
       <ul>
-        {MenuFR?.map((menu) => (
+        {listCategories?.map((category) => (
           <>
-            <li key={uuidv4()} className="uppercase text-xs font-semibold py-[12px] cursor-pointer transition duration-200 ease-out hover:font-bold hover:text-secondary-500">
-              <Link href={menu.href}>
+            <li onClick={() => window.location = `${ROOT_URL}/${category.id}/${category[lang].toLowerCase()}`}  key={uuidv4()} className="uppercase text-xs font-semibold py-[12px] cursor-pointer transition duration-200 ease-out hover:font-bold hover:text-secondary-500">
+              {/* <Link href={menu.href}>
                 {menu.k} <span className="font-normal">(10)</span>{" "}
-              </Link>
+              </Link> */}
+              {category[lang]}
             </li>
             <hr />
           </>

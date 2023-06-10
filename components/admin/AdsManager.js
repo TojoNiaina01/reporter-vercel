@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
@@ -13,22 +13,68 @@ import Image from "next/image";
 import ConfirmDelete from "@/components/ConfirmDelete";
 import EditAds from "@/components/admin/EditAds";
 import {v4 as uuidv4} from "uuid"
+import moment from "moment";
+import Paginate from "@/components/Paginate";
+import {useRouter} from "next/navigation";
+import { ROOT_URL } from "@/env";
 
-const AdsManager = () => {
+const AdsManager = ({listAds}) => {
   const state = [
     { k: 1, name: "En cours" },
     { k: 2, name: "Fini" },
   ];
-
+  const router = useRouter()
   const [adsState, setAdsState] = useState(state[0]);
   const [modalShow, setModalShow] = useState(false);
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
+
+   /* ------------------------------- pagination ------------------------------- */
+   const [itemOffset, setItemOffset] = useState(null)
+   const [currentArticles, setCurrentArticles] = useState()
+   const itemsPerPage = 5
+   const handlerPageClick = (e) => {
+     const newOffset = (e.selected * itemsPerPage) % listAds.length;
+     setItemOffset(newOffset)
+   }
+
+   useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage
+    setCurrentArticles(listAds.slice(itemOffset, endOffset))
+   },[itemOffset, itemsPerPage, listAds])
+
+const deleteAdsHandler = (adsID, imageID) => {
+  const adsElement = document.getElementById(`ads${adsID}`)
+         adsElement.classList.add("opacity-30")
+
+         const paramDelAds = {query: 'deleteAds', param: [adsID]}
+         fetch(`${ROOT_URL}/api/knexApi`, {
+           method: "POST",
+           body: JSON.stringify(paramDelAds),
+           headers: {
+             "Content-type" : "application/json"
+           }
+         }).then((res) => res.json())
+         .then(ads => {
+          const paramDelImage = {query: 'deleteImageAds', param: [imageID]}
+          fetch(`${ROOT_URL}/api/knexApi`, {
+            method: "POST",
+            body: JSON.stringify(paramDelImage),
+            headers: {
+              "Content-type" : "application/json"
+            }
+          }).then((res) => res.json())
+          .then(img => {
+            router.refresh()
+          })
+         })
+}
   return (
     <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold tracking-wide">Listes ADS.</h3>
-        <div className="flex gap-4">
-          {/* Liste category */}
+        {/* <div className="flex gap-4">
+
+
           <Listbox value={adsState} onChange={setAdsState}>
             <div className="flex flex-col relative">
               <Listbox.Button className="text-main-500 flex gap-4 items-center border rounded-full px-4 py-2 border-main-500">
@@ -48,7 +94,7 @@ const AdsManager = () => {
               </Listbox.Options>
             </div>
           </Listbox>
-          {/*  Recherche*/}
+          
           <div className="border border-main-500 py-2 px-4 rounded-full flex items-center w-[200px] h-fit">
             <input
               type="text"
@@ -57,7 +103,7 @@ const AdsManager = () => {
             />
             <MagnifyingGlassIcon className="h-5" color="#3e817d" />
           </div>
-        </div>
+        </div> */}
       </div>
       {/*  tableau */}
 
@@ -89,13 +135,13 @@ const AdsManager = () => {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5].map((table) => (
-              <tr key={uuidv4()} className="bg-white border-b ">
-                <td className="px-6 py-4">{table}</td>
+            {currentArticles?.map((ads) => (
+              <tr id={`ads${ads.id}`} key={uuidv4()} className="bg-white border-b ">
+                <td className="px-6 py-4">{ads.id}</td>
                 <td className="relative w-[100px] h-[100px]">
                   <Image
                     fill
-                    src={Publicite}
+                    src={`/uploads/images/${ads.image_name}.${ads.image_extension}`}
                     className=" object-contain"
                     alt="Article image blog"
                   />
@@ -104,24 +150,20 @@ const AdsManager = () => {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                  Telma Boost
+                  {ads.title.length > 30 ? `${ads.title.substring(0,30)}...` : ads.title}
                 </th>
-                <td className="px-6 py-4">https://www.telma.shop</td>
-                <td className="px-6 py-4">
-                  Nombre de Jours
-                  <CheckIcon className="h-6 text-main-500" />
-                  <ExclamationTriangleIcon className="h-5 text-yellow-500" />
+                <td className="px-6 py-4">{ads.link.length > 50 ? `${ads.link.substring(0,50)}...` : ads.link}</td>
+                <td className="px-2 py-4 flex flex-col items-center justify-center">
+                  <div className="text-sm">de {moment(ads.date_start).format('L')} </div>
+                  <div className="text-sm">à {moment(ads.date_end).format('L')}  </div>
+                  
                 </td>
-                <td className="px-6 py-4">Horizontal</td>
+                <td className="px-6 py-4">{ads.format}</td>
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
-                    <PencilSquareIcon
-                      className="h-5 text-main-500 cursor-pointer"
-                      onClick={() => setModalShow(!modalShow)}
-                    />
                     <TrashIcon
                       className="h-5 text-red-500 cursor-pointer"
-                      onClick={() => setModalDeleteConfirm(!modalDeleteConfirm)}
+                      onClick={() => deleteAdsHandler(ads.id, ads.image_id)}
                     />
                   </div>
                 </td>
@@ -132,7 +174,11 @@ const AdsManager = () => {
       </div>
       <div className="flex justify-between items-center mt-5">
         <div />
-        <div>PAGINATION</div>
+        <div>
+        {
+              listAds.length > 5 && <Paginate itemsPerPage={itemsPerPage} handlerPage={handlerPageClick} items={listAds}/>
+          }
+        </div>
       </div>
       {modalShow && <EditAds setModalShow={setModalShow} />}
       {modalDeleteConfirm && (

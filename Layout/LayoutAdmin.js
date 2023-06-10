@@ -16,6 +16,9 @@ import { Popover } from "@headlessui/react";
 import { Jost } from "next/font/google";
 import useMediaQuery from "@/hook/useMediaQuery";
 import Errors from "@/pages/404";
+import { ROOT_URL } from "@/env";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "@/config/redux/auth/authAction";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
@@ -36,6 +39,7 @@ const ActiveLink = ({ children, href }) => {
 
 const LayoutAdmin = ({ children }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
 
@@ -47,6 +51,12 @@ const LayoutAdmin = ({ children }) => {
         backHome
       />
     );
+
+    const logoutHandler = () => {
+      dispatch(logoutUser())
+      router.reload()
+    }
+
 
   return (
     <section className="admin w-full max-w-7xl py-4">
@@ -81,11 +91,11 @@ const LayoutAdmin = ({ children }) => {
               <ul className="mt-2 flex flex-col rounded-2xl border-[1px] p-4 shadow-md">
                 <li className="flex cursor-pointer items-center gap-3 rounded-3xl px-3 py-2 hover:bg-gray-100">
                   <HomeIcon className="h-5" />
-                  <Link href="#">Home</Link>
+                  <Link href={ROOT_URL}>Home</Link>
                 </li>
                 <li className="flex cursor-pointer items-center gap-3 rounded-3xl px-3 py-2 hover:bg-gray-100">
                   <ArrowLeftOnRectangleIcon className="h-5" />
-                  <a href="#">Logout</a>
+                  <button onClick={logoutHandler}>Logout</button>
                 </li>
               </ul>
             </Popover.Panel>
@@ -121,7 +131,7 @@ const LayoutAdmin = ({ children }) => {
             <span className="whitespace-nowrap">Ajout utilisateur</span>
           </ActiveLink>
 
-          <button className="mt-8 rounded bg-secondary-500 py-2 text-white transition active:scale-95">
+          <button onClick={logoutHandler} className="mt-8 rounded bg-secondary-500 py-2 text-white transition active:scale-95">
             Logout
           </button>
         </div>

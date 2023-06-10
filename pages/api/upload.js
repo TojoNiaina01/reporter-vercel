@@ -67,7 +67,7 @@ export default async function handler(req, res) {
             fs.rename(file.filepath, path.join(pathFolderVideo,`${newName}.${extension}`), () => {
               return res.status(200).json({type: "video", result: {name: newName, extension: extension}})
           })
-          return res.status(200).json({type: "video"})
+          //return res.status(200).json({type: "video"})
           }
 
             

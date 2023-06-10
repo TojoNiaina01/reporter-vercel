@@ -34,6 +34,8 @@ const Home = ({
   listMostPopularFr,
   hotEn,
   hotFr,
+  adsHorizontale,
+  adsVertical
 }) => {
   const testdata = {
     clé1: "valeur1",
@@ -45,7 +47,7 @@ const Home = ({
   const [listRecent, setListRecent] = useState(listRecentArticlesEn);
   const [listMostRead, setListMostRead] = useState(listMostReadEn);
   const [listMostPopular, setListMostPopular] = useState(listMostPopularEn);
-  const [hot, setHot] = useState(hotEn);
+  const [hot, setHot] = useState(hotEn[0]&&hotEn[0]);
 
   const storage = JSON.parse(localStorage.getItem('token'))
   // const saltPassword = bcrypt.genSaltSync(10)
@@ -66,15 +68,12 @@ const Home = ({
   }
 
   useEffect(() => {
-    console.log("type of testdata", typeof testdata);
-    console.log("list recent en == ", listRecentArticlesEn);
-    console.log("list recent fr == ", listRecentArticlesFr);
 
     if (storage.lang === "fr") {
       setListSlide(listSlideFr);
       setListRecent(listRecentArticlesFr);
       setListMostRead(listMostReadFr);
-      setHot(hotFr);
+      setHot(hotFr[0]&&hotFr[0]);
       setListMostPopular(listMostPopularFr);
     }
 
@@ -92,22 +91,22 @@ const Home = ({
         ArticleTopOfWeek,
       }}
     >
-      <Banner dataSlide={listSlide} />
-      <div className=" relative mt-6 hidden h-[290px] w-full cursor-pointer lg:block 2xl:mt-16">
+      <Banner dataSlide={listSlide} adsVertical={adsVertical}/>
+      {adsHorizontale[0]&&<div className="app relative mt-6 hidden h-[290px] w-full cursor-pointer lg:block 2xl:mt-16">
         <Hastag style="absolute top-10 z-10  right-14">ads </Hastag>
         <Image
-          src={PubliciteDeux}
+          src={`/uploads/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
           fill
           className="h-[290px] w-full object-cover"
           alt="Publicite"
         />
-      </div>
+      </div>}
       <Recent dataRecent={listRecent} />
       <Popular dataMostPopular={listMostPopular} />
-      <Most dataMostRead={listMostRead} />
+      <Most dataMostRead={listMostRead} listCategories={listCategories}/>
       <NewLetter />
-      <Hotstaff dataHot={hot} />
-      <TopOfWeek />
+      {hot&&<Hotstaff dataHot={hot} />}
+      {/* <TopOfWeek /> */}
     </ArticlesContext.Provider>
   );
 };
@@ -132,6 +131,8 @@ export async function getStaticProps() {
   let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
   let hotEn = [];
   let hotFr = [];
+  let adsHorizontale = []
+  let adsVertical = []
 
   /* -------------------------------------------------------------------------- */
   /*                           maka ny slide fr sy en                           */
@@ -296,6 +297,37 @@ export async function getStaticProps() {
     .then((res) => res.json())
     .then((data) => (hotEn = data));
 
+
+  /* -------------------------------------------------------------------------- */
+  /*                               ALAINA ADS                                   */
+  /* -------------------------------------------------------------------------- */
+
+  /* ----------------------------------- FR ----------------------------------- */
+
+  const paramAdsH = { query: "getAdsByDate", param: ["horizontale"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
+  await fetch(`${baseUrl}/api/knexApi`, {
+    method: "POST",
+    body: JSON.stringify(paramAdsH),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => (adsHorizontale = data));
+
+  /* ----------------------------------- EN ----------------------------------- */
+
+  const paramAdsV = { query: "getAdsByDate", param: ["verticale"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
+  await fetch(`${baseUrl}/api/knexApi`, {
+    method: "POST",
+    body: JSON.stringify(paramAdsV),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => (adsVertical = data));
+
   const ArticleRecentMain = allArticlesData.ArticleRecentMain;
   const ArticleRecentSecondary = allArticlesData.ArticleRecentSecondary;
   const ArticlePopular = allArticlesData.ArticlePopular;
@@ -323,10 +355,12 @@ export async function getStaticProps() {
         listMostReadEn.result.length > 4
           ? listMostReadEn.result.slice(0, 4)
           : listMostReadEn.result,
-      hotEn: hotEn.result[0],
-      hotFr: hotFr.result[0],
+      hotEn: hotEn.result,
+      hotFr: hotFr.result,
       listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 5),
       listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 5),
+      adsHorizontale: adsHorizontale.result,
+      adsVertical: adsVertical.result
     },
   };
 }

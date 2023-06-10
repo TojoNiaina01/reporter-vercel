@@ -32,7 +32,7 @@ const settings = {
   autoplay: true,
 };
 
-const Banner = ({dataSlide}) => {
+const Banner = ({dataSlide, adsVertical}) => {
 
   return (
     <section className="flex gap-4 pt-5 w-full 2xl:justify-between">
@@ -46,15 +46,17 @@ const Banner = ({dataSlide}) => {
         </Slide>
       </div>
 
-      <div className="hidden lg:block relative flex-grow h-[450px] 2xl:h-[600px] cursor-pointer max-w-sm bg-black">
+      {
+        adsVertical[0]&&<div className="hidden lg:block relative flex-grow h-[450px] 2xl:h-[600px] cursor-pointer max-w-sm bg-black">
         <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
         <Image
-          src={Publicite}
+          src={`/uploads/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`}
           fill
           className="object-contain"
           alt="Publicité graphics"
         />
       </div>
+      }
     </section>
   );
 };

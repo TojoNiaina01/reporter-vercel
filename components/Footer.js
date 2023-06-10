@@ -6,10 +6,14 @@ import { SocialIcon } from "react-social-icons";
 import { MenuFR } from "@/constant/constant";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
+import localStorage from "localStorage";
+import { ROOT_URL  } from "@/env";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 
-const Footer = () => {
+const Footer = ({listCategories}) => {
+  const lang = JSON.parse(localStorage.getItem('token')).lang
+ 
   return (
     <footer className="mx-4 my-10 md:mx-0">
       <Image src={Border} alt="Graphics" />
@@ -32,9 +36,9 @@ const Footer = () => {
           </h6>
           <hr className="py-2" />
           <ul className="grid grid-cols-2 gap-[4px]">
-            {MenuFR?.map((menu) => (
-              <li key={uuidv4()} className="footerCateg">
-                <Link href={menu.href}>{menu.k}</Link>
+            {listCategories?.map((category) => (
+              <li onClick={() => window.location = `${ROOT_URL}/${category.id}/${category[lang].toLowerCase()}`} key={uuidv4()} className="footerCateg">
+                {category[lang]}
               </li>
             ))}
           </ul>
