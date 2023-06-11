@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { dataFilter } from "@/config/dataFilter";
 import localStorage from "localStorage";
 import Paginate from "@/components/Paginate";
+import MyDatabase from "@/config/MyDatabase";
 
 const Hastag = ({
   listMostPopularEn,
@@ -141,7 +142,7 @@ const Hastag = ({
 export default Hastag;
 
 export async function getStaticProps({ params }) {
-  const baseUrl = process.env.ROOT_URL;
+  const db = new MyDatabase()
   const hastagID = parseInt(params.hastag[0]);
   let listArticles = []; // asina ny liste ny articles par hastag
   let hastagData = []; // asina ny momban'ilay hastag
@@ -154,31 +155,13 @@ export async function getStaticProps({ params }) {
   /*                  ALAINA NY LISTE NY ARTICLE IZAY MANANA #                  */
   /* -------------------------------------------------------------------------- */
 
-  const paramHas = { query: "getArticlesByHasTag", param: [hastagID] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramHas),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listArticles = data));
+  await db.getArticlesByHasTag(hastagID).then(data => listArticles = data)
 
   /* -------------------------------------------------------------------------- */
   /*                       ALAINA NY HASTAG DATA                                */
   /* -------------------------------------------------------------------------- */
 
-  const paramHastag = { query: "getHastagByID", param: [hastagID] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramHastag),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (hastagData = data));
+  await db.getHastagByID(hastagID).then(data => hastagData = data)
 
   /* -------------------------------------------------------------------------- */
   /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
@@ -186,29 +169,11 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramRecentFr = { query: "getRecentArticle", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesFr = data));
+  await db.getRecentArticle('fr').then(data => listRecentArticlesFr = data)
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramRecentEn = { query: "getRecentArticle", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesEn = data));
+  await db.getRecentArticle('en').then(data => listRecentArticlesEn = data)
 
   /* -------------------------------------------------------------------------- */
   /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
@@ -216,72 +181,45 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramMostPopularFr = { query: "getMostPopular", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularFr = data));
+  await db.getMostPopular('fr').then(data => listMostPopularFr = data)
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramMostPopularEn = { query: "getMostPopular", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularEn = data));
+  await db.getMostPopular('en').then(data => listMostPopularEn = data)
 
   return {
     props: {
-      listArticles: listArticles.result,
-      hastagData: hastagData.result[0],
+      listArticles: listArticles,
+      hastagData: hastagData[0],
       listRecentArticlesEn: dataFilter(
-        listRecentArticlesEn.result,
+        listRecentArticlesEn,
         "category_id",
         3
       ),
       listRecentArticlesFr: dataFilter(
-        listRecentArticlesFr.result,
+        listRecentArticlesFr,
         "category_id",
         3
       ),
-      listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 4),
-      listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 4),
+      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
     },
   };
 }
 
 export async function getStaticPaths() {
-  const baseUrl = process.env.ROOT_URL;
+  const db = new MyDatabase()
+  let listHastag = []
+
+  await db.getAllHastag().then(data => listHastag = data)
 
   const linkBeautify = (link) => {
     const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
       return newLink.toLowerCase()
   };
 
-  let hastag = [];
 
-  const param = { query: "getAllHastag", param: false }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(param),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (hastag = data));
-
-  const paths = hastag.result.map((item) => ({
+  const paths = listHastag.map((item) => ({
     params: { hastag: [`${item.id}`, linkBeautify(item.name)] },
   }));
 

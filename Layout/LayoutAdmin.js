@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -19,11 +19,12 @@ import Errors from "@/pages/404";
 import { ROOT_URL } from "@/env";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "@/config/redux/auth/authAction";
+import { useSelector } from "react-redux";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
 const ActiveLink = ({ children, href }) => {
-  const router = useRouter();
+const router = useRouter()
   return (
     <Link href={href}>
       <p
@@ -40,6 +41,19 @@ const ActiveLink = ({ children, href }) => {
 const LayoutAdmin = ({ children }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
+  const [userCheck, setUserCheck] = useState("editeur")
+  const [name, setName] = useState("")
+  const [func, setFunc] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if(user){
+      setUserCheck(user.type)
+      setName(user.name)
+      setFunc(user.type)
+    }
+  },[])
 
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
 
@@ -53,6 +67,7 @@ const LayoutAdmin = ({ children }) => {
     );
 
     const logoutHandler = () => {
+      setIsLoading(true)
       dispatch(logoutUser())
       router.reload()
     }
@@ -76,10 +91,10 @@ const LayoutAdmin = ({ children }) => {
               <div className="flex items-center gap-2">
                 <div className="leading-3 ">
                   <p className="text-xl font-semibold tracking-wide">
-                    Govina A.
+                    {name}
                   </p>
                   <span className="text-sm font-thin text-[#898997]">
-                    Administrator
+                    {func}
                   </span>
                 </div>
                 <ChevronDownIcon
@@ -122,16 +137,26 @@ const LayoutAdmin = ({ children }) => {
             <CalendarDaysIcon className="h-5" />
             <span className="whitespace-nowrap">Ajout Ads</span>
           </ActiveLink>
-          <ActiveLink href="/admin/listes-utilisateur">
+         {
+          userCheck === "admin" && (
+            <>
+            <ActiveLink href="/admin/listes-utilisateur">
             <Cog6ToothIcon className="h-5" />
             <span className="whitespace-nowrap">Listes utilisateur</span>
-          </ActiveLink>
-          <ActiveLink href="/admin/ajout-utilisateur">
+            </ActiveLink>
+            <ActiveLink href="/admin/ajout-utilisateur">
             <Cog6ToothIcon className="h-5" />
             <span className="whitespace-nowrap">Ajout utilisateur</span>
-          </ActiveLink>
+            </ActiveLink>
+            </>
+          )
+         }
 
-          <button onClick={logoutHandler} className="mt-8 rounded bg-secondary-500 py-2 text-white transition active:scale-95">
+          <button onClick={logoutHandler} className={`flex justify-center items-center mt-8 rounded ${isLoading ? 'bg-gray-400' : 'bg-secondary-500'} py-2 text-white transition active:scale-95`}>
+          {isLoading && (<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>)}
             Logout
           </button>
         </div>

@@ -12,14 +12,20 @@ import { ModalContext } from "@/Layout/Layout";
 import localStorage from "localStorage";
 import { ROOT_URL } from "@/env";
 import {v4 as uuidv4} from "uuid";
+import { useRouter } from "next/navigation";
+
 
 const Navbar = ({ clickHandler }) => {
+  const router = useRouter()
   const [toggleMenu, setToggleMenu] = useState(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 768px)");
   const { newsLetterModal, setNewsLetterModal } = useContext(ModalContext);
   const lang = JSON.parse(localStorage.getItem('token')).lang
   const rating = JSON.parse(localStorage.getItem('token')).rating
   const [option, setOption] = useState()
+  const [placeholderSearch, setPlaceholderSearch] = useState("SEARCH")
+  const [searchVal, setSearchVal] = useState()
+  const [subsribTag, setSubscribTag] = useState("SUBSCRIBE")
 
   const changeLangHandler = (e) => {
     localStorage.setItem('token', JSON.stringify({lang: e.target.value, rating}))
@@ -39,27 +45,39 @@ const Navbar = ({ clickHandler }) => {
         {value: 'fr', tag: 'FR'},
         {value: 'en', tag: 'EN'},
       ]
+      setPlaceholderSearch("RECHERCHE")
+      setSubscribTag("S'ABONNER")
 
       setOption(listOpt)
     }
   },[])
 
+  const searchHandler = (e) => {
+    e.preventDefault()
+    if(searchVal){
+      router.push(`/search?search=${searchVal}&lang=${lang}`)
+    }
+  }
   return (
     <nav className="flex items-center justify-between relative md:pt-5 lg:pt-2">
-      <div className="relative w-40 h-14 md:w-64 md:h-20 lg:order-2 lg:w-[250px] 2xl:w-[350px] 2xl:h-[110px]">
+      <div onClick={() => window.location = ROOT_URL} className="relative w-40 h-14 md:w-64 md:h-20 lg:order-2 lg:w-[250px] 2xl:w-[350px] 2xl:h-[110px]">
         <Image src={Logo} fill className="object-contain" alt="Logo" />
       </div>
       <div
         className="border border-gray-300 rounded-full flex items-center
       h-fit w-40 px-2 py-2 md:w-64 md:flex-grow-0 lg:order-1 lg:mx-0 lg:w-52 2xl:w-64"
       >
-        <input
-          type="text"
-          className="focus:outline-none w-full placeholder:text-xs
-          mx-2 md:placeholder:text-md"
-          placeholder="SEARCH"
-        />
-        <MagnifyingGlassIcon className="h-5" color="#3e817d" />
+       <form onSubmit={searchHandler}>
+          <input
+              type="text"
+              className="focus:outline-none w-full placeholder:text-xs
+              mx-2 md:placeholder:text-md"
+              placeholder={placeholderSearch}
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
+            />
+       </form>
+       <MagnifyingGlassIcon onClick={searchHandler} className="h-5" color="#3e817d" />
       </div>
 
       {isAboveMediumScreens && (
@@ -78,7 +96,7 @@ const Navbar = ({ clickHandler }) => {
           >
             <EnvelopeIcon className="h-5 text-white" />
             <p className="uppercase text-xs tracking-wider font-semibold 2xl:text-sm">
-              s'abonner
+              {subsribTag}
             </p>
           </button>
         </div>

@@ -35,7 +35,6 @@ const Flash = ({listFlash}) => {
     router.push(`/article/${id}/${linkBeautify(title)}`)
   }
 
-  console.log("flash info == ",listFlash)
 
   return (
     <>

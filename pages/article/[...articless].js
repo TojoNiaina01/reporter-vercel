@@ -24,6 +24,7 @@ import {
   SpeakerWaveIcon,
   SpeakerXMarkIcon,
 } from "@heroicons/react/24/outline";
+import MyDatabase from "@/config/MyDatabase";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -53,7 +54,6 @@ const Articless = ({
 
 
 
-  console.log("list recent article en anglais ",listRecentArticlesEn)
   useEffect(() => {
     setBody(parse(articleData.body)); // tsy maintsy parse-na ilay body satria HTML type string
     const param = { query: "incrementViews", param: [articleData.id] };
@@ -90,7 +90,6 @@ const Articless = ({
     router.push(`/hastag/${id}/${linkBeautify(title)}`)
   }
 
-  console.log("article data == ", articleData)
   return (
     <>
       <Head>
@@ -105,14 +104,14 @@ const Articless = ({
             </p>
           </div>
           <div className="absolute right-5 z-10 md:static">
-            <form className="relative mx-auto w-max rounded-full bg-secondary-100">
+            {/* <form className="relative mx-auto w-max rounded-full bg-secondary-100">
               <input
                 type="index"
                 className="peer relative z-10 h-12 w-12 cursor-pointer rounded-full border bg-transparent pl-12
               outline-none focus:w-full focus:cursor-text focus:border-secondary-400 focus:pl-16 focus:pr-4"
               />
               <MagnifyingGlassIcon className="absolute inset-y-0 my-auto h-8 w-12 border-r  border-transparent stroke-secondary-500 px-3.5 peer-focus:border-secondary-400 peer-focus:stroke-secondary-500" />
-            </form>
+            </form> */}
           </div>
         </div>
         <div className="mt-4 justify-between gap-8 lg:flex">
@@ -274,6 +273,7 @@ export default Articless;
 export async function getStaticProps({ params }) {
   const baseUrl = process.env.ROOT_URL;
   const articleID = parseInt(params.articless[0]);
+  const db = new MyDatabase()
   let articleData = [];
   let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
   let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
@@ -287,63 +287,26 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramArticle = { query: "getArticle", param: [articleID] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramArticle),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (articleData = data));
+  await db.getArticle(articleID).then(data => articleData = data)
 
   /* -------------------------------------------------------------------------- */
-  /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
+  /*                    ALAINA NY LISTE NY HASTAG REHETRA                     */
   /* -------------------------------------------------------------------------- */
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramHastag = { query: "getHastagByArticle", param: [articleID] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramHastag),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listHastag = data));
+  await db.getHastagByArticle(articleID).then(data => listHastag = data)
 
   /* -------------------------------------------------------------------------- */
   /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
   /* -------------------------------------------------------------------------- */
 
   /* ----------------------------------- FR ----------------------------------- */
+  await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
 
-  const paramRecentFr = { query: "getRecentArticle", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesFr = data));
 
   /* ----------------------------------- EN ----------------------------------- */
-
-  const paramRecentEn = { query: "getRecentArticle", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesEn = data));
+  await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
 
   /* -------------------------------------------------------------------------- */
   /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
@@ -351,76 +314,46 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramMostPopularFr = { query: "getMostPopular", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularFr = data));
+  await db.getMostPopular("fr").then(data => listMostPopularFr = data)
+
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramMostPopularEn = { query: "getMostPopular", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularEn = data));
+  await db.getMostPopular("en").then(data => listMostPopularEn = data)
 
   return {
     props: {
-      articleData: articleData.result[0],
+      articleData: articleData[0],
       listRecentArticlesEn: dataFilter(
-        listRecentArticlesEn.result,
+        listRecentArticlesEn,
         "category_id",
         3
       ),
       listRecentArticlesFr: dataFilter(
-        listRecentArticlesFr.result,
+        listRecentArticlesFr,
         "category_id",
         3
       ),
-      listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 4),
-      listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 4),
-      listHastag: listHastag.result,
+      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+      listHastag: listHastag,
     },
   };
 }
 
 export async function getStaticPaths() {
+  const db = new MyDatabase()
+  let listArticle = []
+
+  await db.getFullArticles().then(data => listArticle = data)
+
   const linkBeautify = (link) => {
     const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };
-  const baseUrl = process.env.ROOT_URL;
-  let listArticle = [];
 
-  /* -------------------------------------------------------------------------- */
-  /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
-  /* -------------------------------------------------------------------------- */
 
-  /* ----------------------------------- FR ----------------------------------- */
-
-  const paramArticle = { query: "getFullArticles", param: false }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramArticle),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listArticle = data));
-
-  const paths = listArticle.result.map((article) => ({
+  const paths = listArticle.map((article) => ({
     params: { articless: [`${article.id}`, linkBeautify(article.title)] },
   }));
 

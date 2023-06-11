@@ -9,11 +9,11 @@ import NewLetter from "@/components/NewLetter";
 import Hotstaff from "@/components/hotStaff/Hotstaff";
 import TopOfWeek from "@/components/Mostread/TopOfWeek";
 import Banner from "@/components/headers/Banner";
-import MyDatabase from "../config/MyDatabase";
 import localStorage from "localStorage";
 import { dataFilter } from "@/config/dataFilter";
 import { ROOT_URL } from "@/env";
 import bcrypt from "bcryptjs";
+import MyDatabase from "../config/MyDatabase";
 
 export const ArticlesContext = createContext();
 const Home = ({
@@ -140,43 +140,18 @@ export async function getStaticProps() {
   /* -------------------------------------------------------------------------- */
 
   /* ----------------------------------- FR ----------------------------------- */
-  const paramSlideFr = { query: "getSlideByLang", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramSlideFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listSlideFr = data));
+
+  await db.getSlideByLang("fr").then(data => listSlideFr = data)
 
   /* ----------------------------------- EN ----------------------------------- */
-  const paramSlideEn = { query: "getSlideByLang", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramSlideEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listSlideEn = data));
+
+  await db.getSlideByLang("en").then(data => listSlideEn = data)
 
   /* -------------------------------------------------------------------------- */
   /*                   ALAINA NY LISTE-N'NY CATEGORIE REHETRA                   */
   /* -------------------------------------------------------------------------- */
 
-  const paramCategory = { query: "getFullCategories", param: false }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramCategory),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listCategories = data));
+  await db.getFullCategories().then(data => listCategories = data)
 
   /* -------------------------------------------------------------------------- */
   /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
@@ -184,29 +159,12 @@ export async function getStaticProps() {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramRecentFr = { query: "getRecentArticle", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesFr = data));
+  await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramRecentEn = { query: "getRecentArticle", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesEn = data));
+  await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
+
 
   /* -------------------------------------------------------------------------- */
   /*                      ALAINA NY LISTE NY IZAY BE PAMAKY                     */
@@ -214,29 +172,12 @@ export async function getStaticProps() {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramMostReadFr = { query: "getMostReadByLang", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostReadFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostReadFr = data));
+  await db.getMostReadByLang("fr").then(data => listMostReadFr = data)
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramMostReadEn = { query: "getMostReadByLang", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostReadEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostReadEn = data));
+  await db.getMostReadByLang("en").then(data => listMostReadEn = data)
+
 
   /* -------------------------------------------------------------------------- */
   /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
@@ -244,29 +185,12 @@ export async function getStaticProps() {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramMostPopularFr = { query: "getMostPopular", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularFr = data));
+  await db.getMostPopular("fr").then(data => listMostPopularFr = data)
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramMostPopularEn = { query: "getMostPopular", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularEn = data));
+  await db.getMostPopular("en").then(data => listMostPopularEn = data)
+
 
   /* -------------------------------------------------------------------------- */
   /*                             ALAINA NY HOT STAFF                            */
@@ -274,94 +198,53 @@ export async function getStaticProps() {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramHotFr = { query: "getHotByLang", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramHotFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (hotFr = data));
+  await db.getHotByLang("fr").then(data => hotFr = data)
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramHotEn = { query: "getHotByLang", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramHotEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (hotEn = data));
+  await db.getHotByLang("en").then(data => hotEn = data)
 
 
   /* -------------------------------------------------------------------------- */
   /*                               ALAINA ADS                                   */
   /* -------------------------------------------------------------------------- */
 
-  /* ----------------------------------- FR ----------------------------------- */
+  /* ----------------------------------- horizontale ----------------------------------- */
 
-  const paramAdsH = { query: "getAdsByDate", param: ["horizontale"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramAdsH),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (adsHorizontale = data));
+  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramAdsV = { query: "getAdsByDate", param: ["verticale"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramAdsV),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (adsVertical = data));
+  await db.getAdsByDate("verticale").then(data => adsVertical = data)
 
-  const ArticleRecentMain = allArticlesData.ArticleRecentMain;
-  const ArticleRecentSecondary = allArticlesData.ArticleRecentSecondary;
-  const ArticlePopular = allArticlesData.ArticlePopular;
-  const ArticlePopularSeconde = allArticlesData.ArticlePopularSeconde;
-  const ArticleMostMain = allArticlesData.ArticleMostMain;
-  const ArticleTopOfWeek = allArticlesData.ArticleTopOfWeek;
   return {
     props: {
-      listSlideFr: listSlideFr.result,
-      listSlideEn: listSlideEn.result,
-      listCategories: listCategories.result,
+      listSlideFr: listSlideFr,
+      listSlideEn: listSlideEn,
+      listCategories: listCategories,
       listRecentArticlesEn:
-        listRecentArticlesEn.result.length > 6
-          ? listRecentArticlesEn.result.slice(0, 6)
-          : listRecentArticlesEn.result,
+        listRecentArticlesEn.length > 6
+          ? listRecentArticlesEn.slice(0, 6)
+          : listRecentArticlesEn,
       listRecentArticlesFr:
-        listRecentArticlesFr.result.length > 6
-          ? listRecentArticlesFr.result.slice(0, 6)
-          : listRecentArticlesFr.result,
+        listRecentArticlesFr.length > 6
+          ? listRecentArticlesFr.slice(0, 6)
+          : listRecentArticlesFr,
       listMostReadFr:
-        listMostReadFr.result.length > 4
-          ? listMostReadFr.result.slice(0, 4)
-          : listMostReadFr.result,
+        listMostReadFr.length > 4
+          ? listMostReadFr.slice(0, 4)
+          : listMostReadFr,
       listMostReadEn:
-        listMostReadEn.result.length > 4
-          ? listMostReadEn.result.slice(0, 4)
-          : listMostReadEn.result,
-      hotEn: hotEn.result,
-      hotFr: hotFr.result,
-      listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 5),
-      listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 5),
-      adsHorizontale: adsHorizontale.result,
-      adsVertical: adsVertical.result
+        listMostReadEn.length > 4
+          ? listMostReadEn.slice(0, 4)
+          : listMostReadEn,
+      hotEn: hotEn,
+      hotFr: hotFr,
+      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 5),
+      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 5),
+      adsHorizontale: adsHorizontale,
+      adsVertical: adsVertical
     },
   };
 }

@@ -166,7 +166,7 @@ class MyDatabase {
                             {image_type: 'img.type'}
                             
                             )
-                        .orderBy('a.id', 'desc')
+                       .orderBy('a.id', 'desc')
         
 
             if(res){
@@ -892,7 +892,7 @@ class MyDatabase {
      async getUsers(){
         let res =  await knex('users')
                         .select('*')
-                        .orderBy('id', 'desc')
+                        //.orderBy('id', 'desc')
             if(res){
                 return JSON.parse(JSON.stringify(res))
             }else{
@@ -1055,7 +1055,6 @@ class MyDatabase {
                             .where('a.date_start', '<=', today)
                             .where('a.date_end', '>=', today)
                             .where('a.format', format)
-            console.log("res == ", res)
             if(res){
                 return JSON.parse(JSON.stringify(res))
             }else{
@@ -1106,6 +1105,20 @@ class MyDatabase {
         .del()
 
     return id
+     }
+
+
+     async addFollowers(email){
+        let id = await knex
+                        .insert({
+                            email,
+                            created_at:  moment().format("YYYY-MM-DD hh:mm:ss")
+                        })
+                        .into('followers')
+
+            id = JSON.parse(JSON.stringify(id))
+
+        return id[0]
      }
 }
 

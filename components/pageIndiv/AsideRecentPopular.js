@@ -26,7 +26,6 @@ const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listH
       return newLink.toLowerCase()
   };
   
-  console.log("list hastag === ", listHastag)
 
   const redirectHandler = (id, title) => {
     router.push(`/article/${id}/${linkBeautify(title)}`)

@@ -84,7 +84,7 @@ export async function getServerSideProps({req, res}){
 
   const baseUrl = process.env.ROOT_URL
   const param = {query: 'getFullCategories', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
-  const paramArticle = {query: 'getArticlesByLang', param: ["fr"]}// query: ilay anaran'ilay méthode ao @ MyDatabase
+  const paramArticle = {query: 'getFullArticles', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
   let listCategories = []
   let listArticles = []
     await fetch(`${baseUrl}/api/knexApi`, {

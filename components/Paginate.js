@@ -40,9 +40,10 @@ export default function Paginate ({itemsPerPage, initialPage, handlerPage, items
         breakClassName="px-4 py-2 text-gray-800 text-textBlack"
         nextClassName="bg-main-500 text-textBlack rounded-full text-center flex justify-center items-center px-4 ml-4"
         previousClassName="bg-main-500 text-textBlack rounded-full text-center flex justify-center items-center px-4 mr-4"
-        activeClassName="bg-[#659a97]"
+        activeClassName="bg-[#659a97] paginateSelected"
         disabledClassName="hidden"
         initialPage={initialPage}
+       // forcePage={initialPage}
         breakLabel="..."
         nextLabel="Next"
         onPageChange={handlePageClick}

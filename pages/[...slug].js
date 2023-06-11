@@ -13,6 +13,9 @@ import { dataFilter } from "@/config/dataFilter";
 import localStorage from "localStorage";
 import moment from "moment";
 import Paginate from "@/components/Paginate";
+import axios from "axios";
+import { basePath } from "@/next.config";
+import MyDatabase from "@/config/MyDatabase";
 
 const ArticlePrincipale = ({
   listArticlesByCategoriesEn,
@@ -69,7 +72,7 @@ const ArticlePrincipale = ({
             }
             style
           />
-          <div>
+          {/* <div>
             <form
               action=""
               className="relative mx-auto w-max rounded-full bg-secondary-100"
@@ -81,7 +84,7 @@ const ArticlePrincipale = ({
               />
               <MagnifyingGlassIcon className="absolute inset-y-0 my-auto h-8 w-12 border-r  border-transparent stroke-secondary-500 px-3.5 peer-focus:border-secondary-400 peer-focus:stroke-secondary-500" />
             </form>
-          </div>
+          </div> */}
         </div>
         {/* Tag top article */}
         <ul className="flex gap-4 overflow-scroll scrollbar-hide pt-4">
@@ -174,7 +177,7 @@ const ArticlePrincipale = ({
 export default ArticlePrincipale;
 
 export async function getStaticProps({ params }) {
-  const baseUrl = process.env.ROOT_URL;
+  const db = new MyDatabase()
   const data = await import(`/data/articles.json`);
   const dataAside = await import(`/data/thumbnail.json`);
   const articlePopular = dataAside.ArticlePopular;
@@ -195,29 +198,13 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramRecentFr = { query: "getRecentArticle", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesFr = data));
+  await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
+
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramRecentEn = { query: "getRecentArticle", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramRecentEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listRecentArticlesEn = data));
+  await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
+
 
   /* -------------------------------------------------------------------------- */
   /*                      ALAINA NY LISTE NY ARTICLE PAR CATEGORIE                   */
@@ -225,35 +212,13 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramCategoryFr = {
-    query: "getArticleByCategoryLang",
-    param: [categoryID, "fr"],
-  }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramCategoryFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listArticlesByCategoriesFr = data));
+  await db.getArticleByCategoryLang(categoryID, "fr").then(data => listArticlesByCategoriesFr = data)
+
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramCategoryEn = {
-    query: "getArticleByCategoryLang",
-    param: [categoryID, "en"],
-  }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramCategoryEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listArticlesByCategoriesEn = data));
+  await db.getArticleByCategoryLang(categoryID, "en").then(data => listArticlesByCategoriesEn = data)
+  
 
   /* -------------------------------------------------------------------------- */
   /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
@@ -261,29 +226,12 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramMostPopularFr = { query: "getMostPopular", param: ["fr"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularFr = data));
+  await db.getMostPopular("fr").then(data => listMostPopularFr = data)
+
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramMostPopularEn = { query: "getMostPopular", param: ["en"] }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramMostPopularEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listMostPopularEn = data));
+  await db.getMostPopular("en").then(data => listMostPopularEn = data)
 
   /* -------------------------------------------------------------------------- */
   /*                   ALAINA NY LISTE NY HASTAG PAR CATEGORIES                  */
@@ -291,91 +239,86 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramHastagFr = {
-    query: "getHastagByCategory",
-    param: [categoryID, "fr"],
-  }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramHastagFr),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listHastagFr = data));
+  await db.getHastagByCategory(categoryID, "fr").then(data => listHastagFr = data)
+
 
   /* ----------------------------------- EN ----------------------------------- */
 
-  const paramHastagEn = {
-    query: "getHastagByCategory",
-    param: [categoryID, "en"],
-  }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramHastagEn),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (listHastagEn = data));
+  await db.getHastagByCategory(categoryID, "en").then(data => listHastagEn = data)
+
 
   return {
     props: {
       listRecentArticlesEn: dataFilter(
-        listRecentArticlesEn.result,
+        listRecentArticlesEn,
         "category_id",
         3
       ),
       listRecentArticlesFr: dataFilter(
-        listRecentArticlesFr.result,
+        listRecentArticlesFr,
         "category_id",
         3
       ),
-      listArticlesByCategoriesEn: listArticlesByCategoriesEn.result,
-      listArticlesByCategoriesFr: listArticlesByCategoriesFr.result,
-      listMostPopularEn: dataFilter(listMostPopularEn.result, "category_id", 4),
-      listMostPopularFr: dataFilter(listMostPopularFr.result, "category_id", 4),
-      listHastagEn: listHastagEn.result,
-      listHastagFr: listHastagFr.result,
+      listArticlesByCategoriesEn: listArticlesByCategoriesEn,
+      listArticlesByCategoriesFr: listArticlesByCategoriesFr,
+      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+      listHastagEn: listHastagEn,
+      listHastagFr: listHastagFr,
     },
   };
 }
 
 export async function getStaticPaths() {
   const baseUrl = process.env.ROOT_URL;
+  const db = new MyDatabase()
+  let listCategory = []
+  
+  console.log("get full == ", listCategory)
   let categories = [];
+  await db.getFullCategories().then(category => listCategory = category)
   /* -------------------------------------------------------------------------- */
   /*                    ALAINA NY LISTE NY CATEGORY REHETRA                    */
   /* -------------------------------------------------------------------------- */
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  const paramCategory = { query: "getFullCategories", param: false }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-  await fetch(`${baseUrl}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(paramCategory),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => (categories = data));
+  // const paramCategory = { query: "getFullCategories", param: false }; // query: ilay anaran'ilay méthode ao @ MyDatabase
 
-  const paths1 = categories.result.map((category) => ({
+  // await fetch(`${baseUrl}/api/knexApi`, {
+  //   method: "POST",
+  //   body: JSON.stringify(paramCategory),
+  //   headers: {
+  //     "Content-type": "application/json",
+  //   },
+  // })
+  //   .then((res) => res.json())
+  //   .then((data) => categories = data);
+
+  const paths1 = listCategory.map((category) => ({
     params: { slug: [`${category.id}`, category.fr.toLowerCase()] },
   }));
 
-  const paths2 = categories.result.map((category) => ({
+  const paths2 = listCategory.map((category) => ({
     params: { slug: [`${category.id}`, category.en.toLowerCase()] },
   }));
 
   const paths = [...paths1, ...paths2];
-
-  console.log("path == ", paths[0].params.slug);
   return {
     paths,
     fallback: false,
   };
+
+  // return {
+  //   paths: [
+  //     {
+  //       params: {
+  //         slug: ["3", "economy"],
+  //       },
+  //     }, 
+  //   ],
+  //   fallback: false,
+  // };
 }
+
+

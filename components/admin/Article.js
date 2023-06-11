@@ -18,18 +18,36 @@ import moment from "moment";
 import {v4 as uuidV4} from 'uuid';
 import { ROOT_URL } from "@/env";
 import Paginate from "@/components/Paginate";
+import { useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 
+const articlesFilter = (data, categoryID, lang) => {
+  return data.filter(article => (article.category_id === categoryID && article.lang === lang))
+}
+
+const deleteArticle = (data, id) => {
+  return data.filter(article => article.id !== id)
+}
+
+const searchArticle = (data, toSearch) => {
+  const checkSearch = new RegExp(toSearch, "i")
+  return data.filter(article => checkSearch.test(article.title))
+}
 
 const Article = ({ header, tabhead, data, user, listArticles, listCategories, dispatchArticle, listUsers }) => {
   const lang = [
     {tag: "fr", langue: "français"},
     {tag: "en", langue: "Anglais"},
   ];
+  const tmpArticles = useRef(listArticles)
   const [selectedMenu, setSelectedMenu] = useState(listCategories[0]);
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [modalShow, setModalShow] = useState(false);
   const [articleData, setArticleData] = useState()
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
+  const [articles, setArticles] = useState(articlesFilter(listArticles, 1, "fr"))
+  const [toSearch, setToSearch] = useState("")
+  const mainUser = user?useSelector(state => state.user):false
 
   /* -------------------------------- list user ------------------------------- */
   const [listNewUsers, setListNewUsers] = useState(listUsers)
@@ -37,16 +55,39 @@ const Article = ({ header, tabhead, data, user, listArticles, listCategories, di
    /* ------------------------------- pagination ------------------------------- */
    const [itemOffset, setItemOffset] = useState(null)
    const [currentArticles, setCurrentArticles] = useState()
-   const itemsPerPage = 6
+   const [currentUsers, setCurrentUsers] = useState()
+   const [initialPage, setInitialPage] = useState(0)
+   const itemsPerPage = 2
    const handlerPageClick = (e) => {
-     const newOffset = (e.selected * itemsPerPage) % listArticles.length;
+     const newOffset = (e.selected * itemsPerPage) % tmpArticles.current.length;
      setItemOffset(newOffset)
+   }
+  
+   const handlerPageClickUser = (e) => {
+     const newOffset = (e.selected * itemsPerPage) % listNewUsers.length;
+     setItemOffset(newOffset)
+   }
+
+   /* ----------------------------- search système ----------------------------- */
+   const searchHandler = (e) => {
+     if(e.target.value){
+      setArticles(searchArticle(tmpArticles.current, e.target.value))
+    }else{
+      setArticles(articlesFilter(tmpArticles.current, selectedMenu.id, selectedLang.tag))
+    }
    }
 
    useEffect(() => {
     const endOffset = itemOffset + itemsPerPage
-    setCurrentArticles(listArticles.slice(itemOffset, endOffset))
-   },[itemOffset, itemsPerPage, listArticles])
+    console.log("main user === ", mainUser)
+    if(user){
+      setCurrentUsers(listNewUsers.slice(itemOffset, endOffset))
+    }else{
+      setCurrentArticles(articles.slice(itemOffset, endOffset))
+    }
+   
+    
+   },[itemOffset, itemsPerPage, articles, listNewUsers])
 
 
 const modifHandler = (val) => {
@@ -56,37 +97,21 @@ const modifHandler = (val) => {
 
 const categoryHandler = (val) => {
   setSelectedMenu(val)
-  const param = {query: 'getArticleByCategoryLang', param: [val.id, selectedLang.tag]}
-
-  fetch(`${ROOT_URL}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(param),
-    headers: {
-      "Content-type": "application/json"
-    }
-  }).then((res) => res.json())
-    .then((data) => {
-      console.log("new list filtrer == ", data.result)
-      dispatchArticle({type: 'ALLCHANGE', result: data.result})
-    })
+  const liElement = document.querySelector('a[aria-label="Page 1"]')
+  setArticles(articlesFilter(tmpArticles.current, val.id, selectedLang.tag))
+  if(liElement){
+    liElement.click()
+  }
 
 }
 
 const langHandler = (val) => {
   setSelectedLang(val)
-  const param = {query: 'getArticleByCategoryLang', param: [selectedMenu.id, val.tag]}
-
-  fetch(`${ROOT_URL}/api/knexApi`, {
-    method: "POST",
-    body: JSON.stringify(param),
-    headers: {
-      "Content-type": "application/json"
-    }
-  }).then((res) => res.json())
-    .then((data) => {
-      console.log("new list filtrer == ", data.result)
-      dispatchArticle({type: 'ALLCHANGE', result: data.result})
-    })
+  const liElement = document.querySelector('a[aria-label="Page 1"]')
+  setArticles(articlesFilter(tmpArticles.current, selectedMenu.id, val.tag))
+  if(liElement){
+    liElement.click()
+  }
 
 }
 
@@ -147,39 +172,78 @@ const supprArticles = async (article) => {
           }
         }).then((res) => res.json())
         .then(newListUsers => {
-          console.log("suppression article")
-          dispatchArticle({type: 'ALLCHANGE', result: newListUsers.result})
+          tmpArticles.current = deleteArticle(tmpArticles.current, article.id)
+          const newArticles = articlesFilter(tmpArticles.current, article.category_id, article.lang)
+          setArticles(newArticles)
+          const pageNumber = document.querySelectorAll('.pageSelected').length
+
+          const logique = (pageNumber*2-itemsPerPage) === newArticles.length
+          console.log("pageNumber*2 == ", pageNumber*2)
+          console.log("newArticles.length == ", newArticles.length)
+
+          if(logique){
+            const liAllElement = document.querySelectorAll('.pageSelected')
+              const index = liAllElement.length - 2
+              console.log("element supp == ", liAllElement[index])
+              liAllElement[index].querySelector('a').click()
+          }
+
+          // const liElement = document.querySelector('li.paginateSelected')
+          // console.log("current li == ", liElement)
+          // if(!liElement){
+          //   const liAllElement = document.querySelectorAll('.pageSelected')
+          //   const index = liAllElement.length - 1
+          //   console.log("element supp == ", liAllElement[index])
+          //   liAllElement[index].querySelector('a').click()
+          // }
         })
    })
 }
 
 
 
-const deleteUserHandler = (userID) => {
-  const userElement = document.getElementById(`user${userID}`)
-  userElement.classList.add("opacity-30")
+const deleteUserHandler = (userID, email) => {
 
-          const paramUser = {query: 'deleteUser', param: [userID]}
-          fetch(`${ROOT_URL}/api/knexApi`, {
-            method: "POST",
-            body: JSON.stringify(paramUser),
-            headers: {
-              "Content-type" : "application/json"
-            }
-          }).then((res) => res.json())
-          .then(user => {
-            const paramNewList = {query: 'getUsers', param: false}
+  if(mainUser.email !== email){
+    const userElement = document.getElementById(`user${userID}`)
+    userElement.classList.add("opacity-30")
+  
+            const paramUser = {query: 'deleteUser', param: [userID]}
             fetch(`${ROOT_URL}/api/knexApi`, {
               method: "POST",
-              body: JSON.stringify(paramNewList),
+              body: JSON.stringify(paramUser),
               headers: {
                 "Content-type" : "application/json"
               }
             }).then((res) => res.json())
-            .then(newListUsers => {
-              setListNewUsers(newListUsers.result)
+            .then(user => {
+              const paramNewList = {query: 'getUsers', param: false}
+              fetch(`${ROOT_URL}/api/knexApi`, {
+                method: "POST",
+                body: JSON.stringify(paramNewList),
+                headers: {
+                  "Content-type" : "application/json"
+                }
+              }).then((res) => res.json())
+              .then(newListUsers => {
+                setListNewUsers(newListUsers.result)
+                const pageNumber = document.querySelectorAll('.pageSelected').length
+                const logique = (pageNumber*2-itemsPerPage) === newListUsers.result.length
+                console.log("pageNumber*2 == ", pageNumber*2)
+                console.log("newArticles.length == ", newListUsers.result.length)
+  
+                if(logique){
+                  const liAllElement = document.querySelectorAll('.pageSelected')
+                    const index = liAllElement.length - 2
+                    console.log("element supp == ", liAllElement[index])
+                    liAllElement[index].querySelector('a').click()
+            }
+              })
             })
-          })
+    }else{
+        toast.error("Vous ne pouvez pas supprimer votre propre compte")
+    }
+ 
     }
 
     const deleteArticleHandler = (articleID) => {
@@ -203,6 +267,9 @@ const deleteUserHandler = (userID) => {
 
   return (
     <div className="w-[90%] mx-auto">
+      <Toaster toastOptions={{
+          className: 'text-sm'
+        }}/>
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold tracking-wide">{header}</h3>
         <div className="flex gap-4">
@@ -246,17 +313,19 @@ const deleteUserHandler = (userID) => {
                 </Listbox.Options>
               </div>
           </Listbox>
-          </>
-          )}
-          {/*  Recherche*/}
-          <div className="border border-main-500 py-2 px-4 rounded-full flex items-center w-[200px] h-fit">
+          {/* -------------------------------- recherche ------------------------------- */}
+           <div className="border border-main-500 py-2 px-4 rounded-full flex items-center w-[200px] h-fit">
             <input
               type="text"
               className="focus:outline-none w-full mx-2 placeholder:text-xs"
               placeholder="SEARCH"
+              onChange={searchHandler}
             />
             <MagnifyingGlassIcon className="h-5" color="#3e817d" />
           </div>
+          </>
+          )}
+         
         </div>
       </div>
       {/*  tableau */}
@@ -324,7 +393,7 @@ const deleteUserHandler = (userID) => {
 
           {user && (
             <tbody>
-              {listNewUsers?.map((user) => (
+              {currentUsers?.map((user) => (
                 <tr id={`user${user.id}`} key={uuidV4()} className="bg-white border-b ">
                   <td className="px-6 py-4">{user.id}</td>
                   <th
@@ -338,7 +407,7 @@ const deleteUserHandler = (userID) => {
                     <div className="flex gap-2">
                       <TrashIcon
                         className="h-5 text-red-500 cursor-pointer"
-                        onClick={() => deleteUserHandler(user.id)}
+                        onClick={() => deleteUserHandler(user.id, user.email)}
                       />
                     </div>
                   </td>
@@ -352,12 +421,15 @@ const deleteUserHandler = (userID) => {
         <div />
         <div>
         {
-              listArticles.length > 6 && <Paginate itemsPerPage={itemsPerPage} handlerPage={handlerPageClick} items={listArticles}/>
+              articles.length > 2 && <Paginate itemsPerPage={itemsPerPage} handlerPage={handlerPageClick} items={articles} initialPage={initialPage}/>
+          }
+        {
+              listNewUsers.length > 2 && <Paginate itemsPerPage={itemsPerPage} handlerPage={handlerPageClickUser} items={listNewUsers}/>
           }
         </div>
       </div>
 
-      {modalShow && <ModalArticle setModalShow={setModalShow} articleData={articleData}/>}
+      {modalShow && <ModalArticle setModalShow={setModalShow} articleData={articleData} />}
       {modalDeleteConfirm && (
         <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
       )}

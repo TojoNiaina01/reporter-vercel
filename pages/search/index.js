@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderCategory from "@/components/HeaderCategory";
 import {
   ArrowDownIcon,
@@ -11,17 +11,65 @@ import Title from "@/components/Title";
 import Image from "next/image";
 import { PolitiqueArticleOne } from "@/public/assets/img";
 import {v4 as uuidv4} from "uuid";
+import MyDatabase from "@/config/MyDatabase";
+import { useRouter } from "next/router";
+import { dataFilter } from "@/config/dataFilter";
+import localStorage from "localStorage";
+import Paginate from "@/components/Paginate";
 
-const search = ({ articleRecent, articlePopular }) => {
+const search = ({
+  listMostPopularEn,
+  listMostPopularFr,
+  listRecentArticlesEn,
+  listRecentArticlesFr,
+  listSearch,
+  searchTag
+}) => {
+  const router = useRouter();
   const [order, setOrder] = useState(false);
+  const [listRecent, setListRecent] = useState(listRecentArticlesEn);
+  const [listPopular, setListPopular] = useState(listMostPopularEn);
+  const storage = JSON.parse(localStorage.getItem("token"));
+  const [titre, setTitre] = useState("Search Result :")
+  const [miniTitre, setMiniTitre] = useState("Search - page")
+
+  const linkBeautify = (link) => {
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    return newLink.toLowerCase()
+  };  
+
+  /* ------------------------------- pagination ------------------------------- */
+  const [itemOffset, setItemOffset] = useState(null);
+  const [currentArticles, setCurrentArticles] = useState();
+  const itemsPerPage = 12;
+  const handlerPageClick = (e) => {
+    const newOffset = (e.selected * itemsPerPage) % listSearch.length;
+    setItemOffset(newOffset);
+  };
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentArticles(listSearch.slice(itemOffset, endOffset));
+    if (storage.lang === "fr") {
+      setListRecent(listRecentArticlesFr);
+      setListPopular(listMostPopularFr);
+      setTitre("Resultat de : ")
+      setMiniTitre("Recherche - page")
+    }
+  }, [itemOffset, itemsPerPage, listSearch]);
+
+  const redirectHandler = (id, title) => {
+    router.push(`/article/${id}/${linkBeautify(title)}`);
+  };
+  
   return (
     <section className="mt-10 mx-2">
       {/* TOP */}
       <div className="flex justify-between items-center gap-1 lg:items-start">
         <div>
-          <HeaderCategory title="Search Result" style />
+          <HeaderCategory title={`${titre} ${searchTag}`} style />
           <p className="text-xs lg:text-sm font-thin tracking-wide">
-            Search - Page
+            {miniTitre}
           </p>
         </div>
         <div className="z-10 absolute right-5 md:static">
@@ -39,8 +87,7 @@ const search = ({ articleRecent, articlePopular }) => {
       <div className="mt-4 lg:flex gap-8 justify-between">
         <div className="w-full">
           <div className="flex justify-between items-center">
-            <h6 className="font-semibold">"Best Indoor" Results</h6>
-            <button onClick={() => setOrder(!order)}>
+            {/* <button onClick={() => setOrder(!order)}>
               {order ? (
                 <p className="flex items-center font-semibold gap-1">
                   Newest <ArrowDownIcon className="h-3 w-3" />
@@ -50,30 +97,34 @@ const search = ({ articleRecent, articlePopular }) => {
                   Older <ArrowUpIcon className="h-3 w-3" />
                 </p>
               )}
-            </button>
+            </button> */}
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-            {[1, 2, 3, 4, 5, 6, 8].map((item) => (
-              <div key={uuidv4()} className="group cursor-pointer flex flex-col bg-[#EFF2FB]  mb-2 rounded overflow-hidden lg:flex-row">
+            {currentArticles?.map((articleData) => (
+              <div onClick={() =>
+                redirectHandler(articleData.id, articleData.title)
+              } 
+              key={uuidv4()} className="group cursor-pointer flex flex-col bg-[#EFF2FB]  mb-2 rounded overflow-hidden lg:flex-row">
                 <Image
-                  src={PolitiqueArticleOne}
+                  src={`/uploads/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
                   className="h-[150px] object-cover md:w-full/2 md:h-full/2 lg:w-[250px] lg:h-full"
-                  alt="Article image blog"
+                  alt={articleData.title.substring(0, 50)}
+                  width={1200}
+                  height={575}
                 />
                 <div className="mx-2 lg:pt-5">
                   <Title style="text-base tracking-wide lg:text-xl ">
-                    The best indoor plants to create comfort at home
+                  {articleData.title}
                   </Title>
                   <DateAuteur
-                    date="JUL 06"
-                    auteur="Vinago"
+                    date={articleData.created_at}
+                    auteur={articleData.author}
                     style="text-secondary-500 py-1 "
                   />
                   <p className="text-sm text-secondary-700">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
-                    ad assumenda aut commodi consequatur distinctio est facere
-                    iste laborum magnam nisi officia omnis perspiciatis ratione,
-                    repellendus, sapiente soluta vero voluptatibus?
+                  {articleData.description.length > 255
+                      ? `${articleData.description.substring(0, 255)}...`
+                      : articleData.description}
                   </p>
                 </div>
               </div>
@@ -81,12 +132,19 @@ const search = ({ articleRecent, articlePopular }) => {
           </div>
 
           <h7 className="text-xl font-semibold text-center w-full">
-            PAGINATION
+          {listSearch.length > 12 && (
+              <Paginate
+                itemsPerPage={itemsPerPage}
+                handlerPage={handlerPageClick}
+                items={listSearch}
+              />
+            )}
           </h7>
         </div>
         <AsideRecentPopular
-          articleRecent={articleRecent}
-          articlePopular={articlePopular}
+           articleRecent={listRecent}
+           listPopular={listPopular}
+           hastagPage
         />
       </div>
     </section>
@@ -97,14 +155,71 @@ export default search;
 
 export async function getServerSideProps({query}) {
   
-  const dataAside = await import(`/data/thumbnail.json`);
-  const articleRecent = dataAside.ArticleRecentMain;
-  const articlePopular = dataAside.ArticlePopular;
+  const db = new MyDatabase()
+  let listSearch = []
+  let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
+  let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
+  let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+  let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+
+  if(!query.search || !query.lang){
+    return {
+      redirect: {
+        destination: "/"
+      }
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                        ALAINA NY RESULTAT RECHERCHE                        */
+  /* -------------------------------------------------------------------------- */
+
+    await db.searchArticle(query.search, query.lang).then(data => listSearch = data)
+    
+
+
+  /* -------------------------------------------------------------------------- */
+  /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
+  /* -------------------------------------------------------------------------- */
+
+  /* ----------------------------------- FR ----------------------------------- */
+
+  await db.getRecentArticle('fr').then(data => listRecentArticlesFr = data)
+
+  /* ----------------------------------- EN ----------------------------------- */
+
+  await db.getRecentArticle('en').then(data => listRecentArticlesEn = data)
+
+  /* -------------------------------------------------------------------------- */
+  /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+  /* -------------------------------------------------------------------------- */
+
+  /* ----------------------------------- FR ----------------------------------- */
+
+  await db.getMostPopular('fr').then(data => listMostPopularFr = data)
+
+  /* ----------------------------------- EN ----------------------------------- */
+
+  await db.getMostPopular('en').then(data => listMostPopularEn = data)
+  
 
   return {
     props: {
-      articleRecent,
-      articlePopular,
-    },
-  };
-}
+      searchTag: query.search,
+      listSearch,
+      listRecentArticlesEn: dataFilter(
+        listRecentArticlesEn,
+        "category_id",
+        3
+      ),
+      listRecentArticlesFr: dataFilter(
+        listRecentArticlesFr,
+        "category_id",
+        3
+      ),
+      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+    }
+    }
+  }
+
