@@ -9,7 +9,7 @@ import {v4 as uuidv4} from "uuid"
 import localStorage from "localStorage";
 import { ROOT_URL } from "@/env";
 
-const SecondaryMost = ({listCategories}) => {
+const SecondaryMost = ({listCategories, adsVertical}) => {
   const lang = JSON.parse(localStorage.getItem('token')).lang
   return (
     <div className="lg:w-[25%]">
@@ -28,15 +28,19 @@ const SecondaryMost = ({listCategories}) => {
         ))}
       </ul>
 
-      <div className="relative w-full h-[275px]">
-        <Hastag style="absolute top-1 z-10  right-1">ads</Hastag>
-        <Image
-          src={PubliciteTrois}
-          fill
-          className="object-cover"
-          alt="Publiciter"
-        />
-      </div>
+      {
+        adsVertical[0]&&(
+          <div className="relative w-full h-[275px]">
+            <Hastag style="absolute top-1 z-10  right-1">ads</Hastag>
+            <Image
+              src={`/uploads/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`}
+              fill
+              className="object-contain"
+              alt="Publiciter"
+            />
+          </div>
+        )
+      }
     </div>
   );
 };

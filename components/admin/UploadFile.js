@@ -1,11 +1,16 @@
- import React, { useRef, useState } from "react";
+ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { log } from "next/dist/server/typescript/utils";
 import {v4 as uuidv4} from "uuid";
 
-const UploadFile = ({onChangeFile, isMultiple}) => {
+const UploadFile = ({onChangeFile, isMultiple, ads, selectedMenu}) => {
   const [files, setFiles] = useState();
+  const [widthMin, setWidthMin] = useState("1000px")
+  const [widthMax, setWidthMax] = useState("1400px")
+  const [heightMin, setHeightMin] = useState("300px")
+  const [heightMax, setHeightMax] = useState("400px")
+
   const inputRef = useRef(null);
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -36,6 +41,22 @@ const UploadFile = ({onChangeFile, isMultiple}) => {
 
   }
 
+  useEffect(() => {
+    if(ads){
+     if(selectedMenu === "verticale"){
+        setWidthMin("300px")
+        setWidthMax("400px")
+        setHeightMin("600px")
+        setHeightMax("650px")
+     }else{
+      setWidthMin("1000px")
+      setWidthMax("1400px")
+      setHeightMin("300px")
+      setHeightMax("400px")
+     }
+    }
+  },[selectedMenu])
+
   return (
     <div
       className="flex flex-col"
@@ -64,10 +85,24 @@ const UploadFile = ({onChangeFile, isMultiple}) => {
               ></path>
             </svg>
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold">Click to upload</span> or drag and
-              drop
+              <span className="font-semibold">Cliquez pour télécharger</span> ou faites glisser
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">PNG, JPG</p>
+           {
+            ads?(
+              <>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Longeur: entre  
+                  <span className="font-semibold text-lg"> {widthMin}</span> et <span className="font-semibold text-lg"> {widthMax}</span>
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Hauteur: entre  
+                  <span className="font-semibold text-lg"> {heightMin}</span> et <span className="font-semibold text-lg"> {heightMax}</span>
+                  </p>
+              </>
+            ):(
+                 <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold text-lg">PNG, JPEG, MP4</span>
+                  </p>
+            )
+           }
           </div>
           <input
             multiple={isMultiple}

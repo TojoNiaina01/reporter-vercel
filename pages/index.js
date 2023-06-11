@@ -104,7 +104,7 @@ const Home = ({
       </div>}
       <Recent dataRecent={listRecent} />
       <Popular dataMostPopular={listMostPopular} />
-      <Most dataMostRead={listMostRead} listCategories={listCategories}/>
+      <Most dataMostRead={listMostRead} listCategories={listCategories} adsVertical={adsVertical}/>
       <NewLetter />
       {hot&&<Hotstaff dataHot={hot} />}
       {/* <TopOfWeek /> */}

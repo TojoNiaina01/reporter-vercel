@@ -16,6 +16,12 @@ const Hotstaff = ({ dataHot }) => {
   const lang = JSON.parse(localStorage.getItem("token")).lang;
   const [hastag, setHasTag] = useState();
 
+  const linkBeautify = (link) => {
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    return newLink.toLowerCase()
+  };  
+
+
   useEffect(() => {
     if (lang === "en") {
       setHasTag(dataHot.category_en);
@@ -63,7 +69,7 @@ const Hotstaff = ({ dataHot }) => {
               auteur={dataHot.author}
             />
 
-            <Link href="#" className="flex items-center gap-1 pt-3 lg:pt-6">
+            <Link href={`/article/${dataHot.id}/${linkBeautify(dataHot.title)}`} className="flex items-center gap-1 pt-3 lg:pt-6">
               <span className={`uppercase tracking-wide ${jost.className}`}>
                 Explorer
               </span>

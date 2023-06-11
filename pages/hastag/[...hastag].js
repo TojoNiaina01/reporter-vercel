@@ -24,6 +24,8 @@ const Hastag = ({
   listRecentArticlesFr,
   listArticles,
   hastagData,
+  adsHorizontale,
+  adsVertical
 }) => {
   const router = useRouter();
   const [order, setOrder] = useState(false);
@@ -132,6 +134,7 @@ const Hastag = ({
         <AsideRecentPopular
           articleRecent={listRecent}
           listPopular={listPopular}
+          adsVertical={adsVertical}
           hastagPage
         />
       </div>
@@ -150,6 +153,8 @@ export async function getStaticProps({ params }) {
   let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
   let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
   let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+  let adsHorizontale = []
+  let adsVertical = []
 
   /* -------------------------------------------------------------------------- */
   /*                  ALAINA NY LISTE NY ARTICLE IZAY MANANA #                  */
@@ -187,6 +192,19 @@ export async function getStaticProps({ params }) {
 
   await db.getMostPopular('en').then(data => listMostPopularEn = data)
 
+    /* -------------------------------------------------------------------------- */
+  /*                               ALAINA ADS                                   */
+  /* -------------------------------------------------------------------------- */
+
+  /* ----------------------------------- horizontale ----------------------------------- */
+
+  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
+
+  /* ----------------------------------- EN ----------------------------------- */
+
+  await db.getAdsByDate("verticale").then(data => adsVertical = data)
+
   return {
     props: {
       listArticles: listArticles,
@@ -203,6 +221,8 @@ export async function getStaticProps({ params }) {
       ),
       listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
       listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+      adsHorizontale: adsHorizontale,
+      adsVertical: adsVertical
     },
   };
 }

@@ -23,7 +23,9 @@ const search = ({
   listRecentArticlesEn,
   listRecentArticlesFr,
   listSearch,
-  searchTag
+  searchTag,
+  adsHorizontale,
+  adsVertical
 }) => {
   const router = useRouter();
   const [order, setOrder] = useState(false);
@@ -144,6 +146,8 @@ const search = ({
         <AsideRecentPopular
            articleRecent={listRecent}
            listPopular={listPopular}
+           adsVertical={adsVertical}
+           
            hastagPage
         />
       </div>
@@ -161,6 +165,8 @@ export async function getServerSideProps({query}) {
   let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
   let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
   let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+  let adsHorizontale = []
+  let adsVertical = []
 
   if(!query.search || !query.lang){
     return {
@@ -173,8 +179,9 @@ export async function getServerSideProps({query}) {
   /* -------------------------------------------------------------------------- */
   /*                        ALAINA NY RESULTAT RECHERCHE                        */
   /* -------------------------------------------------------------------------- */
-
-    await db.searchArticle(query.search, query.lang).then(data => listSearch = data)
+    const resSearch =  query.search.replace(/[%20]/g, " ");
+    console.log("resulta == ", resSearch)
+    await db.searchArticle(resSearch, query.lang).then(data => listSearch = data)
     
 
 
@@ -201,6 +208,19 @@ export async function getServerSideProps({query}) {
   /* ----------------------------------- EN ----------------------------------- */
 
   await db.getMostPopular('en').then(data => listMostPopularEn = data)
+
+  /* -------------------------------------------------------------------------- */
+  /*                               ALAINA ADS                                   */
+  /* -------------------------------------------------------------------------- */
+
+  /* ----------------------------------- horizontale ----------------------------------- */
+
+  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
+
+  /* ----------------------------------- EN ----------------------------------- */
+
+  await db.getAdsByDate("verticale").then(data => adsVertical = data)
   
 
   return {
@@ -219,6 +239,8 @@ export async function getServerSideProps({query}) {
       ),
       listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
       listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+      adsHorizontale: adsHorizontale,
+      adsVertical: adsVertical
     }
     }
   }

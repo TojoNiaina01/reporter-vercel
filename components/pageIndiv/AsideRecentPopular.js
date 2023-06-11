@@ -13,7 +13,7 @@ import localStorage from "localStorage";
 import moment from "moment";
 import { useRouter } from "next/router";
 
-const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listHastag }) => {
+const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listHastag, adsVertical }) => {
   const router = useRouter()
   const [recentTitle, setRecentTitle] = useState("Recent Articles")
   const [followTitle, setFollowTitle] = useState("Follow Us")
@@ -98,10 +98,14 @@ const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listH
       </div>
       )
       }
-      <div className="relative w-full h-[437px] mt-5 md:h-[752px] lg:h-[300px] lg:order-3">
-        <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
-        <Image src={Publicite} fill className="object-cover" alt="Publicite" />
-      </div>
+      {
+        adsVertical[0]&&(
+          <div className="relative w-full h-[437px] mt-5 md:h-[752px] lg:h-[300px] lg:order-3">
+                <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
+                <Image src={`/uploads/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`} fill className="object-cover" alt="Publicite" />
+          </div>
+        )
+      }
       {/*Follow us*/}
       <div className="mt-10 hidden lg:block">
         <HeaderCategory title={followTitle} />

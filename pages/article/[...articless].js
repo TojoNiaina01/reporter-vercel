@@ -35,6 +35,8 @@ const Articless = ({
   listMostPopularEn,
   listMostPopularFr,
   listHastag,
+  adsHorizontale,
+  adsVertical
 }) => {
   const router = useRouter();
   const [isMuted, setIsMuted] = useState(true);
@@ -52,7 +54,7 @@ const Articless = ({
     return newLink.toLowerCase()
   };  
 
-
+console.log("list hastag == ", listHastag)
 
   useEffect(() => {
     setBody(parse(articleData.body)); // tsy maintsy parse-na ilay body satria HTML type string
@@ -213,17 +215,21 @@ const Articless = ({
 
             <div className="mt-5 flex items-center gap-4">
               <HeaderCategory title="Tags :" />
-              <ul className="flex gap-4 ">
-                {listHastag?.map((hastag) => (
-                  <li
-                    key={uuidv4()}
-                    className="tagBg cursor-pointer rounded border-[1px] border-gray-300 px-2 py-1 text-xs font-bold uppercase"
-                    onClick={() => redirectHandler(hastag.id, hastag.name)}
-                  >
-                    {hastag.name}
-                  </li>
+              {
+                listHastag[0].id&&(
+                  <ul className="flex gap-4 ">
+                    {listHastag?.map((hastag) => (
+                      <li
+                        key={uuidv4()}
+                        className="tagBg cursor-pointer rounded border-[1px] border-gray-300 px-2 py-1 text-xs font-bold uppercase"
+                        onClick={() => redirectHandler(hastag.id, hastag.name)}
+                      >
+                        {hastag.name}
+                      </li>
                 ))}
               </ul>
+                )
+              }
             </div>
             {/* <div className="bg-main-400 flex gap-6 items-center my-6 rounded">
               <div className="relative w-[200px] h-[180px] rounded-r-full overflow-hidden">
@@ -252,18 +258,23 @@ const Articless = ({
           <AsideRecentPopular
             articleRecent={listRecent}
             listPopular={listPopular}
+            adsVertical={adsVertical}
           />
         </div>
       </section>
-      <div className="relative hidden h-[250px] w-full lg:block">
-        <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
-        <Image
-          src={PubliciteDeux}
-          fill
-          className="object-cover"
-          alt="publicite"
-        />
+      {
+        adsHorizontale&&(
+          <div className="relative hidden h-[250px] w-full lg:block">
+            <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
+            <Image
+              src={`/uploads/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
+              fill
+              className="object-cover"
+              alt="publicite"
+            />
       </div>
+        )
+      }
     </>
   );
 };
@@ -280,6 +291,8 @@ export async function getStaticProps({ params }) {
   let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
   let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
   let listHastag = [];
+  let adsHorizontale = []
+  let adsVertical = []
 
   /* -------------------------------------------------------------------------- */
   /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
@@ -321,6 +334,19 @@ export async function getStaticProps({ params }) {
 
   await db.getMostPopular("en").then(data => listMostPopularEn = data)
 
+   /* -------------------------------------------------------------------------- */
+  /*                               ALAINA ADS                                   */
+  /* -------------------------------------------------------------------------- */
+
+  /* ----------------------------------- horizontale ----------------------------------- */
+
+  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
+
+  /* ----------------------------------- EN ----------------------------------- */
+
+  await db.getAdsByDate("verticale").then(data => adsVertical = data)
+
   return {
     props: {
       articleData: articleData[0],
@@ -337,6 +363,8 @@ export async function getStaticProps({ params }) {
       listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
       listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
       listHastag: listHastag,
+      adsHorizontale: adsHorizontale,
+      adsVertical: adsVertical
     },
   };
 }

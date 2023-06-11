@@ -18,7 +18,7 @@ const Recent = ({dataRecent}) => {
       <div className="flex flex-col gap-4 lg:flex-row lg:pt-2">
         {/* Left Panel */}
         <div className="space-y-7 lg:w-[80%] lg:space-y-8">
-          {dataRecent.slice(0,3)?.map(
+          {dataRecent?.slice(0,3)?.map(
             (article) => (
               <MainArticle key={uuidv4()} articleData={article}/>
             )
@@ -27,7 +27,7 @@ const Recent = ({dataRecent}) => {
 
         {/*  Right Panel*/}
         <div className=" flex overflow-x-scroll gap-4 pt-5 scrollbar-hide lg:flex-col lg:pt-0 lg:gap-6">
-          {dataRecent.slice(3,6)?.map((article) => (
+          {dataRecent?.slice(3,6)?.map((article) => (
             <SecondaryArticle key={uuidv4()} articleData={article}/>
           ))} 
 

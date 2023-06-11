@@ -6,7 +6,7 @@ import SecondaryMost from "@/components/Most/SecondaryMost";
 import useMediaQuery from "@/hook/useMediaQuery";
 import {v4 as uuidv4} from "uuid";
 
-const Most = ({dataMostRead, listCategories}) => {
+const Most = ({dataMostRead, listCategories, adsVertical}) => {
   const { ArticleMostMain } = useContext(ArticlesContext);
   const isAboveScreen = useMediaQuery("(min-width: 1024px)");
   return (
@@ -20,7 +20,7 @@ const Most = ({dataMostRead, listCategories}) => {
           ))}
         </div>
       </div>
-      {isAboveScreen && <SecondaryMost listCategories={listCategories}/>}
+      {isAboveScreen && <SecondaryMost listCategories={listCategories} adsVertical={adsVertical}/>}
     </section>
   );
 };

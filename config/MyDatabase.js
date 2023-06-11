@@ -240,7 +240,8 @@ class MyDatabase {
                             
                             )
                         .whereILike("a.title", `%${tag}%`)
-                        .andWhereILike("a.description", `%${tag}%`)
+                        .orWhereILike("a.description", `%${tag}%`)
+                        .orWhereILike("a.body", `%${tag}%`)
                         .where('a.lang', lang)
                         .orderBy('a.id', 'desc')
         

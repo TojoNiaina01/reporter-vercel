@@ -7,10 +7,22 @@ import Hastag from "@/components/Hastag";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import localStorage from "localStorage";
+import { useRouter } from "next/navigation";
 
 const MainMost = ({articleData}) => {
   const lang = JSON.parse(localStorage.getItem('token')).lang
   const [hastag, setHasTag] = useState()
+
+  const router = useRouter()
+
+  const linkBeautify = (link) => {
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    return newLink.toLowerCase()
+  };  
+  
+  const redirectHandler = (id, title) => {
+    router.push(`/article/${id}/${linkBeautify(title)}`)
+  }
 
   useEffect(() => {
     if(lang === 'en'){
@@ -22,6 +34,7 @@ const MainMost = ({articleData}) => {
 
   return (
     <div
+      onClick={() => redirectHandler(articleData.id, articleData.title)}
       key={uuidv4()}
       className="group relative border-[1px] border-gray-300 rounded cursor-pointer"
     >

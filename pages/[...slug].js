@@ -26,6 +26,8 @@ const ArticlePrincipale = ({
   listMostPopularFr,
   listHastagEn,
   listHastagFr,
+  adsHorizontale,
+  adsVertical
 }) => {
   const [listRecent, setListRecent] = useState(listRecentArticlesEn);
   const [listPopular, setListPopular] = useState(listMostPopularEn);
@@ -100,7 +102,7 @@ const ArticlePrincipale = ({
         {/*Main [...article] + aside */}
         <div className="mt-10 justify-between gap-8 lg:flex">
           {/*Main ariticles*/}
-          <div className="">
+          <div className="w-full">
             <div className="grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-4 lg:grid-cols-1">
               {currentArticles?.map((article) => (
                 <article key={uuidv4()} className="group cursor-pointer">
@@ -153,6 +155,7 @@ const ArticlePrincipale = ({
             articleRecent={listRecent}
             listPopular={listPopular}
             listHastag={listHastag}
+            adsVertical={adsVertical}
             name={
               listArticles.length > 0
                 ? lang && listArticles[0][`category_${lang}`]
@@ -191,6 +194,8 @@ export async function getStaticProps({ params }) {
   let articleData = [];
   let listHastagFr = [];
   let listHastagEn = [];
+  let adsHorizontale = []
+  let adsVertical = []
 
   /* -------------------------------------------------------------------------- */
   /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
@@ -247,6 +252,20 @@ export async function getStaticProps({ params }) {
   await db.getHastagByCategory(categoryID, "en").then(data => listHastagEn = data)
 
 
+    /* -------------------------------------------------------------------------- */
+  /*                               ALAINA ADS                                   */
+  /* -------------------------------------------------------------------------- */
+
+  /* ----------------------------------- horizontale ----------------------------------- */
+
+  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
+
+  /* ----------------------------------- EN ----------------------------------- */
+
+  await db.getAdsByDate("verticale").then(data => adsVertical = data)
+
+
   return {
     props: {
       listRecentArticlesEn: dataFilter(
@@ -265,6 +284,8 @@ export async function getStaticProps({ params }) {
       listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
       listHastagEn: listHastagEn,
       listHastagFr: listHastagFr,
+      adsHorizontale: adsHorizontale,
+      adsVertical: adsVertical
     },
   };
 }

@@ -13,6 +13,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { ROOT_URL } from "@/env";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
 import { useRouter } from "next/navigation";
+
+
+const adsFilter = (data, format) => {
+  return data.filter(ads => ads.format === format)
+}
 const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
   const router = useRouter()
   const [startDate, setStartDate] = useState(new Date());
@@ -21,12 +26,14 @@ const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
   const [title, setTitle] = useState()
   const [link, setLink] = useState()
   const [isLoading, setIsLoading] = useState(false)
+  const [listAdsPerFormat, setListAdsPerFormat] = useState(adsFilter(listAds, "horizontale"))
+
 
 
   const disableDates = useMemo(() => {
       let dates = []
 
-      listAds.forEach((ads) => {
+      listAdsPerFormat.forEach((ads) => {
         const range = eachDayOfInterval({
           start: new Date(ads.date_start),
           end: new Date(ads.date_end)
@@ -37,7 +44,7 @@ const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
       })
       console.log("date == ", dates)
       return dates
-  },[listAds])
+  },[listAdsPerFormat])
 
   const getTitle = (val) => {
     setTitle(val)
@@ -61,6 +68,11 @@ const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
     setEndDate(ranges.selection.endDate);
   };
 
+  const formatHandler = (val) => {
+    setSelectedMenu(val)
+    setListAdsPerFormat(adsFilter(listAds, val.name))
+  }
+
   const addAdsHandler = async(e) => {
       e.preventDefault()
       const image = new Image()
@@ -79,11 +91,14 @@ const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
       if(!isEmpty){
 
          if(files){
+
+          if(startDate !== endDate){
+            
           let formData1 = new FormData()
           formData1.append('file', files[0])
 
               image.src = URL.createObjectURL(files[0])
-             await image.addEventListener('load', () => {
+             image.addEventListener('load', () => {
                 widthImg = image.naturalWidth;
                 heightImg = image.naturalHeight;
 
@@ -204,6 +219,10 @@ const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
 
             })
 
+          }else{
+            toast.error("Deux jours minimum")
+          setIsLoading(false)
+          }
           
 
          }else{
@@ -243,7 +262,7 @@ const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
           </div>
 
           <div className="flex flex-col gap-6 flex-1">
-            <Listbox value={selectedMenu} onChange={setSelectedMenu}>
+            <Listbox value={selectedMenu} onChange={formatHandler}>
               <div className="flex flex-col  relative">
                 <Listbox.Button className="text-main-500 flex justify-between gap-4 items-center border rounded-full px-4 py-2 border-main-500">
                   <p className="">{selectedMenu.name}</p>
@@ -263,7 +282,7 @@ const FormAds = ({ submitBtn, setModalShow, header, listAds }) => {
               </div>
             </Listbox>
             {/* Upload file */}
-            <UploadFile onChangeFile={setFiles} isMultiple={false}/>
+            <UploadFile onChangeFile={setFiles} isMultiple={false} ads selectedMenu={selectedMenu.name}/>
           </div>
         </div>
         <div className="flex gap-12 mt-8">
