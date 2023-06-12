@@ -6,8 +6,9 @@ import { articleAction } from "@/context/allAction";
 import { getTest } from "@/config/storage";
 import { ROOT_URL } from "@/env";
 import { getCookie } from "cookies-next";
+import MyDatabase from "@/config/MyDatabase";
 
-const ListeArticle = ({categories, listArticles}) => {
+const ListeArticle = ({categories, listArticles, listFollowers}) => {
 console.log(getTest)
   const [state, dispatch] = useReducer(articleAction, listArticles)
  
@@ -63,7 +64,7 @@ console.log(getTest)
   return (
     <listCategories.Provider value={categories}>
       <listArticlesContext.Provider value={{state, dispatch}}>
-        <Article header="Listes Articles." tabhead={tabsHead} data={data} listArticles={state} dispatchArticle={dispatch} listCategories={categories} listUsers={[]} />;
+        <Article header="Listes Articles." tabhead={tabsHead} data={data} listArticles={state} dispatchArticle={dispatch} listCategories={categories} listUsers={[]} listFollowers={listFollowers}/>;
       </listArticlesContext.Provider>
     </listCategories.Provider>
   )
@@ -82,11 +83,24 @@ export async function getServerSideProps({req, res}){
     }
   }
 
+  const db = new MyDatabase()
+
   const baseUrl = process.env.ROOT_URL
   const param = {query: 'getFullCategories', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
   const paramArticle = {query: 'getFullArticles', param: false}// query: ilay anaran'ilay méthode ao @ MyDatabase
   let listCategories = []
   let listArticles = []
+  let listFollowers = []
+
+  /* -------------------------------------------------------------------------- */
+  /*                          ALAINA NY LIST FOLLOWERS                          */
+  /* -------------------------------------------------------------------------- */
+
+  await db.getListFollowers().then(data => listFollowers = data)
+
+  /* -------------------------- ******************** -------------------------- */
+
+
     await fetch(`${baseUrl}/api/knexApi`, {
       method: "POST",
       body: JSON.stringify(paramArticle),
@@ -107,7 +121,8 @@ export async function getServerSideProps({req, res}){
       return {
         props: {
           categories: listCategories.result,
-          listArticles: listArticles.result
+          listArticles: listArticles.result,
+          listFollowers
         }
       }
   }

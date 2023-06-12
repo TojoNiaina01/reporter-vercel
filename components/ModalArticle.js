@@ -4,7 +4,7 @@ import Image from "next/image";
 import FormArticle from "@/components/admin/FormArticle";
 import { listCategories, listArticlesContext } from "@/context/allContext";
 
-const ModalArticle = ({ setModalShow, articleData }) => {
+const ModalArticle = ({ setModalShow, articleData, listFollowers }) => {
 
   const categories = useContext(listCategories)
   const {state, dispatch} = useContext(listArticlesContext)
@@ -25,6 +25,7 @@ const ModalArticle = ({ setModalShow, articleData }) => {
           listCategories={categories}
           articleData={state.find(item => item.id === articleData.id)}
           dispatchArticle={dispatch}
+          listFollowers={listFollowers}
           pushBtn
         />
       </div>

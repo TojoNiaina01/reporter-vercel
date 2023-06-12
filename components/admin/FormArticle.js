@@ -9,6 +9,7 @@ import {
   FireIcon,
   HomeIcon,
   XMarkIcon,
+  EnvelopeIcon
 } from "@heroicons/react/24/outline";
 import { MenuFR } from "@/constant/constant";
 import { Listbox } from "@headlessui/react";
@@ -18,6 +19,13 @@ import RichText from "@/components/RichText";
 import { ROOT_URL } from "@/env";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import mail from "@/config/mailer/mail";
+
+const getListFollowers = (data) => {
+  return data.map(follower => {
+      return follower.email
+  })
+}
 
 const FormArticle = ({
   header,
@@ -27,7 +35,8 @@ const FormArticle = ({
   pushBtn,
   listCategories,
   articleData,
-  dispatchArticle
+  dispatchArticle,
+  listFollowers
 }) => {
   const lang = [
     {tag: "fr", langue: "français"},
@@ -50,6 +59,14 @@ const FormArticle = ({
   const [status, setStatus] = useState(false)
   const newArticleData = articleData
   var richtextVal = ""
+  const listFollowersTab = getListFollowers(listFollowers)
+  const [isMailing, setIsMailing] = useState(false)
+
+  const linkBeautify = (link) => {
+    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+      return newLink.toLowerCase()
+  };
+  
   const richTextHandler = (val) => {
     console.log("tap = ", val)
   }
@@ -68,6 +85,7 @@ const FormArticle = ({
     setHastag(val)
   }
 
+  console.log("list follower == ", getListFollowers(listFollowers))
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -700,6 +718,69 @@ const FormArticle = ({
   }
 
 
+  /* -------------------------------------------------------------------------- */
+  /*                          ENVOIE EMAIL TO FOLLOWERS                         */
+  /* -------------------------------------------------------------------------- */
+  console.log("mail === ",mail({
+    title: articleData.title,
+    description: articleData.description,
+    //labelBtn: "Visiter",
+    imgSrc: "https://images.axios.com/2PBI0VSjjFtyFv2aI8i13mvH2uc=/0x215:3286x2063/1920x1080/2022/11/19/1668875430297.jpg",
+    link: `${ROOT_URL}/article/${articleData.id}/${linkBeautify(articleData.title)}`
+  }))
+  const sendMailing = () => {
+
+    setIsMailing(true)
+    console.log("to = ", listFollowers)
+    console.log("title = ", articleData.title)
+    console.log("description = ", articleData.description)
+   try {
+     
+    if(listFollowersTab.length){
+      const theMail = {
+        to: listFollowersTab,
+        subject: "test subject",
+
+        message: mail({
+          title: articleData.title,
+          description: articleData.description,
+          //labelBtn: "Visiter",
+          imgSrc: `${ROOT_URL}/_next/image?url=%2Fuploads%2Fimages%2F${articleData.image[0].image_name}.${articleData.image[0].image_extension}&w=1920&q=75`,
+          link: `${ROOT_URL}/article/${articleData.id}/${linkBeautify(articleData.title)}`,
+          logoSrc: `${ROOT_URL}/_next/image?url=%2Fassets%2Fimg%2FLogo002.png&w=1920&q=75`,
+          bgSrc: `${ROOT_URL}/_next/image?url=%2Fassets%2Fimg%2FHeader-bg.png&w=1920&q=75`,
+          linkReporter: ROOT_URL
+        })
+      }
+
+      
+  
+      fetch(`${ROOT_URL}/api/mailing`, {
+        method: "POST",
+        body: JSON.stringify(theMail),
+        headers: {
+          "Content-type" : "application/json"
+        } 
+      }).then(res => res.json())
+      .then((data) => {
+        console.log(data)
+        toast.success("Email envoyer avec succès")
+        setIsMailing(false)
+      })
+
+    }else{
+      toast.error("Il n'y a pas d'abonner pour le moment")
+      setIsMailing(false)
+    }
+   
+   } catch (error) {
+    toast.error("Une erreur c'est produit")
+    setIsMailing(false)
+    console.log("erreur : ", error)
+   }
+  }
+
+
   const slideHandler = () => {
     const param = {query: 'checkSlide', param: [true, articleData.lang]}
     fetch(`${ROOT_URL}/api/knexApi`, {
@@ -855,6 +936,15 @@ const FormArticle = ({
                   <button type="button" className={`flex items-center ${hotStyle} gap-2 text-white p-2 rounded-lg active:scale-95 transition`} onClick={hotHandler}>
                     <FireIcon className="h-5" />
                     <span>Hot staff</span>
+                  </button>
+                  <button type="button" className={`flex items-center ${isMailing ? 'bg-gray-300':'bg-[#64645A]'} gap-2 text-white p-2 rounded-lg active:scale-95 transition`} onClick={sendMailing}>
+                  {isMailing ? (<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>) : <EnvelopeIcon className="h-5" />}
+                   
+                    
+                    <span>Envoyer aux abonnés</span>
                   </button>
                 </div>
               )}

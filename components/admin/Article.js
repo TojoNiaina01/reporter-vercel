@@ -34,7 +34,7 @@ const searchArticle = (data, toSearch) => {
   return data.filter(article => checkSearch.test(article.title))
 }
 
-const Article = ({ header, tabhead, data, user, listArticles, listCategories, dispatchArticle, listUsers }) => {
+const Article = ({ header, tabhead, data, user, listArticles, listCategories, dispatchArticle, listUsers, listFollowers }) => {
   const lang = [
     {tag: "fr", langue: "français"},
     {tag: "en", langue: "Anglais"},
@@ -429,7 +429,7 @@ const deleteUserHandler = (userID, email) => {
         </div>
       </div>
 
-      {modalShow && <ModalArticle setModalShow={setModalShow} articleData={articleData} />}
+      {modalShow && <ModalArticle setModalShow={setModalShow} articleData={articleData} listFollowers={listFollowers}/>}
       {modalDeleteConfirm && (
         <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
       )}

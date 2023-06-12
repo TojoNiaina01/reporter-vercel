@@ -1121,6 +1121,23 @@ class MyDatabase {
 
         return id[0]
      }
+
+     
+    /**========================================================================
+     **                            MAILING
+     * @getListFollowers           : récupérer l'ads encore valide
+     *========================================================================**/
+
+     async getListFollowers(){
+        let res =  await knex('followers')
+                        .select('*')
+                        
+                if(res){
+                return JSON.parse(JSON.stringify(res))
+                }else{
+                return null
+                }
+     }
 }
 
 export default MyDatabase;

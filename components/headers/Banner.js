@@ -47,7 +47,7 @@ const Banner = ({dataSlide, adsVertical}) => {
       </div>
 
       {
-        adsVertical[0]&&<div className="hidden lg:block relative flex-grow h-[450px] 2xl:h-[600px] cursor-pointer max-w-sm bg-black">
+        adsVertical[0]&&<div className="hidden lg:block relative flex-grow h-[450px] 2xl:h-[600px] cursor-pointer max-w-sm">
         <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
         <Image
           src={`/uploads/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`}
