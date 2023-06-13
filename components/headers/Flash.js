@@ -22,7 +22,7 @@ const Flash = ({listFlash}) => {
   };
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?%';:,\s\u2019]/g, "-");
       return newLink.toLowerCase()
   };
   

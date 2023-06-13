@@ -14,7 +14,7 @@ const Slider = ({ dataSlide }) => {
   const [hastag, setHasTag] = useState();
   const [formatedDate, setFormatedDate] = useState();
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?%';:,\s\u2019]/g, "-");
     return newLink.toLowerCase();
   };
   const [btnLabel, setBtnLabel] = useState("");

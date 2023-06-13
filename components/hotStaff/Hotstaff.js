@@ -17,7 +17,7 @@ const Hotstaff = ({ dataHot }) => {
   const [hastag, setHasTag] = useState();
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?%';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };  
 

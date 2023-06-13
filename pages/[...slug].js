@@ -16,6 +16,21 @@ import Paginate from "@/components/Paginate";
 import axios from "axios";
 import { basePath } from "@/next.config";
 import MyDatabase from "@/config/MyDatabase";
+import { ROOT_URL } from "@/env";
+import path from "path";
+
+const linkBeautify = (link) => {
+  const newLink = link.replace(/[?'%;:,\s\u2019]/g, "-");
+  return newLink.toLowerCase()
+};
+
+const checkLink = (data, id, name) => {
+  const checkID = data.filter(category => category.id === id)
+  const checkTitle = data.filter(category => linkBeautify(category.lang) === name.toLowerCase())
+  const logic = (checkID.length && checkTitle.length) ? true : false
+
+  return logic
+}
 
 const ArticlePrincipale = ({
   listArticlesByCategoriesEn,
@@ -27,7 +42,8 @@ const ArticlePrincipale = ({
   listHastagEn,
   listHastagFr,
   adsHorizontale,
-  adsVertical
+  adsVertical,
+  pathRacing
 }) => {
   const [listRecent, setListRecent] = useState(listRecentArticlesEn);
   const [listPopular, setListPopular] = useState(listMostPopularEn);
@@ -38,7 +54,7 @@ const ArticlePrincipale = ({
   const [currentArticles, setCurrentArticles] = useState();
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?%';:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };
 
@@ -87,7 +103,7 @@ const ArticlePrincipale = ({
               <MagnifyingGlassIcon className="absolute inset-y-0 my-auto h-8 w-12 border-r  border-transparent stroke-secondary-500 px-3.5 peer-focus:border-secondary-400 peer-focus:stroke-secondary-500" />
             </form>
           </div> */}
-        </div>
+        </div >
         {/* Tag top article */}
         <ul className="flex gap-4 overflow-scroll scrollbar-hide pt-4">
           {listHastag?.map((tag) => (
@@ -179,167 +195,164 @@ const ArticlePrincipale = ({
 
 export default ArticlePrincipale;
 
-export async function getStaticProps({ params }) {
+
+export async function getServerSideProps(context){
+  const linkTab = context.query.slug
+  const categoryID = parseInt(linkTab[0])
+  const name = linkTab[1]
   const db = new MyDatabase()
-  const data = await import(`/data/articles.json`);
-  const dataAside = await import(`/data/thumbnail.json`);
-  const articlePopular = dataAside.ArticlePopular;
-  const categoryID = parseInt(params.slug[0]);
-  let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
-  let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
-  let listArticlesByCategoriesEn = []; // asina ny liste ny article par category en (6 farany)
-  let listArticlesByCategoriesFr = []; // asina ny liste ny article par category fr (6 farany)
-  let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-  let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-  let articleData = [];
-  let listHastagFr = [];
-  let listHastagEn = [];
-  let adsHorizontale = []
-  let adsVertical = []
-
-  /* -------------------------------------------------------------------------- */
-  /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
-  /* -------------------------------------------------------------------------- */
-
-  /* ----------------------------------- FR ----------------------------------- */
-
-  await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
-
-
-  /* ----------------------------------- EN ----------------------------------- */
-
-  await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
-
-
-  /* -------------------------------------------------------------------------- */
-  /*                      ALAINA NY LISTE NY ARTICLE PAR CATEGORIE                   */
-  /* -------------------------------------------------------------------------- */
-
-  /* ----------------------------------- FR ----------------------------------- */
-
-  await db.getArticleByCategoryLang(categoryID, "fr").then(data => listArticlesByCategoriesFr = data)
-
-
-  /* ----------------------------------- EN ----------------------------------- */
-
-  await db.getArticleByCategoryLang(categoryID, "en").then(data => listArticlesByCategoriesEn = data)
   
+  let listCategoriesFr = []
+  let listCategoriesEn = []
+  let listFullCategories = []
+
+  const pathRacing = path.join(process.cwd())
+
+  console.log("path == ", pathRacing)
+
+  await db.getFullCategories().then(category => listFullCategories = category)
+  listCategoriesEn = listFullCategories.map(category => {
+    return {id: category.id, lang: category.en}
+  })
+  listCategoriesFr = listFullCategories.map(category => {
+    return {id: category.id, lang: category.fr}
+  })
+
+  listFullCategories = [...listCategoriesEn, ...listCategoriesFr]
 
   /* -------------------------------------------------------------------------- */
-  /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+  /*                                 CHECK LIEN                                 */
   /* -------------------------------------------------------------------------- */
 
-  /* ----------------------------------- FR ----------------------------------- */
-
-  await db.getMostPopular("fr").then(data => listMostPopularFr = data)
-
-
-  /* ----------------------------------- EN ----------------------------------- */
-
-  await db.getMostPopular("en").then(data => listMostPopularEn = data)
-
-  /* -------------------------------------------------------------------------- */
-  /*                   ALAINA NY LISTE NY HASTAG PAR CATEGORIES                  */
-  /* -------------------------------------------------------------------------- */
-
-  /* ----------------------------------- FR ----------------------------------- */
-
-  await db.getHastagByCategory(categoryID, "fr").then(data => listHastagFr = data)
-
-
-  /* ----------------------------------- EN ----------------------------------- */
-
-  await db.getHastagByCategory(categoryID, "en").then(data => listHastagEn = data)
-
-
+  
     /* -------------------------------------------------------------------------- */
-  /*                               ALAINA ADS                                   */
-  /* -------------------------------------------------------------------------- */
+    /*        ALAINA NY LISTE NY HASTAG REHETRA MBA I-CHECKENA LIEN MIDITRA       */
+    /* -------------------------------------------------------------------------- */
 
-  /* ----------------------------------- horizontale ----------------------------------- */
+    if(!isNaN(categoryID) && name && linkTab.length === 2){ // vérifiena alo oe type nombre ve
+      if(checkLink(listFullCategories, categoryID, name.toLowerCase())){
+          
 
-  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+        /* ------------------------- *********************** ------------------------ */
+        /* -------------------------------------------------------------------------- */
+        /*                            ALAINA DAHOLO NY DATA                           */
+        /* -------------------------------------------------------------------------- */
+        /* ----------------------- *************************** ---------------------- */
+
+        let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
+        let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
+        let listArticlesByCategoriesEn = []; // asina ny liste ny article par category en (6 farany)
+        let listArticlesByCategoriesFr = []; // asina ny liste ny article par category fr (6 farany)
+        let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+        let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+        let articleData = [];
+        let listHastagFr = [];
+        let listHastagEn = [];
+        let adsHorizontale = []
+        let adsVertical = []
+      
+        /* -------------------------------------------------------------------------- */
+        /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- FR ----------------------------------- */
+      
+        await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
+      
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
+      
+      
+        /* -------------------------------------------------------------------------- */
+        /*                      ALAINA NY LISTE NY ARTICLE PAR CATEGORIE                   */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- FR ----------------------------------- */
+      
+        await db.getArticleByCategoryLang(categoryID, "fr").then(data => listArticlesByCategoriesFr = data)
+      
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getArticleByCategoryLang(categoryID, "en").then(data => listArticlesByCategoriesEn = data)
+        
+      
+        /* -------------------------------------------------------------------------- */
+        /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- FR ----------------------------------- */
+      
+        await db.getMostPopular("fr").then(data => listMostPopularFr = data)
+      
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getMostPopular("en").then(data => listMostPopularEn = data)
+      
+        /* -------------------------------------------------------------------------- */
+        /*                   ALAINA NY LISTE NY HASTAG PAR CATEGORIES                  */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- FR ----------------------------------- */
+      
+        await db.getHastagByCategory(categoryID, "fr").then(data => listHastagFr = data)
+      
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getHastagByCategory(categoryID, "en").then(data => listHastagEn = data)
+      
+      
+          /* -------------------------------------------------------------------------- */
+        /*                               ALAINA ADS                                   */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- horizontale ----------------------------------- */
+      
+        await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+      
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getAdsByDate("verticale").then(data => adsVertical = data)
+      
+      
+        return {
+          props: {
+            listRecentArticlesEn: dataFilter(
+              listRecentArticlesEn,
+              "category_id",
+              3
+            ),
+            listRecentArticlesFr: dataFilter(
+              listRecentArticlesFr,
+              "category_id",
+              3
+            ),
+            listArticlesByCategoriesEn: listArticlesByCategoriesEn,
+            listArticlesByCategoriesFr: listArticlesByCategoriesFr,
+            listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+            listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+            listHastagEn: listHastagEn,
+            listHastagFr: listHastagFr,
+            adsHorizontale: adsHorizontale,
+            adsVertical: adsVertical,
+            pathRacing
+          },
+        };
 
 
-  /* ----------------------------------- EN ----------------------------------- */
-
-  await db.getAdsByDate("verticale").then(data => adsVertical = data)
+      }
+    }
 
 
   return {
-    props: {
-      listRecentArticlesEn: dataFilter(
-        listRecentArticlesEn,
-        "category_id",
-        3
-      ),
-      listRecentArticlesFr: dataFilter(
-        listRecentArticlesFr,
-        "category_id",
-        3
-      ),
-      listArticlesByCategoriesEn: listArticlesByCategoriesEn,
-      listArticlesByCategoriesFr: listArticlesByCategoriesFr,
-      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
-      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
-      listHastagEn: listHastagEn,
-      listHastagFr: listHastagFr,
-      adsHorizontale: adsHorizontale,
-      adsVertical: adsVertical
-    },
-  };
+    redirect: {
+      destination: "/404"
+    }
+  }
 }
-
-export async function getStaticPaths() {
-  const baseUrl = process.env.ROOT_URL;
-  const db = new MyDatabase()
-  let listCategory = []
-  
-  console.log("get full == ", listCategory)
-  let categories = [];
-  await db.getFullCategories().then(category => listCategory = category)
-  /* -------------------------------------------------------------------------- */
-  /*                    ALAINA NY LISTE NY CATEGORY REHETRA                    */
-  /* -------------------------------------------------------------------------- */
-
-  /* ----------------------------------- FR ----------------------------------- */
-
-  // const paramCategory = { query: "getFullCategories", param: false }; // query: ilay anaran'ilay méthode ao @ MyDatabase
-
-  // await fetch(`${baseUrl}/api/knexApi`, {
-  //   method: "POST",
-  //   body: JSON.stringify(paramCategory),
-  //   headers: {
-  //     "Content-type": "application/json",
-  //   },
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => categories = data);
-
-  const paths1 = listCategory.map((category) => ({
-    params: { slug: [`${category.id}`, category.fr.toLowerCase()] },
-  }));
-
-  const paths2 = listCategory.map((category) => ({
-    params: { slug: [`${category.id}`, category.en.toLowerCase()] },
-  }));
-
-  const paths = [...paths1, ...paths2];
-  return {
-    paths,
-    fallback: false,
-  };
-
-  // return {
-  //   paths: [
-  //     {
-  //       params: {
-  //         slug: ["3", "economy"],
-  //       },
-  //     }, 
-  //   ],
-  //   fallback: false,
-  // };
-}
-
 

@@ -55,19 +55,7 @@ const Home = ({
 
   // console.log("pass == ", passwordHash)
 
-  const getValue = async () => {
-    const paramFind = { query: "findUser", param: ["email"] };
-    fetch(`${ROOT_URL}/api/knexApi`, {
-      method: "POST",
-      body: JSON.stringify(paramFind),
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("search data === ", data));
-  };
-
+ 
   useEffect(() => {
 
     if (storage.lang === "fr") {
@@ -78,7 +66,7 @@ const Home = ({
       setListMostPopular(listMostPopularFr);
     }
 
-    getValue();
+  
   }, []);
 
   return (
@@ -114,7 +102,7 @@ const Home = ({
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const baseUrl = process.env.ROOT_URL;
   const allArticlesData = await import(`/data/thumbnail.json`);
   const db = new MyDatabase();

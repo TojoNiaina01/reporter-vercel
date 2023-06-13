@@ -59,11 +59,11 @@ const FormArticle = ({
   const [status, setStatus] = useState(false)
   const newArticleData = articleData
   var richtextVal = ""
-  const listFollowersTab = getListFollowers(listFollowers)
+  const listFollowersTab = pushBtn ? getListFollowers(listFollowers) : []
   const [isMailing, setIsMailing] = useState(false)
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?%';:,\s\u2019]/g, "-");
       return newLink.toLowerCase()
   };
   
@@ -85,7 +85,7 @@ const FormArticle = ({
     setHastag(val)
   }
 
-  console.log("list follower == ", getListFollowers(listFollowers))
+
 
   const handleSubmit = async(e) => {
     e.preventDefault();

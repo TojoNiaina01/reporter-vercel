@@ -36,7 +36,7 @@ const search = ({
   const [miniTitre, setMiniTitre] = useState("Search - page")
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?'%;:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };  
 

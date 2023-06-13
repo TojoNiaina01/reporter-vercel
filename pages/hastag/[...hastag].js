@@ -17,6 +17,22 @@ import localStorage from "localStorage";
 import Paginate from "@/components/Paginate";
 import MyDatabase from "@/config/MyDatabase";
 
+
+
+
+const linkBeautify = (link) => {
+  const newLink = link.replace(/[?'%;:,\s\u2019]/g, "-");
+  return newLink.toLowerCase()
+};
+
+const checkLink = (data, id, name) => {
+  const checkID = data.filter(hastag => hastag.id === id)
+  const checkTitle = data.filter(hastag => linkBeautify(hastag.name) === name.toLowerCase())
+  const logic = (checkID.length && checkTitle.length) ? true : false
+
+  return logic
+}
+
 const Hastag = ({
   listMostPopularEn,
   listMostPopularFr,
@@ -35,7 +51,7 @@ const Hastag = ({
   const rating = JSON.parse(localStorage.getItem("token")).rating;
 
   const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
+    const newLink = link.replace(/[?'%;:,\s\u2019]/g, "-");
     return newLink.toLowerCase()
   };  
 
@@ -144,107 +160,122 @@ const Hastag = ({
 
 export default Hastag;
 
-export async function getStaticProps({ params }) {
+
+export async function getServerSideProps(context) {
+  const linkTab = context.query.hastag
+  const hastagID = parseInt(linkTab[0])
+  const name = linkTab[1]
   const db = new MyDatabase()
-  const hastagID = parseInt(params.hastag[0]);
-  let listArticles = []; // asina ny liste ny articles par hastag
-  let hastagData = []; // asina ny momban'ilay hastag
-  let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
-  let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
-  let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-  let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-  let adsHorizontale = []
-  let adsVertical = []
 
-  /* -------------------------------------------------------------------------- */
-  /*                  ALAINA NY LISTE NY ARTICLE IZAY MANANA #                  */
-  /* -------------------------------------------------------------------------- */
+      
+    let listFullHastag = [] // alaina lony ny list article mba i-checkena anle lien miditra
 
-  await db.getArticlesByHasTag(hastagID).then(data => listArticles = data)
 
-  /* -------------------------------------------------------------------------- */
-  /*                       ALAINA NY HASTAG DATA                                */
-  /* -------------------------------------------------------------------------- */
-
-  await db.getHastagByID(hastagID).then(data => hastagData = data)
-
-  /* -------------------------------------------------------------------------- */
-  /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
-  /* -------------------------------------------------------------------------- */
-
-  /* ----------------------------------- FR ----------------------------------- */
-
-  await db.getRecentArticle('fr').then(data => listRecentArticlesFr = data)
-
-  /* ----------------------------------- EN ----------------------------------- */
-
-  await db.getRecentArticle('en').then(data => listRecentArticlesEn = data)
-
-  /* -------------------------------------------------------------------------- */
-  /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
-  /* -------------------------------------------------------------------------- */
-
-  /* ----------------------------------- FR ----------------------------------- */
-
-  await db.getMostPopular('fr').then(data => listMostPopularFr = data)
-
-  /* ----------------------------------- EN ----------------------------------- */
-
-  await db.getMostPopular('en').then(data => listMostPopularEn = data)
 
     /* -------------------------------------------------------------------------- */
-  /*                               ALAINA ADS                                   */
-  /* -------------------------------------------------------------------------- */
+    /*        ALAINA NY LISTE NY HASTAG REHETRA MBA I-CHECKENA LIEN MIDITRA       */
+    /* -------------------------------------------------------------------------- */
 
-  /* ----------------------------------- horizontale ----------------------------------- */
+    await db.getAllHastag().then(data => listFullHastag = data)
+    if(!isNaN(hastagID) && name && linkTab.length === 2){ // vérifiena alo oe type nombre ve
+      if(checkLink(listFullHastag, hastagID, name.toLowerCase())){
 
-  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
+          /* ------------------- ********************************** ------------------- */
+        /* -------------------------------------------------------------------------- */
+        /*                  ALAINA AMZAY NY DATA IZAY ILAINA REHETRA                  */
+        /* -------------------------------------------------------------------------- */
+        /* -------------- ********************************************* ------------- */
+
+        let listArticles = []; // asina ny liste ny articles par hastag
+        let hastagData = []; // asina ny momban'ilay hastag
+        let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
+        let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
+        let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+        let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+        let adsHorizontale = []
+        let adsVertical = []
+      
+        /* -------------------------------------------------------------------------- */
+        /*                  ALAINA NY LISTE NY ARTICLE IZAY MANANA #                  */
+        /* -------------------------------------------------------------------------- */
+      
+        await db.getArticlesByHasTag(hastagID).then(data => listArticles = data)
+      
+        /* -------------------------------------------------------------------------- */
+        /*                       ALAINA NY HASTAG DATA                                */
+        /* -------------------------------------------------------------------------- */
+      
+        await db.getHastagByID(hastagID).then(data => hastagData = data)
+      
+        /* -------------------------------------------------------------------------- */
+        /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- FR ----------------------------------- */
+      
+        await db.getRecentArticle('fr').then(data => listRecentArticlesFr = data)
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getRecentArticle('en').then(data => listRecentArticlesEn = data)
+      
+        /* -------------------------------------------------------------------------- */
+        /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- FR ----------------------------------- */
+      
+        await db.getMostPopular('fr').then(data => listMostPopularFr = data)
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getMostPopular('en').then(data => listMostPopularEn = data)
+      
+          /* -------------------------------------------------------------------------- */
+        /*                               ALAINA ADS                                   */
+        /* -------------------------------------------------------------------------- */
+      
+        /* ----------------------------------- horizontale ----------------------------------- */
+      
+        await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+      
+      
+        /* ----------------------------------- EN ----------------------------------- */
+      
+        await db.getAdsByDate("verticale").then(data => adsVertical = data)
+
+        return {
+          props: {
+            listArticles: listArticles,
+            hastagData: hastagData[0],
+            listRecentArticlesEn: dataFilter(
+              listRecentArticlesEn,
+              "category_id",
+              3
+            ),
+            listRecentArticlesFr: dataFilter(
+              listRecentArticlesFr,
+              "category_id",
+              3
+            ),
+            listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+            listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+            adsHorizontale: adsHorizontale,
+            adsVertical: adsVertical
+          },
+        };
 
 
-  /* ----------------------------------- EN ----------------------------------- */
+      }
+    }
 
-  await db.getAdsByDate("verticale").then(data => adsVertical = data)
-
+    
   return {
-    props: {
-      listArticles: listArticles,
-      hastagData: hastagData[0],
-      listRecentArticlesEn: dataFilter(
-        listRecentArticlesEn,
-        "category_id",
-        3
-      ),
-      listRecentArticlesFr: dataFilter(
-        listRecentArticlesFr,
-        "category_id",
-        3
-      ),
-      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
-      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
-      adsHorizontale: adsHorizontale,
-      adsVertical: adsVertical
-    },
-  };
-}
-
-export async function getStaticPaths() {
-  const db = new MyDatabase()
-  let listHastag = []
-
-  await db.getAllHastag().then(data => listHastag = data)
-
-  const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
-      return newLink.toLowerCase()
-  };
+    redirect: {
+      destination: "/404"
+    }
+  }
 
 
-  const paths = listHastag.map((item) => ({
-    params: { hastag: [`${item.id}`, linkBeautify(item.name)] },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
 }

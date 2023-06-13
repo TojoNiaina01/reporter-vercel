@@ -26,6 +26,21 @@ import {
 } from "@heroicons/react/24/outline";
 import MyDatabase from "@/config/MyDatabase";
 
+
+
+const linkBeautify = (link) => {
+  const newLink = link.replace(/[?%';:,\s\u2019]/g, "-");
+  return newLink.toLowerCase()
+};
+
+const checkLink = (data, id, title) => {
+  const checkID = data.filter(article => article.id === id)
+  const checkTitle = data.filter(article => linkBeautify(article.title) === title)
+  const logic = (checkID.length && checkTitle.length) ? true : false
+
+  return logic
+}
+
 const jost = Jost({ subsets: ["latin"] });
 
 const Articless = ({
@@ -38,63 +53,66 @@ const Articless = ({
   adsHorizontale,
   adsVertical
 }) => {
-  const router = useRouter();
-  const [isMuted, setIsMuted] = useState(true);
-  const [isPlayed, setIsPlayed] = useState(true);
-  const [listRecent, setListRecent] = useState(listRecentArticlesEn);
-  const [listPopular, setListPopular] = useState(listMostPopularEn);
-  const [rateArticle, setRateArticle] = useState(0);
-  const [body, setBody] = useState("");
-  const videoRef = useRef();
-  const storage = JSON.parse(localStorage.getItem("token"));
-  const rating = JSON.parse(localStorage.getItem("token")).rating;
 
-  const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
-    return newLink.toLowerCase()
-  };  
+        
+        const router = useRouter();
+        const [isMuted, setIsMuted] = useState(true);
+        const [isPlayed, setIsPlayed] = useState(true);
+        const [listRecent, setListRecent] = useState(listRecentArticlesEn);
+        const [listPopular, setListPopular] = useState(listMostPopularEn);
+        const [rateArticle, setRateArticle] = useState(0);
+        const [body, setBody] = useState("");
+        const videoRef = useRef();
+        const storage = JSON.parse(localStorage.getItem("token"));
+        const rating = JSON.parse(localStorage.getItem("token")).rating;
 
-console.log("list hastag == ", listHastag)
+        const linkBeautify = (link) => {
+          const newLink = link.replace(/[?'%;:,\s\u2019]/g, "-");
+          return newLink.toLowerCase()
+        };  
 
-  useEffect(() => {
-    setBody(parse(articleData.body)); // tsy maintsy parse-na ilay body satria HTML type string
-    const param = { query: "incrementViews", param: [articleData.id] };
-    fetch(`${ROOT_URL}/api/knexApi`, {
-      method: "POST",
-      body: JSON.stringify(param),
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).then((res) => res.json());
+      console.log("list hastag == ", listHastag)
 
-    if (storage.lang === "fr") {
-      setListRecent(listRecentArticlesFr);
-      setListPopular(listMostPopularFr);
-    }
+        useEffect(() => {
+          setBody(parse(articleData.body)); // tsy maintsy parse-na ilay body satria HTML type string
+          const param = { query: "incrementViews", param: [articleData.id] };
+          fetch(`${ROOT_URL}/api/knexApi`, {
+            method: "POST",
+            body: JSON.stringify(param),
+            headers: {
+              "Content-type": "application/json",
+            },
+          }).then((res) => res.json());
 
-    if (rating.find((item) => item.id === articleData.id)) {
-      setRateArticle(
-        rating[rating.findIndex((item) => item.id === articleData.id)].rate
-      );
-    }
-  }, []);
+          if (storage.lang === "fr") {
+            setListRecent(listRecentArticlesFr);
+            setListPopular(listMostPopularFr);
+          }
 
-  const play = () => {
-    setIsPlayed((value) => !value);
-    videoRef.current.play();
-  };
-  const pause = () => {
-    setIsPlayed((value) => !value);
-    videoRef.current.pause();
-  };
+          if (rating.find((item) => item.id === articleData.id)) {
+            setRateArticle(
+              rating[rating.findIndex((item) => item.id === articleData.id)].rate
+            );
+          }
+        }, []);
 
-  const redirectHandler = (id, title) => {
-    router.push(`/hastag/${id}/${linkBeautify(title)}`)
-  }
+        const play = () => {
+          setIsPlayed((value) => !value);
+          videoRef.current.play();
+        };
+        const pause = () => {
+          setIsPlayed((value) => !value);
+          videoRef.current.pause();
+        };
+
+        const redirectHandler = (id, title) => {
+          router.push(`/hastag/${id}/${linkBeautify(title)}`)
+        }
+ 
 
   return (
     <>
-      <Head>
+          <Head>
         <title>{articleData.title}</title>
       </Head>
       <section className="mx-2 mt-10">
@@ -118,7 +136,7 @@ console.log("list hastag == ", listHastag)
         </div>
         <div className="mt-4 justify-between gap-8 lg:flex">
           {/*Main ariticles*/}
-          <div>
+          <div className="w-full">
             <div className="space-y-4">
               {articleData.image?.map((image) => (
                 <div
@@ -281,18 +299,130 @@ console.log("list hastag == ", listHastag)
 
 export default Articless;
 
-export async function getStaticProps({ params }) {
-  const baseUrl = process.env.ROOT_URL;
-  const articleID = parseInt(params.articless[0]);
-  const db = new MyDatabase()
-  let articleData = [];
-  let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
-  let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
-  let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-  let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-  let listHastag = [];
-  let adsHorizontale = []
-  let adsVertical = []
+// export async function getStaticProps({ params }) {
+//   const baseUrl = process.env.ROOT_URL;
+//   const articleID = parseInt(params.articless[0]);
+//   const db = new MyDatabase()
+//   let articleData = [];
+//   let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
+//   let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
+//   let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+//   let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+//   let listHastag = [];
+//   let adsHorizontale = []
+//   let adsVertical = []
+
+//   /* -------------------------------------------------------------------------- */
+//   /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
+//   /* -------------------------------------------------------------------------- */
+
+//   /* ----------------------------------- FR ----------------------------------- */
+
+//   await db.getArticle(articleID).then(data => articleData = data)
+
+//   /* -------------------------------------------------------------------------- */
+//   /*                    ALAINA NY LISTE NY HASTAG REHETRA                     */
+//   /* -------------------------------------------------------------------------- */
+
+//   /* ----------------------------------- FR ----------------------------------- */
+
+//   await db.getHastagByArticle(articleID).then(data => listHastag = data)
+
+//   /* -------------------------------------------------------------------------- */
+//   /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
+//   /* -------------------------------------------------------------------------- */
+
+//   /* ----------------------------------- FR ----------------------------------- */
+//   await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
+
+
+//   /* ----------------------------------- EN ----------------------------------- */
+//   await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
+
+//   /* -------------------------------------------------------------------------- */
+//   /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+//   /* -------------------------------------------------------------------------- */
+
+//   /* ----------------------------------- FR ----------------------------------- */
+
+//   await db.getMostPopular("fr").then(data => listMostPopularFr = data)
+
+
+//   /* ----------------------------------- EN ----------------------------------- */
+
+//   await db.getMostPopular("en").then(data => listMostPopularEn = data)
+
+//    /* -------------------------------------------------------------------------- */
+//   /*                               ALAINA ADS                                   */
+//   /* -------------------------------------------------------------------------- */
+
+//   /* ----------------------------------- horizontale ----------------------------------- */
+
+//   await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
+
+//   /* ----------------------------------- EN ----------------------------------- */
+
+//   await db.getAdsByDate("verticale").then(data => adsVertical = data)
+
+//   return {
+//     props: {
+//       articleData: articleData[0],
+//       listRecentArticlesEn: dataFilter(
+//         listRecentArticlesEn,
+//         "category_id",
+//         3
+//       ),
+//       listRecentArticlesFr: dataFilter(
+//         listRecentArticlesFr,
+//         "category_id",
+//         3
+//       ),
+//       listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+//       listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+//       listHastag: listHastag,
+//       adsHorizontale: adsHorizontale,
+//       adsVertical: adsVertical
+//     },
+//   };
+// }
+
+// export async function getStaticPaths() {
+//   const db = new MyDatabase()
+//   let listArticle = []
+
+//   await db.getFullArticles().then(data => listArticle = data)
+
+//   const linkBeautify = (link) => {
+//     const newLink = link.replace(/[?'%;:,\s\u2019]/g, "-");
+//     return newLink.toLowerCase()
+//   };
+
+
+//   const paths = listArticle.map((article) => ({
+//     params: { articless: [`${article.id}`, linkBeautify(article.title)] },
+//   }));
+
+//   console.log("paths == ", paths[0].params.articless);
+
+//   return {
+//     paths,
+//     fallback: 'blocking',
+//   };
+// }
+
+export async function getServerSideProps(context){
+const linkTab = context.query.articless
+const articleID = parseInt(linkTab[0])
+const title = linkTab[1]
+const db = new MyDatabase()
+
+
+ 
+
+let listFullArticle = [] // alaina lony ny list article mba i-checkena anle lien miditra
+
+
 
   /* -------------------------------------------------------------------------- */
   /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
@@ -300,95 +430,116 @@ export async function getStaticProps({ params }) {
 
   /* ----------------------------------- FR ----------------------------------- */
 
-  await db.getArticle(articleID).then(data => articleData = data)
+  await db.getFullArticles().then(data => listFullArticle = data)
+  
 
-  /* -------------------------------------------------------------------------- */
-  /*                    ALAINA NY LISTE NY HASTAG REHETRA                     */
-  /* -------------------------------------------------------------------------- */
+  console.log("isNaN == ", isNaN(articleID))
+  console.log("title == ", title)
+  console.log("length == ", linkTab.length)
 
-  /* ----------------------------------- FR ----------------------------------- */
-
-  await db.getHastagByArticle(articleID).then(data => listHastag = data)
-
-  /* -------------------------------------------------------------------------- */
-  /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
-  /* -------------------------------------------------------------------------- */
-
-  /* ----------------------------------- FR ----------------------------------- */
-  await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
+  if(!isNaN(articleID) && title && linkTab.length === 2){ // vérifiena alo oe type nombre ve
+      if(checkLink(listFullArticle, articleID, title)){
 
 
-  /* ----------------------------------- EN ----------------------------------- */
-  await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
 
-  /* -------------------------------------------------------------------------- */
-  /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
-  /* -------------------------------------------------------------------------- */
+        /* ------------ ************************************************* ----------- */
+        /* -------------------------------------------------------------------------- */
+        /*                  ALAINA AMZAY NY DATA IZAY ILAINA REHETRA                  */
+        /* -------------------------------------------------------------------------- */
+        /* -------------- ********************************************* ------------- */
 
-  /* ----------------------------------- FR ----------------------------------- */
+          let articleData = [];
+          let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
+          let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
+          let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+          let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
+          let listHastag = [];
+          let adsHorizontale = []
+          let adsVertical = []
 
-  await db.getMostPopular("fr").then(data => listMostPopularFr = data)
+          /* -------------------------------------------------------------------------- */
+          /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
+          /* -------------------------------------------------------------------------- */
+
+          /* ----------------------------------- FR ----------------------------------- */
+
+          await db.getArticle(articleID).then(data => articleData = data)
+
+          /* -------------------------------------------------------------------------- */
+          /*                    ALAINA NY LISTE NY HASTAG REHETRA                     */
+          /* -------------------------------------------------------------------------- */
+
+          /* ----------------------------------- FR ----------------------------------- */
+
+          await db.getHastagByArticle(articleID).then(data => listHastag = data)
+
+          /* -------------------------------------------------------------------------- */
+          /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
+          /* -------------------------------------------------------------------------- */
+
+          /* ----------------------------------- FR ----------------------------------- */
+          await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
 
 
-  /* ----------------------------------- EN ----------------------------------- */
+          /* ----------------------------------- EN ----------------------------------- */
+          await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
 
-  await db.getMostPopular("en").then(data => listMostPopularEn = data)
+          /* -------------------------------------------------------------------------- */
+          /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
+          /* -------------------------------------------------------------------------- */
 
-   /* -------------------------------------------------------------------------- */
-  /*                               ALAINA ADS                                   */
-  /* -------------------------------------------------------------------------- */
+          /* ----------------------------------- FR ----------------------------------- */
 
-  /* ----------------------------------- horizontale ----------------------------------- */
-
-  await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+          await db.getMostPopular("fr").then(data => listMostPopularFr = data)
 
 
-  /* ----------------------------------- EN ----------------------------------- */
+          /* ----------------------------------- EN ----------------------------------- */
 
-  await db.getAdsByDate("verticale").then(data => adsVertical = data)
+          await db.getMostPopular("en").then(data => listMostPopularEn = data)
+
+          /* -------------------------------------------------------------------------- */
+          /*                               ALAINA ADS                                   */
+          /* -------------------------------------------------------------------------- */
+
+          /* ----------------------------------- horizontale ----------------------------------- */
+
+          await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
+
+
+          /* ----------------------------------- EN ----------------------------------- */
+
+          await db.getAdsByDate("verticale").then(data => adsVertical = data)
+
+
+        return {
+          props: {
+                  articleData: articleData[0],
+                  listRecentArticlesEn: dataFilter(
+                    listRecentArticlesEn,
+                    "category_id",
+                    3
+                  ),
+                  listRecentArticlesFr: dataFilter(
+                    listRecentArticlesFr,
+                    "category_id",
+                    3
+                  ),
+                  listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
+                  listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
+                  listHastag: listHastag,
+                  adsHorizontale: adsHorizontale,
+                  adsVertical: adsVertical
+                },
+        }
+      }
+  }
+
+
+
 
   return {
-    props: {
-      articleData: articleData[0],
-      listRecentArticlesEn: dataFilter(
-        listRecentArticlesEn,
-        "category_id",
-        3
-      ),
-      listRecentArticlesFr: dataFilter(
-        listRecentArticlesFr,
-        "category_id",
-        3
-      ),
-      listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
-      listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
-      listHastag: listHastag,
-      adsHorizontale: adsHorizontale,
-      adsVertical: adsVertical
-    },
-  };
-}
-
-export async function getStaticPaths() {
-  const db = new MyDatabase()
-  let listArticle = []
-
-  await db.getFullArticles().then(data => listArticle = data)
-
-  const linkBeautify = (link) => {
-    const newLink = link.replace(/[?';:,\s\u2019]/g, "-");
-    return newLink.toLowerCase()
-  };
-
-
-  const paths = listArticle.map((article) => ({
-    params: { articless: [`${article.id}`, linkBeautify(article.title)] },
-  }));
-
-  console.log("paths == ", paths[0].params.articless);
-
-  return {
-    paths,
-    fallback: false,
-  };
+    redirect: {
+      destination: "/404"
+    }
+  }
 }
