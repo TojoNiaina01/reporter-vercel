@@ -66,21 +66,23 @@ export default async function handler(req, res) {
 
           if(checkType(extension) === 'image'){
 
-             // Lire l'image téléchargée
-            const imageBuffer = fs.readFileSync(file.filepath);
+            //  // Lire l'image téléchargée
+            // const imageBuffer = fs.readFileSync(file.filepath);
 
-            // Optimiser l'image avec sharp
-            const optimizedBuffer = await sharp(imageBuffer)
-              .resize(800) // Redimensionner l'image si nécessaire
-             // .jpeg({ quality: 80 }) // Définir la qualité de compression JPEG
-              .toBuffer()
-              console.log("path == ", file.filepath)
+            // // Optimiser l'image avec sharp
+            // const optimizedBuffer = await sharp(imageBuffer)
+            //   //.resize(800) // Redimensionner l'image si nécessaire
+            //  // .jpeg({ quality: 80 }) // Définir la qualité de compression JPEG
+            //   .toBuffer()
+            //   console.log("path == ", file.filepath)
             
-              fs.writeFileSync(path.join(pathFolderImage,`${newName}.${extension}`), optimizedBuffer)
-
-             return res.status(200).json({type: "image",result: {name: newName, extension: extension, size: file.size, type: file.mimetype}})
+            //   fs.writeFileSync(path.join(pathFolderImage,`${newName}.${extension}`), optimizedBuffer)
 
 
+          fs.rename(file.filepath, path.join(pathFolderVideo,`${newName}.${extension}`), () => {
+            return res.status(200).json({type: "image",result: {name: newName, extension: extension, size: file.size, type: file.mimetype}})
+
+          })
            
           }else{
 
