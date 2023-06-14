@@ -347,14 +347,8 @@ const deleteUserHandler = (userID, email) => {
                 <tr id={`article${article.id}`} key={uuidV4()} className="bg-white border-b ">
                   <td className="px-6 py-4">{article.id}</td>
                   <td className="relative w-[100px] h-[100px]">
-                    {/* <Image
+                    <Image
                       fill
-                      src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
-                      className=" object-contain"
-                      alt="Article image blog"
-                    /> */}
-                     <img
-                      //fill
                       src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                       className=" object-contain"
                       alt="Article image blog"

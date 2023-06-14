@@ -349,16 +349,16 @@ export async function getServerSideProps(context){
     }
 
 
-  // return {
-  //   redirect: {
-  //     destination: "/404"
-  //   }
-  // }
-
   return {
+    redirect: {
+      destination: "/404"
+    }
+  }
+
+ /*  return {
    props: {
     data: []
    }
-  }
+  } */
 }
 

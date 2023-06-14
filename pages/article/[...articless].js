@@ -537,16 +537,11 @@ let listFullArticle = [] // alaina lony ny list article mba i-checkena anle lien
 
 
 
-  // return {
-  //   redirect: {
-  //     destination: "/404"
-  //   }
-  // }
-
-
   return {
-    props: {
-     data: []
+    redirect: {
+      destination: "/404"
     }
-   }
+  }
+
+
 }
