@@ -44,7 +44,6 @@
     "react-slideshow-image": "^4.2.1",
     "react-social-icons": "^5.15.0",
     "redux": "^4.2.1",
-    "sharp": "^0.32.1",
     "tailwind-scrollbar-hide": "^1.1.7",
     "uuid": "^9.0.0"
   },
