@@ -79,7 +79,7 @@ export default async function handler(req, res) {
             //   fs.writeFileSync(path.join(pathFolderImage,`${newName}.${extension}`), optimizedBuffer)
 
 
-          fs.rename(file.filepath, path.join(pathFolderVideo,`${newName}.${extension}`), () => {
+          fs.rename(file.filepath, path.join(pathFolderImage,`${newName}.${extension}`), () => {
             return res.status(200).json({type: "image",result: {name: newName, extension: extension, size: file.size, type: file.mimetype}})
 
           })

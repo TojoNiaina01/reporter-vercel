@@ -1,1 +1,1 @@
-export const ROOT_URL = 'https://indep-reporter.com';
+export const ROOT_URL = 'http://localhost:3000';
