@@ -1,8 +1,8 @@
 // server.js
-const { createServer } = require('http')
-const { parse } = require('url')
-const next = require('next')
-const cors = require('cors')
+const express = require('express');
+const next = require('next');
+const cors = require('cors');
+const path = require('path');
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
@@ -17,24 +17,24 @@ const corsOptions = {
   credentials: true, // Si vous utilisez des cookies ou des en-têtes d'autorisation
 };
 
-app.prepare().then(() => {
-  createServer(async (req, res) => {
-    try {
 
-      // Be sure to pass `true` as the second argument to `url.parse`.
-      // This tells it to parse the query portion of the URL.
-      const corsHandler = cors(corsOptions);
-    corsHandler(req, res, () => {
-      const parsedUrl = parse(req.url, true);
-      handle(req, res, parsedUrl);
-    });
-    } catch (err) {
-      console.error('Error occurred handling', req.url, err)
-      res.statusCode = 500
-      res.end('internal server error')
-    }
-  }).listen(port, (err) => {
-    if (err) throw err
-    console.log(`> Ready on http://${hostname}:${port}`)
-  })
-})
+app.prepare().then(() => {
+  const server = express();
+  const imagesDir = path.join(__dirname, 'uploads','images');
+  const videoDir = path.join(__dirname, 'uploads','videos');
+  
+  server.use('/images', express.static(imagesDir));
+  server.use('/videos', express.static(videoDir));
+
+  // Utiliser le middleware CORS pour activer les en-têtes CORS
+  server.use(cors(corsOptions));
+
+  server.all('*', (req, res) => {
+    return handle(req, res);
+  });
+
+  server.listen(3000, (err) => {
+    if (err) throw err;
+    console.log('> Ready on http://localhost:3000');
+  });
+});

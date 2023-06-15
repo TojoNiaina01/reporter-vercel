@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { dataFilter } from "@/config/dataFilter";
 import localStorage from "localStorage";
 import Paginate from "@/components/Paginate";
+import { ROOT_URL } from "@/env";
 
 const search = ({
   listMostPopularEn,
@@ -108,7 +109,7 @@ const search = ({
               } 
               key={uuidv4()} className="group cursor-pointer flex flex-col bg-[#EFF2FB]  mb-2 rounded overflow-hidden lg:flex-row">
                 <Image
-                  src={`/uploads/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
+                  src={`${ROOT_URL}/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
                   className="h-[150px] object-cover md:w-full/2 md:h-full/2 lg:w-[250px] lg:h-full"
                   alt={articleData.title.substring(0, 50)}
                   width={1200}

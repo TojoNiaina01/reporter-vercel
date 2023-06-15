@@ -16,6 +16,7 @@ import { dataFilter } from "@/config/dataFilter";
 import localStorage from "localStorage";
 import Paginate from "@/components/Paginate";
 import MyDatabase from "@/config/MyDatabase";
+import { ROOT_URL } from "@/env";
 
 
 
@@ -107,7 +108,7 @@ const Hastag = ({
                 className="group mb-2 flex cursor-pointer flex-col  overflow-hidden rounded bg-[#EFF2FB] lg:flex-row"
               >
                 <Image
-                  src={`/uploads/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
+                  src={`${ROOT_URL}/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
                   className="md:w-full/2 md:h-full/2 h-[150px] object-cover lg:h-full lg:w-[250px]"
                   alt="Article image blog"
                   width={1200}

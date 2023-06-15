@@ -3,9 +3,6 @@ import fs from "fs";
 import path from "path";
 import { v4 as uuidV4 } from "uuid";
 
-const express = require("express");
-const multer = require("multer");
-const server = express();
 
 export const config = {
   api: {
@@ -46,7 +43,6 @@ export default async function handler(req, res) {
         "..",
         "..",
         "..",
-        "public",
         "uploads",
         "images"
       );
@@ -56,18 +52,26 @@ export default async function handler(req, res) {
         "..",
         "..",
         "..",
-        "public",
         "uploads",
         "videos"
       );
       form.multiples = true;
       //form.uploadDir = pathFolder
       //form.maxFileSize = 1 * 1024 * 1024
-
+      try
+      {
       await form.parse(req, async (err, fields, files) => {
         const file = files.file;
         const extension = file.mimetype.split("/").pop();
         const newName = uuidV4();
+
+       
+         const form = new formidable.IncomingForm()
+        const pathFolderImage = path.join(__dirname,'..','..','..','..', 'uploads','images')
+        const pathFolderVideo = path.join(__dirname,'..','..','..','..','uploads','videos')
+        form.multiples = true
+        //form.uploadDir = pathFolder
+        //form.maxFileSize = 1 * 1024 * 1024
 
         if (err) {
           console.log("BIG ERROR");
@@ -75,6 +79,7 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: `parse error : ${err}` });
           });
         }
+        
 
         if (!checkType(extension)) {
           fs.unlink(file.filepath, () => {
@@ -86,49 +91,20 @@ export default async function handler(req, res) {
           });
         }
 
-        if (checkType(extension) === "image") {
-          //  // Lire l'image téléchargée
-          // const imageBuffer = fs.readFileSync(file.filepath);
 
-          // // Optimiser l'image avec sharp
-          // const optimizedBuffer = await sharp(imageBuffer)
-          //   //.resize(800) // Redimensionner l'image si nécessaire
-          //  // .jpeg({ quality: 80 }) // Définir la qualité de compression JPEG
-          //   .toBuffer()
-          //   console.log("path == ", file.filepath)
+          if(checkType(extension) === 'image'){
 
-          //   fs.writeFileSync(path.join(pathFolderImage,`${newName}.${extension}`), optimizedBuffer)
 
-          fs.rename(
-            file.filepath,
-            path.join(pathFolderImage, `${newName}.${extension}`),
-            () => {
-              return res
-                .status(200)
-                .json({
-                  type: "image",
-                  result: {
-                    name: newName,
-                    extension: extension,
-                    size: file.size,
-                    type: file.mimetype,
-                  },
-                });
-            }
-          );
-        } else {
-          fs.rename(
-            file.filepath,
-            path.join(pathFolderVideo, `${newName}.${extension}`),
-            () => {
-              return res
-                .status(200)
-                .json({
-                  type: "video",
-                  result: { name: newName, extension: extension },
-                });
-            }
-          );
+          fs.rename(file.filepath, path.join(pathFolderImage,`${newName}.${extension}`), () => {
+            return res.status(200).json({type: "image",result: {name: newName, extension: extension, size: file.size, type: file.mimetype}})
+
+          })
+           
+          }else{
+
+            fs.rename(file.filepath, path.join(pathFolderVideo,`${newName}.${extension}`), () => {
+              return res.status(200).json({type: "video", result: {name: newName, extension: extension}})
+          })
           //return res.status(200).json({type: "video"})
         }
       });

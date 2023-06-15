@@ -5,6 +5,7 @@ import DateAuteur from "@/components/DateAuteur";
 import Title from "@/components/Title";
 import moment from "moment";
 import { useRouter } from "next/router";
+import { ROOT_URL } from "@/env";
 
 const SecondaryPopular = ({article}) => {
 const router = useRouter()
@@ -22,7 +23,7 @@ console.log("article == ", article)
             
               <div className="relative w-full h-[228px] md:h-[270px] lg:w-full lg:h-full">
                 <Image
-                  src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
+                  src={`${ROOT_URL}/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                   className="object-cover"
                   alt="Image article blog"
                   width={1200}

@@ -9,6 +9,7 @@ import Hastag from "@/components/Hastag";
 import HeaderCategory from "@/components/HeaderCategory";
 import moment from "moment";
 import localStorage from "localStorage";
+import { ROOT_URL } from "@/env";
 
 const jost = Jost({ subsets: ["latin"], weight: "500" });
 
@@ -35,7 +36,7 @@ const Hotstaff = ({ dataHot }) => {
       <HeaderCategory title="Hot Staff" banner />
       <div className="lg:flex">
         <Image
-          src={`/uploads/images/${dataHot.image[0].image_name}.${dataHot.image[0].image_extension}`}
+          src={`${ROOT_URL}/images/${dataHot.image[0].image_name}.${dataHot.image[0].image_extension}`}
           className="w-full object-cover md:h-[500px] lg:h-[400px] lg:w-[50%] xl:w-[60%] 2xl:w-full "
           alt="Image article blog"
           width={1200}

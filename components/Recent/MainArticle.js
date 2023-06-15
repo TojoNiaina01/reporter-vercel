@@ -7,6 +7,7 @@ import Title from "@/components/Title";
 import { v4 as uuidv4 } from "uuid";
 import localStorage from "localStorage";
 import { useRouter } from "next/router";
+import { ROOT_URL } from "@/env";
 
 
 
@@ -43,7 +44,7 @@ const MainArticle = ({articleData}) => {
       <div className="relative w-[50%] h-[200px] md:w-[40%] lg:w-[35%]">
         <Hastag style="absolute top-2 z-10  left-4"> {hastag} </Hastag>
         <Image
-          src={`/uploads/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
+          src={`${ROOT_URL}/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
           fill
           className="object-cover"
           alt="Image article blog"

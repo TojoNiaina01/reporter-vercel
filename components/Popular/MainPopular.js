@@ -25,7 +25,7 @@ const MainPopular = ({ articleData, styleHidden, dateStyle }) => {
       >
         <div className="relative w-[120px] h-[95px] md:w-full md:h-[120px] lg:w-[110px] lg:h-[90px]">
           <Image
-            src={`/uploads/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
+            src={`${ROOT_URL}/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
             fill
             className="object-cover"
             alt="Image blog article"

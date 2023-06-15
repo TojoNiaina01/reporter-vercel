@@ -33,7 +33,7 @@ const SecondaryMost = ({listCategories, adsVertical}) => {
           <div className="relative w-full h-[275px]">
             <Hastag style="absolute top-1 z-10  right-1">ads</Hastag>
             <Image
-              src={`/uploads/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`}
+              src={`${ROOT_URL}/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`}
               fill
               className="object-contain"
               alt="Publiciter"

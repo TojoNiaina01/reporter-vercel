@@ -7,6 +7,7 @@ import { Publicite } from "@/public/assets/img";
 import Hastag from "@/components/Hastag";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import {v4 as uuidV4} from 'uuid'
+import { ROOT_URL } from "@/env";
 
 const indicators = (index) => (
   <span className="cursor-pointer p-[4px] bg-gray-300 rounded-full mx-1 indicator xl:p-[5px]" />
@@ -50,7 +51,7 @@ const Banner = ({dataSlide, adsVertical}) => {
         adsVertical[0]&&<div className="hidden lg:block relative flex-grow h-[450px] 2xl:h-[600px] cursor-pointer max-w-sm">
         <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
         <Image
-          src={`/uploads/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`}
+          src={`${ROOT_URL}/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`}
           fill
           className="object-contain"
           alt="Publicité graphics"

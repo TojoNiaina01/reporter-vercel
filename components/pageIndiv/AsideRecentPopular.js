@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import localStorage from "localStorage";
 import moment from "moment";
+import { ROOT_URL } from "@/env";
 import { useRouter } from "next/router";
 
 const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listHastag, adsVertical }) => {
@@ -57,7 +58,7 @@ const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listH
                   {lang2 === 'fr' ? article.category_fr : article.category_en}
                   </Hastag>
                 <Image
-                  src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
+                  src={`${ROOT_URL}/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                   fill
                   className="object-cover"
                   alt="Image article blog"
@@ -102,7 +103,7 @@ const AsideRecentPopular = ({listPopular, articleRecent, name, hastagPage, listH
         adsVertical[0]&&(
           <div className="relative w-full h-[437px] mt-5 md:h-[752px] lg:h-[300px] lg:order-3">
                 <Hastag style="absolute top-2 z-10  right-4">ads</Hastag>
-                <Image src={`/uploads/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`} fill className="object-cover" alt="Publicite" />
+                <Image src={`${ROOT_URL}/images/${adsVertical[0].image_name}.${adsVertical[0].image_extension}`} fill className="object-cover" alt="Publicite" />
           </div>
         )
       }

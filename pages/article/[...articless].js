@@ -141,13 +141,56 @@ const Articless = ({
                   className="relative h-[250px] w-full md:h-[350px] lg:h-[500px] lg:rounded"
                 >
                   <Image
-                    src={`/uploads/images/${image.image_name}.${image.image_extension}`}
+                    src={`${ROOT_URL}/images/${image.image_name}.${image.image_extension}`}
                     className="object-cover"
                     fill
                     alt="Image article blog"
                   />
                 </div>
-              ))}
+                  ))}
+             
+              {
+                articleData.video[0].video_name&&(
+                  articleData.video?.map(video => (
+                  <div className="relative group "> 
+                      <video
+                        src={`${ROOT_URL}/videos/${video.video_name}.${video.video_extension}`}
+                        type="video/mp4"
+                        play
+                        muted={isMuted}
+                        loop
+                        ref={videoRef}
+                      />
+                      <div className="absolute right-5 bottom-5 text-main-500">
+                        {isMuted ? (
+                          <SpeakerXMarkIcon
+                            className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={() => setIsMuted((value) => !value)}
+                          />
+                        ) : (
+                          <SpeakerWaveIcon
+                            className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={() => setIsMuted((value) => !value)}
+                          />
+                        )}
+                      </div>
+                      <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        {isPlayed ? (
+                          <PlayCircleIcon
+                            className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={play}
+                          />
+                        ) : (
+                          <PauseCircleIcon
+                            className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                            onClick={pause}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))
+                )
+              }
 
               {articleData.video[0].video_name &&
                 articleData.video?.map((video) => (
@@ -271,130 +314,24 @@ const Articless = ({
           />
         </div>
       </section>
-      {adsHorizontale && (
-        <div className="relative hidden h-[250px] w-full lg:block">
-          <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
-          <Image
-            src={`/uploads/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
-            fill
-            className="object-cover"
-            alt="publicite"
-          />
-        </div>
-      )}
+      {
+        adsHorizontale&&(
+          <div className="relative hidden h-[250px] w-full lg:block">
+            <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
+            <Image
+              src={`${ROOT_URL}/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
+              fill
+              className="object-cover"
+              alt="publicite"
+            />
+      </div>
+        )
+      }
     </>
   );
 };
 
 export default Articless;
-
-// export async function getStaticProps({ params }) {
-//   const baseUrl = process.env.ROOT_URL;
-//   const articleID = parseInt(params.articless[0]);
-//   const db = new MyDatabase()
-//   let articleData = [];
-//   let listRecentArticlesFr = []; // asina ny liste ny recent article (6 farany)
-//   let listRecentArticlesEn = []; // asina ny liste ny recent article (6 farany)
-//   let listMostPopularEn = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-//   let listMostPopularFr = []; // asina ny liste-n'izay be mpijery, izany oe manana rating ambony (6 farany)
-//   let listHastag = [];
-//   let adsHorizontale = []
-//   let adsVertical = []
-
-//   /* -------------------------------------------------------------------------- */
-//   /*                    ALAINA NY LISTE NY ARTICLE REHETRA                     */
-//   /* -------------------------------------------------------------------------- */
-
-//   /* ----------------------------------- FR ----------------------------------- */
-
-//   await db.getArticle(articleID).then(data => articleData = data)
-
-//   /* -------------------------------------------------------------------------- */
-//   /*                    ALAINA NY LISTE NY HASTAG REHETRA                     */
-//   /* -------------------------------------------------------------------------- */
-
-//   /* ----------------------------------- FR ----------------------------------- */
-
-//   await db.getHastagByArticle(articleID).then(data => listHastag = data)
-
-//   /* -------------------------------------------------------------------------- */
-//   /*                      ALAINA NY LISTE NY RECENT ARTICLE                     */
-//   /* -------------------------------------------------------------------------- */
-
-//   /* ----------------------------------- FR ----------------------------------- */
-//   await db.getRecentArticle("fr").then(data => listRecentArticlesFr = data)
-
-//   /* ----------------------------------- EN ----------------------------------- */
-//   await db.getRecentArticle("en").then(data => listRecentArticlesEn = data)
-
-//   /* -------------------------------------------------------------------------- */
-//   /*                   ALAINA NY LISTE NY IZAY BE MPANOME AVIS                  */
-//   /* -------------------------------------------------------------------------- */
-
-//   /* ----------------------------------- FR ----------------------------------- */
-
-//   await db.getMostPopular("fr").then(data => listMostPopularFr = data)
-
-//   /* ----------------------------------- EN ----------------------------------- */
-
-//   await db.getMostPopular("en").then(data => listMostPopularEn = data)
-
-//    /* -------------------------------------------------------------------------- */
-//   /*                               ALAINA ADS                                   */
-//   /* -------------------------------------------------------------------------- */
-
-//   /* ----------------------------------- horizontale ----------------------------------- */
-
-//   await db.getAdsByDate("horizontale").then(data => adsHorizontale = data)
-
-//   /* ----------------------------------- EN ----------------------------------- */
-
-//   await db.getAdsByDate("verticale").then(data => adsVertical = data)
-
-//   return {
-//     props: {
-//       articleData: articleData[0],
-//       listRecentArticlesEn: dataFilter(
-//         listRecentArticlesEn,
-//         "category_id",
-//         3
-//       ),
-//       listRecentArticlesFr: dataFilter(
-//         listRecentArticlesFr,
-//         "category_id",
-//         3
-//       ),
-//       listMostPopularEn: dataFilter(listMostPopularEn, "category_id", 4),
-//       listMostPopularFr: dataFilter(listMostPopularFr, "category_id", 4),
-//       listHastag: listHastag,
-//       adsHorizontale: adsHorizontale,
-//       adsVertical: adsVertical
-//     },
-//   };
-// }
-
-// export async function getStaticPaths() {
-//   const db = new MyDatabase()
-//   let listArticle = []
-
-//   await db.getFullArticles().then(data => listArticle = data)
-
-//   const linkBeautify = (link) => {
-//     const newLink = link.replace(/[?'%;:,\s\u2019]/g, "-");
-//     return newLink.toLowerCase()
-//   };
-
-//   const paths = listArticle.map((article) => ({
-//     params: { articless: [`${article.id}`, linkBeautify(article.title)] },
-//   }));
-
-//   console.log("paths == ", paths[0].params.articless);
-
-//   return {
-//     paths,
-//     fallback: 'blocking',
-//   };
-// }
 
 export async function getServerSideProps(context) {
   const linkTab = context.query.articless;

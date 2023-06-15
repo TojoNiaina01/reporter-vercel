@@ -124,7 +124,7 @@ const ArticlePrincipale = ({
                 <article key={uuidv4()} className="group cursor-pointer">
                   <figure className="relative h-[250px] w-full lg:h-[450px]">
                     <Image
-                      src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
+                      src={`${ROOT_URL}/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                       fill
                       className="rounded object-cover"
                       alt="Article Image blog"
