@@ -310,7 +310,7 @@ const FormAds = ({
               <DateRange
                 ranges={[selectionRange]}
                 minDate={new Date()}
-                rangeColors={["#659a97"]}
+                rangeColors={["#3e817d"]}
                 onChange={handleSelect}
                 showMonthAndYearPickers={false}
                 showDateDisplay={false}

@@ -30,7 +30,7 @@ const ActiveLink = ({ children, href }) => {
     <Link href={href}>
       <p
         className={`${
-          router.pathname === href ? "rounded-xl bg-main-500 text-white" : ""
+          router.pathname === href ? "rounded-xl bg-main-400 text-white" : ""
         } flex items-center gap-2  px-4 py-3 text-sm font-semibold`}
       >
         {children}
