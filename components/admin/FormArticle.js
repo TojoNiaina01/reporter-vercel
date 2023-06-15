@@ -1105,7 +1105,7 @@ const FormArticle = ({
               {isChecked && (
                 <div className="flex w-fit flex-col">
                   <TimePicker onChange={onChangeTime} value={timeValue} />
-                  <Calendar date={new Date()} color={["#3e817d"]} />
+                  <Calendar date={new Date()} color="#3e817d" />
                 </div>
               )}
 
