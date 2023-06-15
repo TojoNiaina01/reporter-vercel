@@ -293,7 +293,7 @@ const Article = ({
 
   return (
     <div className="mx-auto w-[90%]">
-      <Toaster
+      <Toaster   
         toastOptions={{
           className: "text-sm",
         }}
@@ -380,7 +380,7 @@ const Article = ({
                   <td className="relative h-[100px] w-[100px]">
                     <Image
                       fill
-                      src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
+                      src={`${ROOT_URL}/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                       className=" object-contain"
                       alt="Article image blog"
                     />

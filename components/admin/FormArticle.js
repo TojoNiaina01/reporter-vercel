@@ -28,6 +28,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import moment from "moment";
 
 const getListFollowers = (data) => {
   return data.map((follower) => {
@@ -67,7 +68,7 @@ const FormArticle = ({
   const [slide, setSlide] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(false);
-  const [timeValue, onChangeTime] = useState("10:00");
+  
   const newArticleData = articleData;
   var richtextVal = "";
   const listFollowersTab = pushBtn ? getListFollowers(listFollowers) : [];
@@ -99,6 +100,16 @@ const FormArticle = ({
   const getHastag = (val) => {
     setHastag(val);
   };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                 PROGRAMMER                                 */
+  /* -------------------------------------------------------------------------- */
+  const [date, setDate] = useState(null)
+  const [timeValue, onChangeTime] = useState("10:00");
+
+  const calendarChange = (val) => {
+    setDate(val)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -176,7 +187,35 @@ const FormArticle = ({
                 },
               })
                 .then((res) => res.json())
-                .then((article) => {
+                .then(async(article) => {
+
+                  /* -------------------------------------------------------------------------- */
+                  /*                               AJOUT PROGRAMME                              */
+                  /* -------------------------------------------------------------------------- */
+
+                  if(isChecked){
+                    const dateVal = moment(date).format('DD-MM-YYYY')
+                    const hourVal = moment(timeValue, 'HH:mm')
+                    const fullDate = moment(dateVal).set({hour: hourVal.hour(), minute: hourVal.minute()})
+                    const programVal = {
+                      id: article.result[0].id,
+                      program: true,
+                      date_program: fullDate
+                    }
+                    const paramProgram = {
+                      query: "updateProgramArticle",
+                      param: [programVal],
+                    };
+                    await fetch(`${ROOT_URL}/api/knexApi`, {
+                      method: "POST",
+                      body: JSON.stringify(paramProgram),
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                    })
+                      .then((res) => res.json())
+                  }
+
                   /* -------------------------------------------------------------------------- */
                   /*                                HASTAG SYSTEM                               */
                   /* -------------------------------------------------------------------------- */
@@ -193,7 +232,7 @@ const FormArticle = ({
                       query: "addHastag",
                       param: [listHastag, selectedLang.tag],
                     };
-                    fetch(`${ROOT_URL}/api/knexApi`, {
+                    await fetch(`${ROOT_URL}/api/knexApi`, {
                       method: "POST",
                       body: JSON.stringify(paramHastag),
                       headers: {
@@ -218,7 +257,7 @@ const FormArticle = ({
                           query: "addHastagArticle",
                           param: [hastag_articles],
                         };
-                        fetch(`${ROOT_URL}/api/knexApi`, {
+                       fetch(`${ROOT_URL}/api/knexApi`, {
                           method: "POST",
                           body: JSON.stringify(paramHastagArticle),
                           headers: {
@@ -1105,7 +1144,7 @@ const FormArticle = ({
               {isChecked && (
                 <div className="flex w-fit flex-col">
                   <TimePicker onChange={onChangeTime} value={timeValue} />
-                  <Calendar date={new Date()} color={["#3e817d"]} />
+                  <Calendar date={date} color={["#3e817d"]} onChange={calendarChange} />
                 </div>
               )}
 

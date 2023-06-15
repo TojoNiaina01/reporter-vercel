@@ -81,6 +81,7 @@ class MyDatabase {
                         'a.flash', 
                         'a.hot', 
                         'a.slide', 
+                        'a.path',
                         'a.created_at',
                         {category_fr: 'c.fr'},
                         {category_en: 'c.en'},
@@ -119,6 +120,7 @@ class MyDatabase {
                'a.created_at',
                'a.flash', 
                'a.hot', 
+               'a.path',
                'a.slide', 
                'a.created_at',
                {category_fr: 'c.fr'},
@@ -131,7 +133,8 @@ class MyDatabase {
                
                )
         .where('a.lang', lang)
-        .orderBy('a.id', 'desc')
+        .andWhere('a.date_program', '<', knex.fn.now())
+        .orderBy('a.date_program', 'desc')
 
         if(res){
             const resToJson = JSON.parse(JSON.stringify(res))
@@ -155,6 +158,7 @@ class MyDatabase {
                             'a.lang',
                             'a.flash', 
                             'a.hot', 
+                            'a.path',
                             'a.slide', 
                             'a.created_at',
                             {category_fr: 'c.fr'},
@@ -166,7 +170,8 @@ class MyDatabase {
                             {image_type: 'img.type'}
                             
                             )
-                       .orderBy('a.id', 'desc')
+                        .where('a.date_program', '<', knex.fn.now())
+                        .orderBy('a.date_program', 'desc')
         
 
             if(res){
@@ -191,6 +196,7 @@ class MyDatabase {
                             'a.lang',
                             'a.flash', 
                             'a.hot', 
+                            'a.path',
                             'a.slide', 
                             'a.created_at',
                             {category_fr: 'c.fr'},
@@ -203,7 +209,8 @@ class MyDatabase {
                             
                             )
                         .where({'c.id': category_id, 'a.lang': lang})
-                        .orderBy('a.id', 'desc')
+                        .andWhere('a.date_program', '<', knex.fn.now())
+                        .orderBy('a.date_program', 'desc')
         
             if(res){
                 const resToJson = JSON.parse(JSON.stringify(res))
@@ -227,6 +234,7 @@ class MyDatabase {
                             'a.author', 
                             'a.lang',
                             'a.flash', 
+                            'a.path',
                             'a.hot', 
                             'a.slide', 
                             'a.created_at',
@@ -243,6 +251,7 @@ class MyDatabase {
                         .orWhereILike("a.description", `%${tag}%`)
                         .orWhereILike("a.body", `%${tag}%`)
                         .where('a.lang', lang)
+                        .andWhere('a.date_program', '<', knex.fn.now())
                         .orderBy('a.id', 'desc')
         
 
@@ -267,6 +276,7 @@ class MyDatabase {
             'a.author', 
             'a.lang',
             'a.flash', 
+            'a.path',
             'a.hot', 
             'a.slide', 
             'a.created_at',
@@ -280,6 +290,7 @@ class MyDatabase {
             
             )
         .where({'a.lang': lang, 'a.slide': true})
+        .andWhere('a.date_program', '<', knex.fn.now())
 
         if(res){
             const resToJson = JSON.parse(JSON.stringify(res))
@@ -301,6 +312,7 @@ class MyDatabase {
             'a.author', 
             'a.lang',
             'a.flash', 
+            'a.path',
             'a.hot', 
             'a.slide', 
             'a.created_at',
@@ -314,6 +326,7 @@ class MyDatabase {
             
             )
         .where({'a.lang': lang, 'a.flash': true})
+        .andWhere('a.date_program', '<', knex.fn.now())
 
         if(res){
             const resToJson = JSON.parse(JSON.stringify(res))
@@ -337,6 +350,7 @@ class MyDatabase {
             'a.author', 
             'a.lang',
             'a.flash', 
+            'a.path',
             'a.hot', 
             'a.slide', 
             'a.created_at',
@@ -350,6 +364,7 @@ class MyDatabase {
             
             )
         .where({'a.lang': lang, 'a.hot': true})
+        .andWhere('a.date_program', '<', knex.fn.now())
 
 
         if(res){
@@ -375,6 +390,7 @@ class MyDatabase {
             'a.flash', 
             'a.hot', 
             'a.slide', 
+            'a.path',
             'a.created_at',
             {category_fr: 'c.fr'},
             {category_en: 'c.en'},
@@ -386,6 +402,7 @@ class MyDatabase {
             
             )
         .where({'a.lang': lang})
+        .andWhere('a.date_program', '<', knex.fn.now())
         .orderBy('a.id', 'desc')
 
 
@@ -412,6 +429,7 @@ class MyDatabase {
             'a.lang',
             'a.flash', 
             'a.hot', 
+            'a.path',
             'a.slide', 
             'a.created_at',
             'a.views',
@@ -425,6 +443,7 @@ class MyDatabase {
             
             )
         .where({'a.lang': lang})
+        .andWhere('a.date_program', '<', knex.fn.now())
         .orderBy('a.views', 'desc')
 
 
@@ -450,6 +469,7 @@ class MyDatabase {
             'a.author', 
             'a.lang',
             'a.flash', 
+            'a.path',
             'a.hot', 
             'a.slide', 
             'a.created_at',
@@ -464,6 +484,7 @@ class MyDatabase {
             
             )
         .where({'a.lang': lang})
+        .andWhere('a.date_program', '<', knex.fn.now())
         .orderBy('a.rating', 'desc')
 
             if(res){
@@ -485,6 +506,7 @@ class MyDatabase {
                             author,
                             category_id,
                             created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
+                            date_program: moment().format("YYYY-MM-DD hh:mm:ss"),
                             lang,
                             flash: false,
                             hot: false,
@@ -514,6 +536,15 @@ class MyDatabase {
                         category_id,
                         lang,
                         created_at: moment().format("YYYY-MM-DD hh:mm:ss")
+                    })
+    }
+
+    async updateProgramArticle({id, program, date_program}){
+        return await knex('articles')
+                    .where('id', id)
+                    .update({
+                        program,
+                        date_program: moment(date_program).format("YYYY-MM-DD hh:mm:ss")
                     })
     }
 
