@@ -1,13 +1,20 @@
 import { ModalContext } from "@/Layout/Layout";
 import { Cross } from "@/public/assets/svg";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Jost } from "next/font/google";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 const SondageModal = () => {
   const { sondageModal, setSondagerModal } = useContext(ModalContext);
+  const lang = JSON.parse(localStorage.getItem("token")).lang;
+  const [langText, setLangText] = useState("");
+
+  useEffect(() => {
+    if (lang === "fr") setLangText("Quelle est votre opinion à ce sujet ?");
+    if (lang === "en") setLangText("What is your opinion on this subject ?");
+  }, []);
   return (
     <section className="fixed inset-0  z-20 flex items-center justify-center  bg-black/40 backdrop-blur-[2px]">
       <button
@@ -18,9 +25,9 @@ const SondageModal = () => {
       </button>
 
       {/*<div className="w-[45vw] rounded-lg bg-white p-14 md:p-10">*/}
-      <div className="w-full rounded-lg bg-white p-14 md:mx-4 md:p-10 lg:w-[45vw] lg:max-w-5xl">
+      <div className="w-full rounded-lg bg-gray-50 p-14 md:mx-4 md:p-10 lg:w-[45vw] lg:max-w-5xl">
         <h6 className={` text-2xl leading-7 ${jost.className} lg:text-4xl`}>
-          Quels est votre opinion sur ce sujet ?
+          {langText}
         </h6>
 
         <p className=" mt-6 text-lg font-semibold lg:text-xl">
