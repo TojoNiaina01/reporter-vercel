@@ -115,20 +115,14 @@ const Articless = ({
       <section className="mx-2 mt-10">
         <div className="flex items-center justify-between gap-1 lg:items-start">
           <div>
-            <HeaderCategory title="article" style />
-            <p className="text-xs font-semibold tracking-wide lg:text-sm">
+            <Title style="text-xl tracking-wide my-2 leading-6 lg:text-3xl lg:leading-5">
               {articleData.title}
-            </p>
-          </div>
-          <div className="absolute right-5 z-10 md:static">
-            {/* <form className="relative mx-auto w-max rounded-full bg-secondary-100">
-              <input
-                type="index"
-                className="peer relative z-10 h-12 w-12 cursor-pointer rounded-full border bg-transparent pl-12
-              outline-none focus:w-full focus:cursor-text focus:border-secondary-400 focus:pl-16 focus:pr-4"
-              />
-              <MagnifyingGlassIcon className="absolute inset-y-0 my-auto h-8 w-12 border-r  border-transparent stroke-secondary-500 px-3.5 peer-focus:border-secondary-400 peer-focus:stroke-secondary-500" />
-            </form> */}
+            </Title>
+
+            {/* Eto ilay sous titre misy slash imput vaovao */}
+            <h4 className="text-base uppercase tracking-wide text-main-400">
+              interview
+            </h4>
           </div>
         </div>
         <div className="mt-4 justify-between gap-8 lg:flex">
@@ -147,50 +141,47 @@ const Articless = ({
                     alt="Image article blog"
                   />
                 </div>
-                  ))}
-             
-              {
-                articleData.video[0].video_name&&(
-                  articleData.video?.map(video => (
-                  <div className="relative group "> 
-                      <video
-                        src={`${ROOT_URL}/videos/${video.video_name}.${video.video_extension}`}
-                        type="video/mp4"
-                        play
-                        muted={isMuted}
-                        loop
-                        ref={videoRef}
-                      />
-                      <div className="absolute right-5 bottom-5 text-main-500">
-                        {isMuted ? (
-                          <SpeakerXMarkIcon
-                            className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                            onClick={() => setIsMuted((value) => !value)}
-                          />
-                        ) : (
-                          <SpeakerWaveIcon
-                            className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                            onClick={() => setIsMuted((value) => !value)}
-                          />
-                        )}
-                      </div>
-                      <div className="absolute  text-main-500 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        {isPlayed ? (
-                          <PlayCircleIcon
-                            className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                            onClick={play}
-                          />
-                        ) : (
-                          <PauseCircleIcon
-                            className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                            onClick={pause}
-                          />
-                        )}
-                      </div>
+              ))}
+
+              {articleData.video[0].video_name &&
+                articleData.video?.map((video) => (
+                  <div className="group relative ">
+                    <video
+                      src={`${ROOT_URL}/videos/${video.video_name}.${video.video_extension}`}
+                      type="video/mp4"
+                      play
+                      muted={isMuted}
+                      loop
+                      ref={videoRef}
+                    />
+                    <div className="absolute bottom-5 right-5 text-main-500">
+                      {isMuted ? (
+                        <SpeakerXMarkIcon
+                          className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                          onClick={() => setIsMuted((value) => !value)}
+                        />
+                      ) : (
+                        <SpeakerWaveIcon
+                          className="h-5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                          onClick={() => setIsMuted((value) => !value)}
+                        />
+                      )}
                     </div>
-                  ))
-                )
-              }
+                    <div className="absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-main-500">
+                      {isPlayed ? (
+                        <PlayCircleIcon
+                          className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                          onClick={play}
+                        />
+                      ) : (
+                        <PauseCircleIcon
+                          className="h-14 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                          onClick={pause}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
 
               {articleData.video[0].video_name &&
                 articleData.video?.map((video) => (
@@ -237,9 +228,10 @@ const Articless = ({
               auteur={articleData.author}
             />
             <hr className="my-2" />
-            <Title style="text-xl tracking-wide my-2 leading-6 lg:text-2xl lg:leading-5">
-              {articleData.title}
-            </Title>
+
+            {/*<Title style="text-xl tracking-wide my-2 leading-6 lg:text-2xl lg:leading-5">*/}
+            {/*  {articleData.title}*/}
+            {/*</Title>*/}
 
             <p className="text-sm tracking-wide text-gray-600">
               {articleData.description}
@@ -314,19 +306,17 @@ const Articless = ({
           />
         </div>
       </section>
-      {
-        adsHorizontale&&(
-          <div className="relative hidden h-[250px] w-full lg:block">
-            <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
-            <Image
-              src={`${ROOT_URL}/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
-              fill
-              className="object-cover"
-              alt="publicite"
-            />
-      </div>
-        )
-      }
+      {adsHorizontale && (
+        <div className="relative hidden h-[250px] w-full lg:block">
+          <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
+          <Image
+            src={`${ROOT_URL}/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
+            fill
+            className="object-cover"
+            alt="publicite"
+          />
+        </div>
+      )}
     </>
   );
 };

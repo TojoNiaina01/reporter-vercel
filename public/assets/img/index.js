@@ -29,3 +29,4 @@ export { default as NotFoundBg } from "./NotFoundBg.png";
 export { default as PolitiqueArticleOne } from "./PolitiqueArticleOne.jpg";
 export { default as PolitiqueArticleTwo } from "./PolitiqueArticleTwo.jpg";
 export { default as PolitiqueArticleThree } from "./PolitiqueArticleThree.jpg";
+export { default as Flag } from "./flag.png";
