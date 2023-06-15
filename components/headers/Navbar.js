@@ -5,8 +5,9 @@ import {
   ChevronDownIcon,
   EnvelopeIcon,
   QuestionMarkCircleIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Logo } from "@/public/assets/img";
+import { Flag, Logo } from "@/public/assets/img";
 import { MenuBurger, Cross } from "@/public/assets/svg";
 import useMediaQuery from "@/hook/useMediaQuery";
 import { ModalContext } from "@/Layout/Layout";
@@ -74,7 +75,10 @@ const Navbar = ({ clickHandler }) => {
       >
         <Image src={Logo} fill className="object-contain" alt="Logo" />
       </div>
-      <div>
+      <div className="flex items-center gap-2">
+        <div className="relative hidden h-[40px] w-[40px] lg:block">
+          <Image src={Flag} fill className="object-cover" alt="MG flag" />
+        </div>
         <div
           className="flex h-fit w-40 items-center rounded-full
       border border-gray-300 px-2 py-2 md:w-64 md:flex-grow-0 lg:order-1 lg:mx-0 lg:w-52 2xl:w-64"
@@ -98,7 +102,7 @@ const Navbar = ({ clickHandler }) => {
       </div>
 
       {isAboveMediumScreens && (
-        <div className="mx-2 flex items-center gap-4 lg:order-3 lg:mx-0 lg:gap-7">
+        <div className="mx-2 flex items-center gap-4 lg:order-3 lg:mx-0 lg:gap-4">
           <select
             className="cursor-pointer text-sm font-semibold outline-none"
             onChange={changeLangHandler}
@@ -110,35 +114,22 @@ const Navbar = ({ clickHandler }) => {
             ))}
           </select>
 
-          {/* Toggel sondage modal Desctop */}
           <button
-            className="bg-white active:scale-95"
-            onClick={() => setSondagerModal(!sondageModal)}
-          >
-            <QuestionMarkCircleIcon className="h-5" />
-          </button>
-
-          <button
-            className="flex items-center gap-2 rounded-full bg-main-400 px-4
-        py-3 text-white transition duration-150 active:scale-95"
+            className="flex items-center gap-2 rounded-full bg-main-400 px-4 py-3 text-white active:scale-95"
             onClick={() => setNewsLetterModal(!newsLetterModal)}
           >
             <EnvelopeIcon className="h-5 text-white" />
-            <p className="text-xs font-semibold uppercase tracking-wider 2xl:text-sm">
-              {subsribTag}
-            </p>
+          </button>
+
+          {/* Toggel sondage modal Desctop */}
+          <button
+            className=" flex items-center gap-2 rounded-full bg-main-400 px-4 py-3 text-white active:scale-95"
+            onClick={() => setSondagerModal(!sondageModal)}
+          >
+            <CheckCircleIcon className="h-5" />
+            <span>Sondage</span>
           </button>
         </div>
-      )}
-
-      {/* toggle sondage mobile */}
-      {!isAboveMediumScreens && (
-        <button
-          className="mx-2 active:scale-95"
-          onClick={() => setSondagerModal(!sondageModal)}
-        >
-          <QuestionMarkCircleIcon className="h-5" />
-        </button>
       )}
 
       {/* Mobile Boutton */}
@@ -155,7 +146,7 @@ const Navbar = ({ clickHandler }) => {
           {/* Menu mobile */}
           {toggleMenu && (
             <div className="absolute right-0 top-12 z-20  rounded-md border border-gray-200 bg-white p-2 shadow-md">
-              <div className="flex gap-4">
+              <div className="flex flex-col gap-4">
                 <select
                   className="cursor-pointer bg-white text-sm font-semibold outline-none"
                   onChange={changeLangHandler}
@@ -166,6 +157,7 @@ const Navbar = ({ clickHandler }) => {
                     </option>
                   ))}
                 </select>
+
                 <button
                   className="flex items-center gap-2 rounded-full bg-main-400 px-4 py-2 text-white outline-none focus:outline-none"
                   onClick={() => setNewsLetterModal(!newsLetterModal)}
@@ -174,6 +166,15 @@ const Navbar = ({ clickHandler }) => {
                   <span className="text-sm font-semibold uppercase tracking-wide ">
                     s'abonner
                   </span>
+                </button>
+
+                {/* Toggel sondage modal Desctop */}
+                <button
+                  className=" flex items-center gap-2 rounded-full bg-main-400 px-4 py-2 text-white active:scale-95"
+                  onClick={() => setSondagerModal(!sondageModal)}
+                >
+                  <CheckCircleIcon className="h-5" />
+                  <span>Sondage</span>
                 </button>
               </div>
             </div>
