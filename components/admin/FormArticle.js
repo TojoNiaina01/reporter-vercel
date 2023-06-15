@@ -10,6 +10,7 @@ import {
   HomeIcon,
   XMarkIcon,
   EnvelopeIcon,
+  ViewfinderCircleIcon,
 } from "@heroicons/react/24/outline";
 import { MenuFR } from "@/constant/constant";
 import { Listbox } from "@headlessui/react";
@@ -20,6 +21,7 @@ import { ROOT_URL } from "@/env";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import mail from "@/config/mailer/mail";
+import PreviewModal from "@/components/PreviewModal";
 
 const getListFollowers = (data) => {
   return data.map((follower) => {
@@ -46,6 +48,7 @@ const FormArticle = ({
   const [selectedMenu, setSelectedMenu] = useState(listCategories[0]);
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [previewModal, setPreviewModal] = useState(false);
   const [value, setValue] = useState("");
   const [title, setTitle] = useState(articleData.title);
   const [author, setAuthor] = useState("");
@@ -1160,6 +1163,7 @@ const FormArticle = ({
               <XMarkIcon className="h-5" />
               <span>Annuler</span>
             </button>
+
             <button
               type="submit"
               className={`flex items-center ${
@@ -1194,10 +1198,21 @@ const FormArticle = ({
 
               <span>{submitBtn}</span>
             </button>
+
+            {/* Preview */}
+            <button
+              type="button"
+              className="flex items-center gap-2 rounded-full bg-gray-500  px-4 py-2 font-semibold text-white shadow-md active:scale-95"
+              onClick={() => setPreviewModal(!previewModal)}
+            >
+              <ViewfinderCircleIcon className="h-5" />
+              <span>Preview</span>
+            </button>
           </div>
         </form>
 
         {confirmModal && <ConfirmAdd setConfirmModal={setConfirmModal} />}
+        {previewModal && <PreviewModal setPreviewModal={setPreviewModal} />}
       </section>
     </>
   );
