@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Cross } from "@/public/assets/svg";
 import HeaderCategory from "@/components/HeaderCategory";
 import DateAuteur from "@/components/DateAuteur";
@@ -16,15 +16,21 @@ import { ArticleMostTwo, ArticleOne } from "@/public/assets/img";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import { Jost } from "next/font/google";
+import parse from "html-react-parser";
 
 const jost = Jost({ subsets: ["latin"] });
-const PreviewModal = ({ setPreviewModal }) => {
+const PreviewModal = ({ setPreviewModal, data }) => {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlayed, setIsPlayed] = useState(true);
   const [parentWidth, setParentWidth] = useState(1000);
   const [imageWidth, setImageWidth] = useState(966);
   const [imageHeight, setImageHeight] = useState(500);
+  const [body, setBody] = useState("")
   const videoRef = useRef();
+
+  useEffect(() => {
+    setBody(parse(data.body)); // tsy maintsy parse-na ilay body satria HTML type string
+  }, [])
 
   const play = () => {
     setIsPlayed((value) => !value);
@@ -52,6 +58,8 @@ const PreviewModal = ({ setPreviewModal }) => {
       setImageHeight(250);
     }
   };
+
+  console.log("media === ", data.media)
 
   return (
     <>
@@ -91,23 +99,26 @@ const PreviewModal = ({ setPreviewModal }) => {
             style={{ width: `${imageWidth}px` }}
           >
             <div className="space-y-4">
-              <div
+           {
+            data.media.map(file => (
+              (file.type.split("/")[0] === "image") ? (
+                <div
                 key={uuidv4()}
                 className="relative lg:rounded"
                 style={{ height: `${imageHeight}px` }}
               >
                 <Image
                   // src={`/uploads/images/${image.image_name}.${image.image_extension}`}
-                  src={ArticleMostTwo}
+                  src={URL.createObjectURL(file)}
                   className="object-cover"
                   fill
                   alt="Image article blog"
                 />
               </div>
-
-              <div className="group relative ">
+              ) : (
+                <div className="group relative ">
                 <video
-                  src="/assets/video/video1.mp4"
+                  src={URL.createObjectURL(file)}
                   type="video/mp4"
                   play
                   muted={isMuted}
@@ -141,26 +152,29 @@ const PreviewModal = ({ setPreviewModal }) => {
                   )}
                 </div>
               </div>
+              )
+            ))
+           }
+            
+              
+
+             
             </div>
             {/*<DateAuteur date={articleData.created_at} auteur={articleData.author} />*/}
             <DateAuteur date="05.12.2024" auteur="Mandreshy" />
             <hr className="my-2" />
             <Title style="text-xl tracking-wide my-2 leading-6 lg:text-2xl lg:leading-5">
               {/*{articleData.title}*/}
-              Peut-on allier lutte climatique et développement économique ?
+             {data.title}
             </Title>
 
             <p className="text-sm tracking-wide text-gray-600">
               {/*{articleData.description}*/}
-              C’est l’une des questions qui a taraudé les participants de
-              l’Africa CEO Forum, qui s’est déroulé les 5 et 6 juin à Abidjan.
-              Voici quelques-unes de leurs réponses.
+             {data.description}
             </p>
             <div className={`${jost.className} mt-10`}>
               {/*{body}*/}
-              C’est l’une des questions qui a taraudé les participants de
-              l’Africa CEO Forum, qui s’est déroulé les 5 et 6 juin à Abidjan.
-              Voici quelques-unes de leurs réponses.
+             {body}
             </div>
           </div>
         </div>

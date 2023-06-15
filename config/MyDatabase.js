@@ -497,7 +497,7 @@ class MyDatabase {
         
     }
     
-    async addArticle({title, body, description, author, category_id, lang}){
+    async addArticle({title, body, description, author, category_id, lang, path}){
        let articleID = await knex
                         .insert({
                             title,
@@ -510,7 +510,8 @@ class MyDatabase {
                             lang,
                             flash: false,
                             hot: false,
-                            slide: false
+                            slide: false, 
+                            path
                         }) 
                         .into('articles')
         articleID = JSON.parse(JSON.stringify(articleID))
