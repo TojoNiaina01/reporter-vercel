@@ -22,6 +22,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import mail from "@/config/mailer/mail";
 import PreviewModal from "@/components/PreviewModal";
+import { Calendar } from "react-date-range";
+import TimePicker from "react-time-picker";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 
 const getListFollowers = (data) => {
   return data.map((follower) => {
@@ -49,6 +55,7 @@ const FormArticle = ({
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [confirmModal, setConfirmModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [value, setValue] = useState("");
   const [title, setTitle] = useState(articleData.title);
   const [author, setAuthor] = useState("");
@@ -60,6 +67,7 @@ const FormArticle = ({
   const [slide, setSlide] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(false);
+  const [timeValue, onChangeTime] = useState("10:00");
   const newArticleData = articleData;
   var richtextVal = "";
   const listFollowersTab = pushBtn ? getListFollowers(listFollowers) : [];
@@ -68,6 +76,10 @@ const FormArticle = ({
   const linkBeautify = (link) => {
     const newLink = link.replace(/[?%';:,\s\u2019]/g, "-");
     return newLink.toLowerCase();
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
   };
 
   const richTextHandler = (val) => {
@@ -1079,6 +1091,24 @@ const FormArticle = ({
                 onChange={() => {}}
                 defaultValue={""}
               />
+
+              {/* programmer */}
+              <div className="space-x-2">
+                <input
+                  type="checkbox"
+                  id="check"
+                  onChange={handleCheckboxChange}
+                />
+                <label htmlFor="check">Programmer la diffusion</label>
+              </div>
+
+              {isChecked && (
+                <div className="flex w-fit flex-col">
+                  <TimePicker onChange={onChangeTime} value={timeValue} />
+                  <Calendar date={new Date()} color={["#3e817d"]} />
+                </div>
+              )}
+
               {pushBtn && (
                 <div className="flex gap-3">
                   <button
