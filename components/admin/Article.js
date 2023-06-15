@@ -20,6 +20,8 @@ import { ROOT_URL } from "@/env";
 import Paginate from "@/components/Paginate";
 import { useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import path from 'path';
+
 
 const articlesFilter = (data, categoryID, lang) => {
   return data.filter(article => (article.category_id === categoryID && article.lang === lang))
@@ -28,7 +30,6 @@ const articlesFilter = (data, categoryID, lang) => {
 const deleteArticle = (data, id) => {
   return data.filter(article => article.id !== id)
 }
-
 const searchArticle = (data, toSearch) => {
   const checkSearch = new RegExp(toSearch, "i")
   return data.filter(article => checkSearch.test(article.title))
@@ -48,6 +49,7 @@ const Article = ({ header, tabhead, data, user, listArticles, listCategories, di
   const [articles, setArticles] = useState(articlesFilter(listArticles, 1, "fr"))
   const [toSearch, setToSearch] = useState("")
   const mainUser = user?useSelector(state => state.user):false
+  const pathFolderImage = path.join(__dirname,'..','..','..','..','images')
 
   /* -------------------------------- list user ------------------------------- */
   const [listNewUsers, setListNewUsers] = useState(listUsers)
@@ -349,7 +351,7 @@ const deleteUserHandler = (userID, email) => {
                   <td className="relative w-[100px] h-[100px]">
                     <Image
                       fill
-                      src={`/uploads/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
+                      src={`${ROOT_URL}/images/${article.image[0].image_name}.${article.image[0].image_extension}`}
                       className=" object-contain"
                       alt="Article image blog"
                     />

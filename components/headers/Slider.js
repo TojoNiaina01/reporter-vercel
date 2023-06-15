@@ -5,6 +5,7 @@ import { Jost } from "next/font/google";
 import DateAuteur from "@/components/DateAuteur";
 import localStorage from "localStorage";
 import { useRouter } from "next/router";
+import { ROOT_URL } from "@/env";
 
 const jost = Jost({ subsets: ["latin"], weight: "400" });
 
@@ -39,7 +40,7 @@ const Slider = ({ dataSlide }) => {
       <div className="relative max-w-6xl">
         <div className="relative h-[240px] w-full md:h-[450px] 2xl:h-[600px] ">
           <Image
-            src={`/uploads/images/${dataSlide.image[0].image_name}.${dataSlide.image[0].image_extension}`}
+            src={`${ROOT_URL}/images/${dataSlide.image[0].image_name}.${dataSlide.image[0].image_extension}`}
             fill
             alt="Article"
             className="object-cover"

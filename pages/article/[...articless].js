@@ -144,7 +144,7 @@ const Articless = ({
                   className="relative h-[250px] w-full md:h-[350px] lg:h-[450px] lg:rounded"
                 >
                   <Image
-                    src={`/uploads/images/${image.image_name}.${image.image_extension}`}
+                    src={`${ROOT_URL}/images/${image.image_name}.${image.image_extension}`}
                     className="object-cover"
                     fill
                     alt="Image article blog"
@@ -157,7 +157,7 @@ const Articless = ({
                   articleData.video?.map(video => (
                   <div className="relative group "> 
                       <video
-                        src={`/uploads/videos/${video.video_name}.${video.video_extension}`}
+                        src={`${ROOT_URL}/videos/${video.video_name}.${video.video_extension}`}
                         type="video/mp4"
                         play
                         muted={isMuted}
@@ -285,7 +285,7 @@ const Articless = ({
           <div className="relative hidden h-[250px] w-full lg:block">
             <Hastag style="absolute top-5 z-10  right-14">ads </Hastag>
             <Image
-              src={`/uploads/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
+              src={`${ROOT_URL}/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
               fill
               className="object-cover"
               alt="publicite"

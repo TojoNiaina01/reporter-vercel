@@ -141,7 +141,7 @@ const deleteAdsHandler = (adsID, imageID) => {
                 <td className="relative w-[100px] h-[100px]">
                   <Image
                     fill
-                    src={`/uploads/images/${ads.image_name}.${ads.image_extension}`}
+                    src={`${ROOT_URL}/images/${ads.image_name}.${ads.image_extension}`}
                     className=" object-contain"
                     alt="Article image blog"
                   />

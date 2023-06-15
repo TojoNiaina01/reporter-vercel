@@ -84,7 +84,7 @@ const Home = ({
       {adsHorizontale[0]&&<div className="app relative mt-6 hidden h-[290px] w-full cursor-pointer lg:block 2xl:mt-16">
         <Hastag style="absolute top-10 z-10  right-14">ads </Hastag>
         <Image
-          src={`/uploads/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
+          src={`${ROOT_URL}/images/${adsHorizontale[0].image_name}.${adsHorizontale[0].image_extension}`}
           fill
           className="h-[290px] w-full object-cover"
           alt="Publicite"

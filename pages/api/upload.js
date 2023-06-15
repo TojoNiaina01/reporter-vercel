@@ -4,11 +4,6 @@ import path from 'path';
 import {v4 as uuidV4 } from 'uuid';
 
 
-const express = require('express')
-const multer = require('multer')
-const sharp = require('sharp')
-const server = express();
-
 export const config = {
     api: {
       bodyParser: false,
@@ -39,8 +34,8 @@ export default async function handler(req, res) {
        try
        {
          const form = new formidable.IncomingForm()
-        const pathFolderImage = path.join(__dirname,'..','..','..','..','public','uploads','images')
-        const pathFolderVideo = path.join(__dirname,'..','..','..','..','public','uploads','videos')
+        const pathFolderImage = path.join(__dirname,'..','..','..','..', 'uploads','images')
+        const pathFolderVideo = path.join(__dirname,'..','..','..','..','uploads','videos')
         form.multiples = true
         //form.uploadDir = pathFolder
         //form.maxFileSize = 1 * 1024 * 1024
@@ -65,18 +60,6 @@ export default async function handler(req, res) {
           }
 
           if(checkType(extension) === 'image'){
-
-            //  // Lire l'image téléchargée
-            // const imageBuffer = fs.readFileSync(file.filepath);
-
-            // // Optimiser l'image avec sharp
-            // const optimizedBuffer = await sharp(imageBuffer)
-            //   //.resize(800) // Redimensionner l'image si nécessaire
-            //  // .jpeg({ quality: 80 }) // Définir la qualité de compression JPEG
-            //   .toBuffer()
-            //   console.log("path == ", file.filepath)
-            
-            //   fs.writeFileSync(path.join(pathFolderImage,`${newName}.${extension}`), optimizedBuffer)
 
 
           fs.rename(file.filepath, path.join(pathFolderImage,`${newName}.${extension}`), () => {

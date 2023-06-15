@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import localStorage from "localStorage";
 import { useRouter } from "next/navigation";
+import { ROOT_URL } from "@/env";
 
 const MainMost = ({articleData}) => {
   const lang = JSON.parse(localStorage.getItem('token')).lang
@@ -41,7 +42,7 @@ const MainMost = ({articleData}) => {
       <Hastag style="absolute top-1 z-10  left-1">{hastag}</Hastag>
       <div className="relative w-full h-[100px] md:h-[150px] lg:w-full lg:h-[200px]">
         <Image
-          src={`/uploads/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
+          src={`${ROOT_URL}/images/${articleData.image[0].image_name}.${articleData.image[0].image_extension}`}
           fill
           className="object-cover"
           alt="Article image blog"
