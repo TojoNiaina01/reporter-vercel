@@ -3,6 +3,7 @@ import { Cross } from "@/public/assets/svg";
 import Image from "next/image";
 import React, { useContext } from "react";
 import { Jost } from "next/font/google";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 const SondageModal = () => {
