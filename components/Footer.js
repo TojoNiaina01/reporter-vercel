@@ -7,13 +7,13 @@ import { MenuFR } from "@/constant/constant";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import localStorage from "localStorage";
-import { ROOT_URL  } from "@/env";
+import { ROOT_URL } from "@/env";
 
 const jost = Jost({ subsets: ["latin"], weight: "600" });
 
-const Footer = ({listCategories}) => {
-  const lang = JSON.parse(localStorage.getItem('token')).lang
- 
+const Footer = ({ listCategories }) => {
+  const lang = JSON.parse(localStorage.getItem("token")).lang;
+
   return (
     <footer className="mx-4 my-10 md:mx-0">
       <Image src={Border} alt="Graphics" />
@@ -37,7 +37,15 @@ const Footer = ({listCategories}) => {
           <hr className="py-2" />
           <ul className="grid grid-cols-2 gap-[4px]">
             {listCategories?.map((category) => (
-              <li onClick={() => window.location = `${ROOT_URL}/${category.id}/${category[lang].toLowerCase()}`} key={uuidv4()} className="footerCateg">
+              <li
+                onClick={() =>
+                  (window.location = `${ROOT_URL}/${category.id}/${category[
+                    lang
+                  ].toLowerCase()}`)
+                }
+                key={uuidv4()}
+                className="footerCateg"
+              >
                 {category[lang]}
               </li>
             ))}
@@ -60,7 +68,7 @@ const Footer = ({listCategories}) => {
           <ul className="flex flex-wrap  gap-3">
             <li>
               <SocialIcon
-                url="https://facebook.com"
+                url="https://www.facebook.com/nalyste"
                 style={{ height: 35, width: 35 }}
                 className="hover:scale-105"
               />
@@ -81,7 +89,7 @@ const Footer = ({listCategories}) => {
             </li>
             <li>
               <SocialIcon
-                url="https://instagram.com"
+                url="https://www.instagram.com/indep9reporter/"
                 style={{ height: 35, width: 35 }}
                 className="hover:scale-105"
               />

@@ -22,9 +22,8 @@ import { useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 
 const articlesFilter = (data, categoryID, lang) => {
-  return data.filter(
-    (article) => article.category_id === categoryID && article.lang === lang
-  );
+
+  return data.filter((article) => article.category_id === categoryID && article.lang === lang);
 };
 
 const deleteArticle = (data, id) => {
@@ -51,15 +50,15 @@ const Article = ({
     { tag: "fr", langue: "français" },
     { tag: "en", langue: "Anglais" },
   ];
+
+  console.log("list article == ", articlesFilter(listArticles, 1, "fr"))
   const tmpArticles = useRef(listArticles);
   const [selectedMenu, setSelectedMenu] = useState(listCategories[0]);
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [modalShow, setModalShow] = useState(false);
   const [articleData, setArticleData] = useState();
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
-  const [articles, setArticles] = useState(
-    articlesFilter(listArticles, 1, "fr")
-  );
+  const [articles, setArticles] = useState(articlesFilter(listArticles, 1, "fr"));
   const [toSearch, setToSearch] = useState("");
   const mainUser = user ? useSelector((state) => state.user) : false;
 
@@ -94,6 +93,7 @@ const Article = ({
   };
 
   useEffect(() => {
+    console.log("article == ", articles)
     const endOffset = itemOffset + itemsPerPage;
     console.log("main user === ", mainUser);
     if (user) {
