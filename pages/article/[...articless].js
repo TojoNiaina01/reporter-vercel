@@ -115,12 +115,12 @@ const Articless = ({
       <section className="mx-2 mt-10">
         <div className="flex items-center justify-between gap-1 lg:items-start">
           <div>
-            <Title style="text-xl tracking-wide my-2 leading-6 lg:text-3xl lg:leading-5">
+            <Title style="text-2xl tracking-wide my-2 leading-8 lg:text-5xl lg:leading-tight">
               {articleData.title}
             </Title>
 
             {/* Eto ilay sous titre misy slash imput vaovao */}
-            <h4 className="text-base uppercase tracking-wide text-main-400">
+            <h4 className="text-base uppercase tracking-wide text-main-400 ">
               interview
             </h4>
           </div>
