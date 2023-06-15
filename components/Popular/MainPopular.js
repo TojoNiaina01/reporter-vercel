@@ -4,6 +4,7 @@ import DateAuteur from "@/components/DateAuteur";
 import Title from "@/components/Title";
 import moment from "moment";
 import { useRouter } from "next/router";
+import { ROOT_URL } from "@/env";
 
 const MainPopular = ({ articleData, styleHidden, dateStyle }) => {
   const router = useRouter()

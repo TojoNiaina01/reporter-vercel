@@ -1138,6 +1138,63 @@ class MyDatabase {
                 return null
                 }
      }
+
+     /**========================================================================
+     **                            SONDAGE
+     * @addSondage           : ajouter une sondage
+     * @deleteSondage        : supprimer une sondage
+     * @deleteAllOptions     : supprimer tous les options de la sondage
+     *========================================================================**/
+
+     async getSondage(id){
+        let res =  await knex('sondages')
+                        .select('*')
+                        
+                if(res){
+                return JSON.parse(JSON.stringify(res))
+                }else{
+                return null
+                }
+     }
+
+     async addSondage({title, date_start, date_end}){
+        let sondageID = await knex
+                         .insert({
+                             title,
+                             date_start,
+                             date_end
+                         }) 
+                         .into('sondages')
+            sondageID = JSON.parse(JSON.stringify(sondageID))
+ 
+         return this.getSondage(sondageID[0])
+     }
+
+     async addSondageOption(data){
+            await knex
+                .insert(data) 
+                .into('sondages_option')
+ 
+         return data
+     }
+
+     async deleteSondage(id){
+        await knex('sondages')
+             .where('id', id)
+             .del()
+        return id
+    }
+
+    async deleteAllSondageOption(sondage_id){
+        await knex('sondages_options')
+             .where('sondage_id', sondage_id)
+             .del()
+        return sondage_id
+    }
+
+
+
+
 }
 
 export default MyDatabase;
