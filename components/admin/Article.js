@@ -22,8 +22,9 @@ import { useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 
 const articlesFilter = (data, categoryID, lang) => {
-
-  return data.filter((article) => article.category_id === categoryID && article.lang === lang);
+  return data.filter(
+    (article) => article.category_id === categoryID && article.lang === lang
+  );
 };
 
 const deleteArticle = (data, id) => {
@@ -51,14 +52,16 @@ const Article = ({
     { tag: "en", langue: "Anglais" },
   ];
 
-  console.log("list article == ", articlesFilter(listArticles, 1, "fr"))
+  console.log("list article == ", articlesFilter(listArticles, 1, "fr"));
   const tmpArticles = useRef(listArticles);
   const [selectedMenu, setSelectedMenu] = useState(listCategories[0]);
   const [selectedLang, setSelectedLang] = useState(lang[0]);
   const [modalShow, setModalShow] = useState(false);
   const [articleData, setArticleData] = useState();
   const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
-  const [articles, setArticles] = useState(articlesFilter(listArticles, 1, "fr"));
+  const [articles, setArticles] = useState(
+    articlesFilter(listArticles, 1, "fr")
+  );
   const [toSearch, setToSearch] = useState("");
   const mainUser = user ? useSelector((state) => state.user) : false;
 
@@ -93,7 +96,7 @@ const Article = ({
   };
 
   useEffect(() => {
-    console.log("article == ", articles)
+    console.log("article == ", articles);
     const endOffset = itemOffset + itemsPerPage;
     console.log("main user === ", mainUser);
     if (user) {
@@ -293,7 +296,7 @@ const Article = ({
 
   return (
     <div className="mx-auto w-[90%]">
-      <Toaster   
+      <Toaster
         toastOptions={{
           className: "text-sm",
         }}
@@ -421,7 +424,10 @@ const Article = ({
                       />
                       <TrashIcon
                         className="h-5 cursor-pointer text-red-500"
-                        onClick={() => deleteArticleHandler(article.id)}
+                        // onClick={() => deleteArticleHandler(article.id)
+                        onClick={() =>
+                          setModalDeleteConfirm(!modalDeleteConfirm)
+                        }
                       />
                     </div>
                   </td>
@@ -489,7 +495,29 @@ const Article = ({
         />
       )}
       {modalDeleteConfirm && (
-        <ConfirmDelete setModalDeleteConfirm={setModalDeleteConfirm} />
+        <div className="fixed inset-0  z-20 flex items-center justify-center  bg-black/40 backdrop-blur-[2px]">
+          <div className="w-[500px] rounded-lg bg-white p-14 md:p-10">
+            <h3 className="text-lg font-semibold">
+              Cet article sera définitivement supprimé, Êtes-vous sûr(e) de
+              vouloir continuer ?
+            </h3>
+            <div className="mt-2 space-x-2">
+              <input type="checkbox" id="confirm" />
+              <label htmlFor="confirm">Confirmer</label>
+            </div>
+            <div className="mt-6">
+              <button className="mr-2 rounded-lg bg-main-400 p-2 text-white">
+                Valider
+              </button>
+              <button
+                className="ml-2 rounded-lg bg-red-400 p-2 text-white"
+                onClick={() => setModalDeleteConfirm(false)}
+              >
+                Annuler
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -47,7 +47,7 @@ const Sondage = () => {
                   type="text"
                 />
                 <div>
-                  <div className="grid grid-cols-2 gap-4 pt-4">
+                  <div className="grid grid-cols-2  gap-4 pt-4">
                     <Input
                       id="resultOne"
                       label="Premier choix"
@@ -96,6 +96,7 @@ const Sondage = () => {
                   </div>
                 </div>
               </div>
+
               <div className="mx-auto overflow-hidden rounded-lg border border-secondary-200">
                 <DateRange
                   ranges={[selectionRange]}
