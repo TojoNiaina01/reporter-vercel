@@ -157,6 +157,10 @@ const Sondage = () => {
               </div>
             </div>
           </div>
+
+          <button className="mt-8 rounded-xl bg-main-400 p-4 text-white active:scale-95">
+            Crée un nouveau sondage.
+          </button>
         </>
       )}
     </section>
