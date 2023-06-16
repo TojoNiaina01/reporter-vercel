@@ -62,7 +62,7 @@ const Sondage = () => {
                     />
 
                     {inputs?.map((input, i) => (
-                      <div className="relative w-full">
+                      <div className="relative">
                         <input
                           type="text"
                           id="choix"
@@ -109,7 +109,7 @@ const Sondage = () => {
                 />
               </div>
             </div>
-            <div className="gaflex mt-8 flex h-[100px] w-[100px] items-center justify-center">
+            <div className="mt-8 flex h-[100px] w-[100px] items-center gap-5">
               <button
                 type="button"
                 className="flex items-center gap-2 rounded-full bg-[#555555] px-4 py-2 font-semibold text-white shadow-md active:scale-95"
@@ -123,7 +123,6 @@ const Sondage = () => {
             gap-2 rounded-full bg-main-400 px-4 py-2 font-semibold text-white shadow-md active:scale-95`}
               >
                 <CheckBadgeIcon className="h-5" />
-
                 <span>Valider</span>
               </button>
             </div>
