@@ -29,7 +29,7 @@ const Sondage = () => {
     key: "selection",
   };
 
-  const [sondageActif, setSondageActif] = useState(true);
+  const [sondageActif, setSondageActif] = useState(false);
   return (
     <section className="mx-auto w-[90%]">
       {!sondageActif && (
@@ -62,12 +62,20 @@ const Sondage = () => {
                     />
 
                     {inputs?.map((input, i) => (
-                      <Input
-                        id={i}
-                        label="Plus de choix"
-                        required
-                        type="text"
-                      />
+                      <div className="relative w-full">
+                        <input
+                          type="text"
+                          id="choix"
+                          placeholder=" "
+                          className={`peer w-full rounded-md border border-gray-400 bg-white p-4 pl-4 pt-6 font-light outline-none transition`}
+                        />
+                        <label
+                          htmlFor="choix"
+                          className="text-md  absolute left-4 top-5 z-10 origin-[0] -translate-y-3 transform text-gray-500 duration-150 peer-placeholder-shown:translate-y-0          peer-placeholder-shown:scale-100          peer-focus:-translate-y-4 peer-focus:scale-75"
+                        >
+                          Plus de choix
+                        </label>
+                      </div>
                     ))}
                   </div>
                   <div className="flex justify-center gap-2">
