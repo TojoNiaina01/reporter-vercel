@@ -10,7 +10,8 @@ const testHandler = () => {
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    ["bold", "italic", "underline", "strike"],
+    [{ font: [] }],
+    [("bold", "italic", "underline", "strike")],
     ["link"],
     [{ list: "ordered" }, { list: "bullet" }],
     ["blockquote"],
@@ -94,7 +95,7 @@ const RichText = ({ style, value, setValue }) => {
   return (
     <ReactQuill
       modules={modules}
-      className={` max-w-5xl ${style} mt-4 2xl:h-[300px] 2xl:mb-20`}
+      className={` max-w-5xl ${style} mt-4 2xl:mb-20 2xl:h-[300px]`}
       value={value}
       onChange={setValue}
       onPaste={pasteHandler}

@@ -29,7 +29,7 @@ const Sondage = () => {
     key: "selection",
   };
 
-  const [sondageActif, setSondageActif] = useState(false);
+  const [sondageActif, setSondageActif] = useState(true);
   return (
     <section className="mx-auto w-[90%]">
       {!sondageActif && (
@@ -150,7 +150,7 @@ const Sondage = () => {
                 2
               </div>
             </div>
-            <div className=" relative aspect-square w-full rounded-xl bg-gradient-to-br from-[#361a12] to-secondary-400 p-8 text-white">
+            <div className=" relative aspect-square w-full rounded-xl bg-gradient-to-br from-sky-700 to-sky-500 p-8 text-white">
               <p className=" text-4xl font-semibold">41%</p>
               <span className="text-lg">Choix numero un se place ici</span>
               <div className="absolute -right-8 -top-14 flex h-[100px] w-[100px] items-center justify-center rounded-full border-4 border-white bg-secondary-400 text-xl text-white">

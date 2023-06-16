@@ -35,6 +35,7 @@ const Menu = ({ listCategories }) => {
       setTourism("tourisme");
     }
   }, []);
+
   return (
     <div className="mx-4 select-none pt-4 md:mx-0">
       <ul

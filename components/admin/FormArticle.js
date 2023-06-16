@@ -12,7 +12,6 @@ import {
   EnvelopeIcon,
   ViewfinderCircleIcon,
 } from "@heroicons/react/24/outline";
-import { MenuFR } from "@/constant/constant";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ConfirmAdd from "@/components/ConfirmAdd";
@@ -68,9 +67,9 @@ const FormArticle = ({
   const [slide, setSlide] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(false);
-  const [path, setPath] = useState()
-  const [dataPreview, setDataPreview] = useState()
-  
+  const [path, setPath] = useState();
+  const [dataPreview, setDataPreview] = useState();
+
   const newArticleData = articleData;
   var richtextVal = "";
   const listFollowersTab = pushBtn ? getListFollowers(listFollowers) : [];
@@ -104,63 +103,61 @@ const FormArticle = ({
   };
 
   const getPath = (val) => {
-    setPath(val)
-  }
+    setPath(val);
+  };
 
   /* -------------------------------------------------------------------------- */
   /*                                   PREVIEW                                  */
   /* -------------------------------------------------------------------------- */
-const previewHandler = () => {
- 
-  let isEmpty = 0
+  const previewHandler = () => {
+    let isEmpty = 0;
 
-  const fileTmp = []
+    const fileTmp = [];
 
-  if(files[0]){
-    fileTmp.push(files[0])
-  }
-
-  if(files[1]){
-    fileTmp.push(files[1])
-  }
-
-  if(files[2]){
-    fileTmp.push(files[2])
-  }
-  const tmpDataPrev = {
-    media: fileTmp,
-    title: title,
-    description: descript,
-    body: value,
-    path: path
-  }
-
-  
-  for (const prop in tmpDataPrev) {
-    if (!tmpDataPrev[prop]) isEmpty++;
-  }
-
-  if(!isEmpty){
-    if(files){
-      setPreviewModal(!previewModal)
-      setDataPreview(tmpDataPrev)
-    }else{
-      toast.error("Sélectionner au moin une image")
+    if (files[0]) {
+      fileTmp.push(files[0]);
     }
-  }else{
-    toast.error("Tous les champs sont obligatoires")
-  }
-}
+
+    if (files[1]) {
+      fileTmp.push(files[1]);
+    }
+
+    if (files[2]) {
+      fileTmp.push(files[2]);
+    }
+    const tmpDataPrev = {
+      media: fileTmp,
+      title: title,
+      description: descript,
+      body: value,
+      path: path,
+    };
+
+    for (const prop in tmpDataPrev) {
+      if (!tmpDataPrev[prop]) isEmpty++;
+    }
+
+    if (!isEmpty) {
+      if (files) {
+        setPreviewModal(!previewModal);
+        setDataPreview(tmpDataPrev);
+      } else {
+        toast.error("Sélectionner au moin une image");
+      }
+    } else {
+      toast.error("Tous les champs sont obligatoires");
+    }
+  };
 
   /* -------------------------------------------------------------------------- */
   /*                                 PROGRAMMER                                 */
   /* -------------------------------------------------------------------------- */
-  const [date, setDate] = useState(null)
+  const [date, setDate] = useState(null);
   const [timeValue, onChangeTime] = useState("10:00");
 
   const calendarChange = (val) => {
-    setDate(val)
-  }
+    setDate(val);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -239,21 +236,23 @@ const previewHandler = () => {
                 },
               })
                 .then((res) => res.json())
-                .then(async(article) => {
-
+                .then(async (article) => {
                   /* -------------------------------------------------------------------------- */
                   /*                               AJOUT PROGRAMME                              */
                   /* -------------------------------------------------------------------------- */
 
-                  if(isChecked){
-                    const dateVal = moment(date).format('DD-MM-YYYY')
-                    const hourVal = moment(timeValue, 'HH:mm')
-                    const fullDate = moment(dateVal).set({hour: hourVal.hour(), minute: hourVal.minute()})
+                  if (isChecked) {
+                    const dateVal = moment(date).format("DD-MM-YYYY");
+                    const hourVal = moment(timeValue, "HH:mm");
+                    const fullDate = moment(dateVal).set({
+                      hour: hourVal.hour(),
+                      minute: hourVal.minute(),
+                    });
                     const programVal = {
                       id: article.result[0].id,
                       program: true,
-                      date_program: fullDate
-                    }
+                      date_program: fullDate,
+                    };
                     const paramProgram = {
                       query: "updateProgramArticle",
                       param: [programVal],
@@ -264,8 +263,7 @@ const previewHandler = () => {
                       headers: {
                         "Content-type": "application/json",
                       },
-                    })
-                      .then((res) => res.json())
+                    }).then((res) => res.json());
                   }
 
                   /* -------------------------------------------------------------------------- */
@@ -309,7 +307,7 @@ const previewHandler = () => {
                           query: "addHastagArticle",
                           param: [hastag_articles],
                         };
-                       fetch(`${ROOT_URL}/api/knexApi`, {
+                        fetch(`${ROOT_URL}/api/knexApi`, {
                           method: "POST",
                           body: JSON.stringify(paramHastagArticle),
                           headers: {
@@ -1196,7 +1194,11 @@ const previewHandler = () => {
               {isChecked && (
                 <div className="flex w-fit flex-col">
                   <TimePicker onChange={onChangeTime} value={timeValue} />
-                  <Calendar date={date} color={["#3e817d"]} onChange={calendarChange} />
+                  <Calendar
+                    date={date}
+                    color={["#3e817d"]}
+                    onChange={calendarChange}
+                  />
                 </div>
               )}
 
@@ -1333,7 +1335,9 @@ const previewHandler = () => {
         </form>
 
         {confirmModal && <ConfirmAdd setConfirmModal={setConfirmModal} />}
-        {previewModal && <PreviewModal setPreviewModal={setPreviewModal} data={dataPreview} />}
+        {previewModal && (
+          <PreviewModal setPreviewModal={setPreviewModal} data={dataPreview} />
+        )}
       </section>
     </>
   );
