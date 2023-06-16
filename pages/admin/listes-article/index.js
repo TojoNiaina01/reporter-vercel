@@ -118,6 +118,8 @@ export async function getServerSideProps({ req, res }) {
     .then((res) => res.json())
     .then((data) => (listArticles = data));
 
+    //console.log("list article == ", listArticles.result)
+
   await fetch(`${baseUrl}/api/knexApi`, {
     method: "POST",
     body: JSON.stringify(param),

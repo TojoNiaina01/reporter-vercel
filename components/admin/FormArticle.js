@@ -28,6 +28,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import moment from "moment";
 
 const getListFollowers = (data) => {
   return data.map((follower) => {
@@ -67,7 +68,9 @@ const FormArticle = ({
   const [slide, setSlide] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(false);
-  const [timeValue, onChangeTime] = useState("10:00");
+  const [path, setPath] = useState()
+  const [dataPreview, setDataPreview] = useState()
+  
   const newArticleData = articleData;
   var richtextVal = "";
   const listFollowersTab = pushBtn ? getListFollowers(listFollowers) : [];
@@ -99,6 +102,65 @@ const FormArticle = ({
   const getHastag = (val) => {
     setHastag(val);
   };
+
+  const getPath = (val) => {
+    setPath(val)
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   PREVIEW                                  */
+  /* -------------------------------------------------------------------------- */
+const previewHandler = () => {
+ 
+  let isEmpty = 0
+
+  const fileTmp = []
+
+  if(files[0]){
+    fileTmp.push(files[0])
+  }
+
+  if(files[1]){
+    fileTmp.push(files[1])
+  }
+
+  if(files[2]){
+    fileTmp.push(files[2])
+  }
+  const tmpDataPrev = {
+    media: fileTmp,
+    title: title,
+    description: descript,
+    body: value,
+    path: path
+  }
+
+  
+  for (const prop in tmpDataPrev) {
+    if (!tmpDataPrev[prop]) isEmpty++;
+  }
+
+  if(!isEmpty){
+    if(files){
+      setPreviewModal(!previewModal)
+      setDataPreview(tmpDataPrev)
+    }else{
+      toast.error("Sélectionner au moin une image")
+    }
+  }else{
+    toast.error("Tous les champs sont obligatoires")
+  }
+}
+
+  /* -------------------------------------------------------------------------- */
+  /*                                 PROGRAMMER                                 */
+  /* -------------------------------------------------------------------------- */
+  const [date, setDate] = useState(null)
+  const [timeValue, onChangeTime] = useState("10:00");
+
+  const calendarChange = (val) => {
+    setDate(val)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -154,6 +216,7 @@ const FormArticle = ({
       data.body = value;
       data.category_id = selectedMenu.id;
       data.lang = selectedLang.tag;
+      data.path = path;
 
       for (const prop in data) {
         if (!data[prop]) isEmpty++;
@@ -176,7 +239,35 @@ const FormArticle = ({
                 },
               })
                 .then((res) => res.json())
-                .then((article) => {
+                .then(async(article) => {
+
+                  /* -------------------------------------------------------------------------- */
+                  /*                               AJOUT PROGRAMME                              */
+                  /* -------------------------------------------------------------------------- */
+
+                  if(isChecked){
+                    const dateVal = moment(date).format('DD-MM-YYYY')
+                    const hourVal = moment(timeValue, 'HH:mm')
+                    const fullDate = moment(dateVal).set({hour: hourVal.hour(), minute: hourVal.minute()})
+                    const programVal = {
+                      id: article.result[0].id,
+                      program: true,
+                      date_program: fullDate
+                    }
+                    const paramProgram = {
+                      query: "updateProgramArticle",
+                      param: [programVal],
+                    };
+                    await fetch(`${ROOT_URL}/api/knexApi`, {
+                      method: "POST",
+                      body: JSON.stringify(paramProgram),
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                    })
+                      .then((res) => res.json())
+                  }
+
                   /* -------------------------------------------------------------------------- */
                   /*                                HASTAG SYSTEM                               */
                   /* -------------------------------------------------------------------------- */
@@ -193,7 +284,7 @@ const FormArticle = ({
                       query: "addHastag",
                       param: [listHastag, selectedLang.tag],
                     };
-                    fetch(`${ROOT_URL}/api/knexApi`, {
+                    await fetch(`${ROOT_URL}/api/knexApi`, {
                       method: "POST",
                       body: JSON.stringify(paramHastag),
                       headers: {
@@ -218,7 +309,7 @@ const FormArticle = ({
                           query: "addHastagArticle",
                           param: [hastag_articles],
                         };
-                        fetch(`${ROOT_URL}/api/knexApi`, {
+                       fetch(`${ROOT_URL}/api/knexApi`, {
                           method: "POST",
                           body: JSON.stringify(paramHastagArticle),
                           headers: {
@@ -1088,7 +1179,7 @@ const FormArticle = ({
                 name="sousmenu"
                 required
                 type="text"
-                onChange={() => {}}
+                onChange={getPath}
                 defaultValue={""}
               />
 
@@ -1105,7 +1196,7 @@ const FormArticle = ({
               {isChecked && (
                 <div className="flex w-fit flex-col">
                   <TimePicker onChange={onChangeTime} value={timeValue} />
-                  <Calendar date={new Date()} color="#3e817d" />
+                  <Calendar date={date} color={["#3e817d"]} onChange={calendarChange} />
                 </div>
               )}
 
@@ -1233,7 +1324,7 @@ const FormArticle = ({
             <button
               type="button"
               className="flex items-center gap-2 rounded-full bg-gray-500  px-4 py-2 font-semibold text-white shadow-md active:scale-95"
-              onClick={() => setPreviewModal(!previewModal)}
+              onClick={previewHandler}
             >
               <ViewfinderCircleIcon className="h-5" />
               <span>Preview</span>
@@ -1242,7 +1333,7 @@ const FormArticle = ({
         </form>
 
         {confirmModal && <ConfirmAdd setConfirmModal={setConfirmModal} />}
-        {previewModal && <PreviewModal setPreviewModal={setPreviewModal} />}
+        {previewModal && <PreviewModal setPreviewModal={setPreviewModal} data={dataPreview} />}
       </section>
     </>
   );
